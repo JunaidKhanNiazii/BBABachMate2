@@ -15,3 +15,7 @@ git push -u origin main
 git remote add origin https://github.com/JunaidKhanNiazii/BBABachMate2.git
 git branch -M main
 git push -u origin main
+
+git add . 
+git commit -m "Update code" 
+git push
