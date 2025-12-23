@@ -14,39 +14,39 @@ function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (password !== confirmPassword) {
       return setError('Passwords do not match');
     }
-    
+
     if (password.length < 6) {
       return setError('Password must be at least 6 characters');
     }
-    
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return setError('Please enter a valid email address');
+    }
+
     setError('');
     setLoading(true);
 
-    // Special handling for admin email
-    let userRole = role;
-    if (email === 'bscs22f46@namal.edu.pk') {
-      userRole = 'admin';
-      alert('Admin account detected! You will have full system access.');
-    }
-
     const additionalData = {
       accountType: role,
-      registeredAt: new Date().toISOString()
+      registeredAt: new Date().toISOString(),
+      status: 'pending' // All new users start as pending
     };
 
-    const result = await register(email, password, userRole, additionalData);
-    
+    const result = await register(email, password, 'pending', additionalData);
+
     if (result.success) {
-      alert('Registration successful!');
+      alert('Registration successful! Your account is pending admin approval. You will be notified once approved.');
       navigate('/login');
     } else {
       setError(result.error);
     }
-    
+
     setLoading(false);
   };
 
