@@ -19,3 +19,13 @@ git push -u origin main
 git add . 
 git commit -m "Update code" 
 git push
+
+
+how clone 
+git clone https://github.com/JunaidKhanNiazii/BBABachMate2.git
+
+
+how create a branch
+git switch -C HereWriteBranchName
+git branch // check which branch is activate and how many branch 
+
