@@ -2,6 +2,7 @@ const admin = require('firebase-admin');
 require('dotenv').config();
 
 let firestore = null;
+let bucket = null;
 
 try {
   // Initialize Firebase
@@ -17,14 +18,19 @@ try {
       token_uri: "https://oauth2.googleapis.com/token",
       auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs",
       client_x509_cert_url: "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-fbsvc%40comsat-6fe05.iam.gserviceaccount.com"
-    })
+    }),
+    storageBucket: "comsat-6fe05.appspot.com" // Add storage bucket
   });
 
   firestore = admin.firestore();
+  bucket = admin.storage().bucket();
+
   console.log('✅ Firebase Admin initialized successfully');
+  console.log('✅ Firebase Storage bucket:', bucket.name);
 } catch (error) {
-  console.log('⚠️  Firebase Admin not initialized (optional)');
-  console.log('   Reason:', error.message);
+  console.error('❌ Firebase Admin initialization failed!');
+  console.error('   Error:', error.message);
+  console.error('   Stack:', error.stack);
 }
 
-module.exports = { admin, firestore };
+module.exports = { admin, firestore, bucket };

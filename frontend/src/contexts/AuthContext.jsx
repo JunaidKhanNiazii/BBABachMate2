@@ -1,13 +1,12 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { auth, db } from '../firebase';
+import React, { useContext, useState, useEffect, createContext } from 'react';
+import { auth } from '../firebase';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
-  onAuthStateChanged,
-  updateProfile
+  onAuthStateChanged
 } from 'firebase/auth';
-import { doc, setDoc, getDoc, collection, query, where, getDocs } from 'firebase/firestore';
+import api from '../api/axios';
 
 const AuthContext = createContext();
 
@@ -17,32 +16,31 @@ export function useAuth() {
 
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(null);
+  const [userProfile, setUserProfile] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [profileLoading, setProfileLoading] = useState(false); // New state for profile fetch
 
-  // Register with role (simplified - roles assigned by admins later)
-  async function register(email, password, role = 'pending', additionalData = {}) {
+  // Register
+  async function register(email, password, role, profileData) {
     try {
-      // Create user in Firebase Auth
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
+      await createUserWithEmailAndPassword(auth, email, password);
+      // Wait for user prop to be available
+      const user = auth.currentUser;
+      if (!user) throw new Error("Firebase user creation failed");
 
-      // Update display name
-      await updateProfile(user, {
-        displayName: email.split('@')[0]
+      const response = await api.post('/auth/register', {
+        role,
+        profile: profileData
       });
 
-      // Save user data with default role in Firestore
-      await setDoc(doc(db, 'users', user.uid), {
-        email: user.email,
-        displayName: user.displayName,
-        role: role, // Default to 'pending' - admin approval needed
-        status: 'pending', // pending, approved, rejected
-        createdAt: new Date(),
-        ...additionalData
-      });
-
-      return { success: true, user };
+      if (response.data.success) {
+        setUserProfile(response.data.user);
+        return { success: true };
+      } else {
+        return { success: false, error: 'Failed to create user profile in database.' };
+      }
     } catch (error) {
+      console.error("Registration Error:", error);
       return { success: false, error: error.message };
     }
   }
@@ -50,116 +48,46 @@ export function AuthProvider({ children }) {
   // Login
   async function login(email, password) {
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      return { success: true, user: userCredential.user };
+      setProfileLoading(true); // Expect profile fetch
+      await signInWithEmailAndPassword(auth, email, password);
+      return { success: true };
     } catch (error) {
+      console.error("Login Error:", error);
+      setProfileLoading(false);
       return { success: false, error: error.message };
     }
   }
 
   // Logout
-  async function logout() {
-    try {
-      await signOut(auth);
-      return { success: true };
-    } catch (error) {
-      return { success: false, error: error.message };
-    }
+  function logout() {
+    setUserProfile(null);
+    return signOut(auth);
   }
 
-  // Get user role from Firestore
-  async function getUserRole(uid) {
+  // Fetch User Profile from Backend
+  const fetchUserProfile = async () => {
     try {
-      const userDoc = await getDoc(doc(db, 'users', uid));
-      if (userDoc.exists()) {
-        const userData = userDoc.data();
-        return {
-          role: userData.role || 'pending',
-          status: userData.status || 'pending',
-          displayName: userData.displayName,
-          ...userData
-        };
+      const response = await api.get('/auth/me');
+      if (response.data.success) {
+        setUserProfile(response.data.user);
       }
-      return { role: 'pending', status: 'pending' };
     } catch (error) {
-      console.error('Error getting user role:', error);
-      return { role: 'pending', status: 'pending' };
+      console.error("Error fetching user profile:", error);
+      // Don't auto-logout on 404 - let user stay logged in to complete registration
+      setUserProfile(null);
     }
-  }
-
-  // Admin functions for role management
-  async function updateUserRole(userId, newRole) {
-    if (!currentUser || currentUser.role !== 'admin') {
-      throw new Error('Unauthorized: Only admins can update roles');
-    }
-
-    try {
-      await setDoc(doc(db, 'users', userId), {
-        role: newRole,
-        status: 'approved',
-        approvedBy: currentUser.uid,
-        approvedAt: new Date()
-      }, { merge: true });
-
-      return { success: true };
-    } catch (error) {
-      return { success: false, error: error.message };
-    }
-  }
-
-  async function getPendingUsers() {
-    if (!currentUser || currentUser.role !== 'admin') {
-      throw new Error('Unauthorized: Only admins can view pending users');
-    }
-
-    try {
-      const q = query(collection(db, 'users'), where('status', '==', 'pending'));
-      const querySnapshot = await getDocs(q);
-      const pendingUsers = [];
-      querySnapshot.forEach((doc) => {
-        pendingUsers.push({ id: doc.id, ...doc.data() });
-      });
-      return pendingUsers;
-    } catch (error) {
-      console.error('Error getting pending users:', error);
-      return [];
-    }
-  }
-
-  async function approveUser(userId, role) {
-    return updateUserRole(userId, role);
-  }
-
-  async function rejectUser(userId) {
-    if (!currentUser || currentUser.role !== 'admin') {
-      throw new Error('Unauthorized: Only admins can reject users');
-    }
-
-    try {
-      await setDoc(doc(db, 'users', userId), {
-        status: 'rejected',
-        rejectedBy: currentUser.uid,
-        rejectedAt: new Date()
-      }, { merge: true });
-
-      return { success: true };
-    } catch (error) {
-      return { success: false, error: error.message };
-    }
-  }
+  };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      setCurrentUser(user);
       if (user) {
-        const userData = await getUserRole(user.uid);
-        setCurrentUser({
-          ...user,
-          role: userData.role,
-          status: userData.status,
-          displayName: userData.displayName
-        });
+        setProfileLoading(true);
+        await fetchUserProfile();
+        setProfileLoading(false);
       } else {
-        setCurrentUser(null);
+        setUserProfile(null);
+        setProfileLoading(false);
       }
       setLoading(false);
     });
@@ -169,14 +97,12 @@ export function AuthProvider({ children }) {
 
   const value = {
     currentUser,
+    userProfile,
+    loading, // Initial load
+    profileLoading, // Transitions
     register,
     login,
-    logout,
-    updateUserRole,
-    getPendingUsers,
-    approveUser,
-    rejectUser,
-    loading
+    logout
   };
 
   return (

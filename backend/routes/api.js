@@ -2,8 +2,76 @@ const express = require('express');
 const { ObjectId } = require('mongodb');
 const { getMongoDB } = require('../config/mongodb');
 const { firestore } = require('../config/firebase');
+const Inquiry = require('../models/Inquiry');
 
 const router = express.Router();
+const User = require('../models/User');
+const { FYP, Project } = require('../models/UniversityEntities');
+const { Challenge } = require('../models/IndustryEntities');
+
+// ========== PUBLIC STATS ==========
+router.get('/public-stats', async (req, res) => {
+  try {
+    console.log('--- FETCHING PUBLIC STATS ---');
+    const universities = await User.countDocuments({ role: 'university' });
+    const industries = await User.countDocuments({ role: 'industry' });
+    const fyps = await FYP.countDocuments();
+    const projects = await Project.countDocuments();
+
+    // Aggregating real funding
+    const challenges = await Challenge.find({}, 'fundingAmount');
+    const totalFunding = challenges.reduce((sum, item) => sum + (item.fundingAmount || 0), 0);
+
+    console.log(`Universities: ${universities}, Industries: ${industries}, FYPs: ${fyps}, Projects: ${projects}, Funding: ${totalFunding}`);
+
+    const formattedFunding = totalFunding >= 1000000
+      ? `${(totalFunding / 1000000).toFixed(1)}M`
+      : `${(totalFunding / 1000).toFixed(1)}K`;
+
+    res.json({
+      success: true,
+      data: {
+        universities,
+        industries,
+        projects: fyps + projects,
+        funding: `PKR ${formattedFunding}`
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+// ========== INQUIRIES ==========
+router.post('/inquiries', async (req, res) => {
+  try {
+    const { name, email, sector, message } = req.body;
+
+    if (!name || !email || !sector || !message) {
+      return res.status(400).json({
+        success: false,
+        message: 'All fields are required'
+      });
+    }
+
+    const newInquiry = new Inquiry({
+      name,
+      email,
+      sector,
+      message
+    });
+
+    await newInquiry.save();
+
+    res.json({
+      success: true,
+      message: 'Inquiry submitted successfully'
+    });
+  } catch (error) {
+    console.error('Inquiry error:', error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
 
 // ========== TEST ENDPOINTS ==========
 
@@ -13,18 +81,18 @@ router.get('/test', async (req, res) => {
     // Test MongoDB
     const db = getMongoDB();
     await db.command({ ping: 1 });
-    
+
     let firebaseConnected = false;
     let firebaseMessage = '';
-    
+
     // Test Firebase
     if (firestore) {
       try {
         // Simple Firebase test
         const testRef = firestore.collection('connection_test').doc('ping');
-        await testRef.set({ 
+        await testRef.set({
           timestamp: new Date().toISOString(),
-          message: 'Connection test' 
+          message: 'Connection test'
         });
         firebaseConnected = true;
         firebaseMessage = 'Firebase connected successfully';
@@ -34,7 +102,7 @@ router.get('/test', async (req, res) => {
     } else {
       firebaseMessage = 'Firebase not initialized';
     }
-    
+
     res.json({
       success: true,
       timestamp: new Date().toISOString(),
@@ -65,7 +133,7 @@ router.get('/test', async (req, res) => {
 router.post('/mongo/students', async (req, res) => {
   try {
     const { name, rollNumber, semester, email, phone, department } = req.body;
-    
+
     // Validation
     if (!name || !rollNumber || !semester) {
       return res.status(400).json({
@@ -73,10 +141,10 @@ router.post('/mongo/students', async (req, res) => {
         message: 'Name, rollNumber, and semester are required'
       });
     }
-    
+
     const db = getMongoDB();
     const collection = db.collection('students');
-    
+
     const student = {
       name,
       rollNumber,
@@ -87,9 +155,9 @@ router.post('/mongo/students', async (req, res) => {
       createdAt: new Date(),
       updatedAt: new Date()
     };
-    
+
     const result = await collection.insertOne(student);
-    
+
     res.status(201).json({
       success: true,
       message: 'Student saved to MongoDB',
@@ -112,7 +180,7 @@ router.get('/mongo/students', async (req, res) => {
     const db = getMongoDB();
     const collection = db.collection('students');
     const students = await collection.find({}).sort({ createdAt: -1 }).toArray();
-    
+
     res.json({
       success: true,
       count: students.length,
@@ -132,25 +200,25 @@ router.get('/mongo/students', async (req, res) => {
 router.get('/mongo/students/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    
+
     if (!ObjectId.isValid(id)) {
       return res.status(400).json({
         success: false,
         message: 'Invalid student ID'
       });
     }
-    
+
     const db = getMongoDB();
     const collection = db.collection('students');
     const student = await collection.findOne({ _id: new ObjectId(id) });
-    
+
     if (!student) {
       return res.status(404).json({
         success: false,
         message: 'Student not found'
       });
     }
-    
+
     res.json({
       success: true,
       database: 'mongodb',
@@ -171,7 +239,7 @@ router.get('/mongo/students/:id', async (req, res) => {
 router.post('/firebase/students', async (req, res) => {
   try {
     const { name, rollNumber, semester, email, phone, department } = req.body;
-    
+
     // Validation
     if (!name || !rollNumber || !semester) {
       return res.status(400).json({
@@ -179,20 +247,20 @@ router.post('/firebase/students', async (req, res) => {
         message: 'Name, rollNumber, and semester are required'
       });
     }
-    
+
     if (!firestore) {
       return res.status(500).json({
         success: false,
         message: 'Firebase not connected'
       });
     }
-    
+
     const collection = firestore.collection('students');
-    
+
     // Generate a document ID
     const studentId = `${rollNumber}_${Date.now()}`;
     const docRef = collection.doc(studentId);
-    
+
     const student = {
       name,
       rollNumber,
@@ -204,9 +272,9 @@ router.post('/firebase/students', async (req, res) => {
       updatedAt: new Date().toISOString(),
       id: studentId
     };
-    
+
     await docRef.set(student);
-    
+
     res.status(201).json({
       success: true,
       message: 'Student saved to Firebase',
@@ -232,10 +300,10 @@ router.get('/firebase/students', async (req, res) => {
         message: 'Firebase not connected'
       });
     }
-    
+
     const collection = firestore.collection('students');
     const snapshot = await collection.get();
-    
+
     const students = [];
     snapshot.forEach(doc => {
       students.push({
@@ -243,7 +311,7 @@ router.get('/firebase/students', async (req, res) => {
         ...doc.data()
       });
     });
-    
+
     res.json({
       success: true,
       count: students.length,
@@ -263,24 +331,24 @@ router.get('/firebase/students', async (req, res) => {
 router.get('/firebase/students/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    
+
     if (!firestore) {
       return res.status(500).json({
         success: false,
         message: 'Firebase not connected'
       });
     }
-    
+
     const collection = firestore.collection('students');
     const doc = await collection.doc(id).get();
-    
+
     if (!doc.exists) {
       return res.status(404).json({
         success: false,
         message: 'Student not found in Firebase'
       });
     }
-    
+
     res.json({
       success: true,
       database: 'firebase',
@@ -304,7 +372,7 @@ router.get('/firebase/students/:id', async (req, res) => {
 router.post('/both/students', async (req, res) => {
   try {
     const { name, rollNumber, semester, email, phone, department } = req.body;
-    
+
     // Validation
     if (!name || !rollNumber || !semester) {
       return res.status(400).json({
@@ -312,7 +380,7 @@ router.post('/both/students', async (req, res) => {
         message: 'Name, rollNumber, and semester are required'
       });
     }
-    
+
     const studentData = {
       name,
       rollNumber,
@@ -321,23 +389,23 @@ router.post('/both/students', async (req, res) => {
       phone: phone || '',
       department: department || 'BBA'
     };
-    
+
     const results = {
       mongodb: null,
       firebase: null
     };
-    
+
     // Save to MongoDB
     try {
       const db = getMongoDB();
       const mongoCollection = db.collection('students');
-      
+
       const mongoStudent = {
         ...studentData,
         createdAt: new Date(),
         updatedAt: new Date()
       };
-      
+
       const mongoResult = await mongoCollection.insertOne(mongoStudent);
       results.mongodb = {
         success: true,
@@ -349,14 +417,14 @@ router.post('/both/students', async (req, res) => {
         error: mongoError.message
       };
     }
-    
+
     // Save to Firebase
     try {
       if (firestore) {
         const firebaseCollection = firestore.collection('students');
         const firebaseId = results.mongodb?.id || `student_${Date.now()}`;
         const docRef = firebaseCollection.doc(firebaseId);
-        
+
         const firebaseStudent = {
           ...studentData,
           mongoId: results.mongodb?.id,
@@ -364,7 +432,7 @@ router.post('/both/students', async (req, res) => {
           updatedAt: new Date().toISOString(),
           firebaseId: firebaseId
         };
-        
+
         await docRef.set(firebaseStudent);
         results.firebase = {
           success: true,
@@ -382,7 +450,7 @@ router.post('/both/students', async (req, res) => {
         error: firebaseError.message
       };
     }
-    
+
     res.status(201).json({
       success: true,
       message: 'Student save attempt completed',
@@ -405,7 +473,7 @@ router.get('/both/students', async (req, res) => {
       mongodb: { success: false, students: [], count: 0 },
       firebase: { success: false, students: [], count: 0 }
     };
-    
+
     // Get from MongoDB
     try {
       const db = getMongoDB();
@@ -419,21 +487,21 @@ router.get('/both/students', async (req, res) => {
     } catch (mongoError) {
       results.mongodb.error = mongoError.message;
     }
-    
+
     // Get from Firebase
     try {
       if (firestore) {
         const firebaseCollection = firestore.collection('students');
         const snapshot = await firebaseCollection.get();
         const firebaseStudents = [];
-        
+
         snapshot.forEach(doc => {
           firebaseStudents.push({
             firebaseId: doc.id,
             ...doc.data()
           });
         });
-        
+
         results.firebase = {
           success: true,
           students: firebaseStudents,
@@ -445,7 +513,7 @@ router.get('/both/students', async (req, res) => {
     } catch (firebaseError) {
       results.firebase.error = firebaseError.message;
     }
-    
+
     res.json({
       success: true,
       message: 'Data retrieved from both databases',
@@ -473,7 +541,7 @@ router.get('/both/students', async (req, res) => {
 router.delete('/clear-test-data', async (req, res) => {
   try {
     const results = {};
-    
+
     // Clear MongoDB test data
     try {
       const db = getMongoDB();
@@ -485,7 +553,7 @@ router.delete('/clear-test-data', async (req, res) => {
     } catch (mongoError) {
       results.mongodb = { error: mongoError.message };
     }
-    
+
     // Clear Firebase test data
     try {
       if (firestore) {
@@ -498,7 +566,7 @@ router.delete('/clear-test-data', async (req, res) => {
     } catch (firebaseError) {
       results.firebase = { error: firebaseError.message };
     }
-    
+
     res.json({
       success: true,
       message: 'Test data cleared',
