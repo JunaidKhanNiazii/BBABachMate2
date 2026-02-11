@@ -4,7 +4,7 @@ const User = require('../models/User');
 const { verifyToken } = require('../middleware/authMiddleware');
 
 // @route   POST /api/auth/register
-// @desc    Create a new user profile in MongoDB (after Firebase Signup)
+// @desc    Create a new user profile in Firestore (after Firebase Signup)
 // @access  Private (Valid Firebase Token required)
 router.post('/register', verifyToken, async (req, res) => {
     const { role, profile } = req.body;
@@ -14,10 +14,16 @@ router.post('/register', verifyToken, async (req, res) => {
     }
 
     try {
-        // Check if user already exists
+        // Check if user already exists by UID
         let user = await User.findOne({ firebaseUid: req.firebaseUid });
         if (user) {
-            return res.status(400).json({ success: false, message: 'User profile already exists.' });
+            return res.status(400).json({ success: false, message: 'User profile already exists for this ID.' });
+        }
+
+        // Check if user already exists by Email (Redundancy check)
+        const emailUser = await User.findOne({ email: req.email });
+        if (emailUser) {
+            return res.status(400).json({ success: false, message: 'An account with this email already exists in our records.' });
         }
 
         // Check for Super Admin

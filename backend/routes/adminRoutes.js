@@ -13,7 +13,12 @@ router.put('/users/:id/toggle-verify', controller.toggleVerification); // Toggle
 router.delete('/users/:id', controller.deleteUser);
 
 // Inquiries
+// Inquiries
 router.get('/inquiries', controller.getAllInquiries);
 router.delete('/inquiries/:id', controller.deleteInquiry);
+
+// Content Management
+router.get('/content', controller.getContentByType);
+router.delete('/content/:id', controller.deleteContent);
 
 module.exports = router;

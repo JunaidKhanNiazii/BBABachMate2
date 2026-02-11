@@ -1,0 +1,25 @@
+{
+    "watch": [
+        "."
+    ],
+    "ext": "js,json",
+    "ignore": [
+        "*.log",
+        ".git",
+        "node_modules/**/node_modules",
+        "uploads",
+        "debug_users.js",
+        "force_reset_admin.js",
+        "list_auth_users.js",
+        "multi_reset.js",
+        "promote_admin.js",
+        "seed_data.js",
+        "setup_admin.js",
+        "setup_partners.js",
+        "test_rest_auth.js",
+        "test_rest_auth_native.js",
+        "wipe_collections.js",
+        "fix_missing_profile.js"
+    ],
+    "delay": "2500"
+}

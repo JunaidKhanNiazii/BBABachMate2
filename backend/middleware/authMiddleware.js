@@ -11,14 +11,19 @@ const verifyToken = async (req, res, next) => {
 
     try {
         const decodedToken = await admin.auth().verifyIdToken(token);
+
+        // Fetch user from Firestore
+        const user = await User.findOne({ firebaseUid: decodedToken.uid });
+
+        if (!user) {
+            console.log(`⚠️ AuthMiddleware: No Firestore profile for UID: ${decodedToken.uid} (${decodedToken.email})`);
+        } else {
+            // console.log(`✅ AuthMiddleware: Found user ${user.email}`);
+        }
+
         req.firebaseUid = decodedToken.uid;
         req.email = decodedToken.email;
-
-        // Attach MongoDB user if exists
-        const user = await User.findOne({ firebaseUid: decodedToken.uid });
-        if (user) {
-            req.user = user;
-        }
+        req.user = user; // Attach user object to request
         next();
     } catch (error) {
         console.error('Token verification error:', error);

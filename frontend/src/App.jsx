@@ -56,31 +56,32 @@ function App() {
               <Route path="trainings" element={<ProtectedRoute><PublicListing title="Trainings" endpoint="/university/trainings" /></ProtectedRoute>} />
               <Route path="collaborations" element={<ProtectedRoute><PublicListing title="Collaborations" endpoint="/university/collaborations" /></ProtectedRoute>} />
 
-              {/* Protected dashboard routes */}
-              <Route path="/dashboard" element={
-                <ProtectedRoute>
-                  <DashboardRedirect />
-                </ProtectedRoute>
-              } />
-
-              <Route path="dashboard/industry" element={
-                <ProtectedRoute allowedRoles={['industry']}>
-                  <IndustryDashboard />
-                </ProtectedRoute>
-              } />
-
-              <Route path="dashboard/university" element={
-                <ProtectedRoute allowedRoles={['university']}>
-                  <UniversityDashboard />
-                </ProtectedRoute>
-              } />
-
-              <Route path="dashboard/admin" element={
-                <ProtectedRoute allowedRoles={['admin']}>
-                  <AdminDashboard />
-                </ProtectedRoute>
-              } />
             </Route>
+
+            {/* Protected dashboard routes - Outside Layout to prevent header conflict */}
+            <Route path="/dashboard" element={
+              <ProtectedRoute>
+                <DashboardRedirect />
+              </ProtectedRoute>
+            } />
+
+            <Route path="dashboard/industry" element={
+              <ProtectedRoute allowedRoles={['industry']}>
+                <IndustryDashboard />
+              </ProtectedRoute>
+            } />
+
+            <Route path="dashboard/university" element={
+              <ProtectedRoute allowedRoles={['university']}>
+                <UniversityDashboard />
+              </ProtectedRoute>
+            } />
+
+            <Route path="dashboard/admin" element={
+              <ProtectedRoute allowedRoles={['admin']}>
+                <AdminDashboard />
+              </ProtectedRoute>
+            } />
 
             {/* Redirect to home for unknown routes */}
             <Route path="*" element={<Navigate to="/" />} />

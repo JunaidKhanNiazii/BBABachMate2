@@ -1,8 +1,9 @@
 // server.js - Full Backend Logic
 const express = require('express');
 const cors = require('cors');
-const { connectMongoDB } = require('./config/mongodb');
+// Connect to databases
 const { firestore } = require('./config/firebase');
+// MongoDB connection removed
 
 // Route Imports
 const authRoutes = require('./routes/authRoutes');
@@ -11,26 +12,40 @@ const universityRoutes = require('./routes/universityRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const apiRoutes = require('./routes/api');
 
+const helmet = require('helmet');
+const compression = require('compression');
+const morgan = require('morgan');
+
 const app = express();
 const port = 5000;
 
 // Middleware
+app.use(helmet({
+  contentSecurityPolicy: false, // For local dev compatibility
+  crossOriginResourcePolicy: { policy: "cross-origin" }
+}));
+app.use(compression()); // Gzip all responses
+app.use(morgan('dev')); // Fast logging
 app.use(cors());
 app.use(express.json());
 
-// Serve uploaded files statically
-app.use('/uploads', express.static('uploads'));
+// Serve uploaded files statically with caching
+app.use('/uploads', express.static('uploads', {
+  maxAge: '1d',
+  immutable: true
+}));
 
 // Connect to databases
-connectMongoDB();
+// MongoDB connection removed
+// connectMongoDB();
 
 // Base Route
 app.get('/', (req, res) => {
   res.json({
-    message: '✅ BBABachmate Backend Server Running',
+    message: '✅ BBABachmate Backend Server Running (Firebase Only)',
     timestamp: new Date().toISOString(),
     status: 'active',
-    version: '2.0.0 (Role-Based Upgrade)'
+    version: '2.1.0 (Firebase Migration)'
   });
 });
 
@@ -54,8 +69,7 @@ app.listen(port, () => {
   console.log(`
 ====================================
 🚀 Server running: http://localhost:${port}
-📡 MongoDB: Connected
-🔥 Firebase: ${firestore ? 'Connected' : 'Optional'}
+🔥 Firebase: ${firestore ? 'Connected' : 'Failed'}
 📌 API Routes:
    - /api/auth
    - /api/industry

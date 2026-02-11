@@ -1,0 +1,10 @@
+version: "2"
+authtoken: 33RynJLswHkgVXSVOGIWZp0tKEU_68qnxBW3vmckMLSThBj1B
+tunnels:
+  backend:
+    proto: http
+    addr: 5000
+    hostname: papayan-sightly-suellen.ngrok-free.dev
+  frontend:
+    proto: http
+    addr: 5173

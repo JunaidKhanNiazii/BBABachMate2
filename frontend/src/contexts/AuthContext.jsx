@@ -10,9 +10,16 @@ import api from '../api/axios';
 
 const AuthContext = createContext();
 
-export function useAuth() {
-  return useContext(AuthContext);
-}
+/**
+ * useAuth Hook for component access
+ */
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
+};
 
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(null);
@@ -72,7 +79,12 @@ export function AuthProvider({ children }) {
         setUserProfile(response.data.user);
       }
     } catch (error) {
-      console.error("Error fetching user profile:", error);
+      if (error.response && error.response.status === 404) {
+        // This is expected during correct registration flow before profile is created
+        console.log("User profile not found (yet) - likely a new registration.");
+      } else {
+        console.error("Error fetching user profile:", error);
+      }
       // Don't auto-logout on 404 - let user stay logged in to complete registration
       setUserProfile(null);
     }
@@ -95,15 +107,15 @@ export function AuthProvider({ children }) {
     return unsubscribe;
   }, []);
 
-  const value = {
+  const value = React.useMemo(() => ({
     currentUser,
     userProfile,
-    loading, // Initial load
-    profileLoading, // Transitions
+    loading,
+    profileLoading,
     register,
     login,
     logout
-  };
+  }), [currentUser, userProfile, loading, profileLoading]);
 
   return (
     <AuthContext.Provider value={value}>

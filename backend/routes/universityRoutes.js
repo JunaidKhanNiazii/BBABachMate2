@@ -39,4 +39,16 @@ router.get('/collaborations', verifyToken, controller.getCollaborations);
 router.get('/collaborations/:id', controller.getCollaboration);
 router.delete('/collaborations/:id', verifyToken, checkRole(UNIVERSITY_ROLES), controller.deleteCollaboration);
 
+// --- PRODUCTS ---
+router.post('/products', verifyToken, checkRole(UNIVERSITY_ROLES), upload.single('image'), controller.createProduct);
+router.get('/products', verifyToken, controller.getProducts);
+router.get('/products/:id', controller.getProduct);
+router.delete('/products/:id', verifyToken, checkRole(UNIVERSITY_ROLES), controller.deleteProduct);
+
+// --- OPEN HOUSE ---
+router.post('/openhouse', verifyToken, checkRole(UNIVERSITY_ROLES), upload.single('image'), controller.createOpenHouse);
+router.get('/openhouse', verifyToken, controller.getOpenHouses);
+router.get('/openhouse/:id', controller.getOpenHouse);
+router.delete('/openhouse/:id', verifyToken, checkRole(UNIVERSITY_ROLES), controller.deleteOpenHouse);
+
 module.exports = router;

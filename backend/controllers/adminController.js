@@ -144,3 +144,58 @@ exports.deleteInquiry = async (req, res) => {
         res.status(500).json({ success: false, message: error.message });
     }
 };
+
+// --- Helper for Content Hub ---
+const getModelByType = (type) => {
+    switch (type) {
+        case 'industry/jobs': return Job;
+        case 'industry/internships': return Internship;
+        case 'industry/research': return Research;
+        case 'industry/challenges': return Challenge;
+        case 'industry/speakers': return Speaker;
+        case 'university/fyps': return FYP;
+        case 'university/projects': return Project;
+        case 'university/courses': return Course;
+        case 'university/trainings': return Training;
+        case 'university/collaborations': return Collaboration;
+        default: return null;
+    }
+};
+
+exports.getContentByType = async (req, res) => {
+    try {
+        const { type } = req.query;
+        const Model = getModelByType(type);
+
+        if (!Model) {
+            return res.status(400).json({ success: false, message: 'Invalid content type' });
+        }
+
+        const content = await Model.find()
+            .populate('createdBy', 'profile.name email role') // Populate creator info if available
+            .sort({ createdAt: -1 });
+
+        res.json({ success: true, data: content });
+    } catch (error) {
+        console.error('Error fetching content:', error);
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
+
+exports.deleteContent = async (req, res) => {
+    try {
+        const { type } = req.query;
+        const { id } = req.params;
+        const Model = getModelByType(type);
+
+        if (!Model) {
+            return res.status(400).json({ success: false, message: 'Invalid content type' });
+        }
+
+        await Model.findByIdAndDelete(id);
+        res.json({ success: true, message: 'Content deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting content:', error);
+        res.status(500).json({ success: false, message: error.message });
+    }
+};

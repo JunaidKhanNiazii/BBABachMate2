@@ -1,5 +1,5 @@
 const { Job, Internship, Speaker, Research, Challenge } = require('../models/IndustryEntities');
-const { FYP } = require('../models/UniversityEntities');
+const { FYP, Collaboration } = require('../models/UniversityEntities');
 const User = require('../models/User');
 const { uploadToLocal } = require('../utils/fileUpload');
 
@@ -150,3 +150,9 @@ exports.createChallenge = createOne(Challenge);
 exports.getChallenges = getAll(Challenge);
 exports.getChallenge = getOne(Challenge);
 exports.deleteChallenge = deleteOne(Challenge);
+
+// Collaborations
+exports.createCollaboration = createOne(Collaboration);
+exports.getCollaborations = getAll(Collaboration);
+exports.getCollaboration = getOne(Collaboration);
+exports.deleteCollaboration = deleteOne(Collaboration);

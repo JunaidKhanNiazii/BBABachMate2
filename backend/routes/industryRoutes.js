@@ -39,4 +39,10 @@ router.get('/challenges', verifyToken, controller.getChallenges);
 router.get('/challenges/:id', controller.getChallenge);
 router.delete('/challenges/:id', verifyToken, checkRole(INDUSTRY_ROLES), controller.deleteChallenge);
 
+// --- COLLABORATIONS ---
+router.post('/collaborations', verifyToken, checkRole(INDUSTRY_ROLES), upload.single('image'), controller.createCollaboration);
+router.get('/collaborations', verifyToken, controller.getCollaborations);
+router.get('/collaborations/:id', controller.getCollaboration);
+router.delete('/collaborations/:id', verifyToken, checkRole(INDUSTRY_ROLES), controller.deleteCollaboration);
+
 module.exports = router;

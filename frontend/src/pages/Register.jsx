@@ -107,7 +107,7 @@ function Register() {
               placeholder={role === 'industry' ? "E.G. GOOGLE CLOUD" : "E.G. HARVARD UNIVERSITY"}
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full px-6 py-4 bg-black border border-white/5 rounded-xl text-white focus:border-blue-600 focus:outline-none transition-all placeholder:text-gray-800 font-bold uppercase text-[10px] tracking-widest"
+              className="w-full px-6 py-4 bg-black border border-white/5 rounded-xl text-white focus:border-blue-600 focus:outline-none transition-all placeholder:text-gray-800 font-bold text-[10px] tracking-widest"
               required
             />
           </div>
@@ -119,7 +119,7 @@ function Register() {
               placeholder="ADMIN@ORGANIZATION.COM"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-6 py-4 bg-black border border-white/5 rounded-xl text-white focus:border-blue-600 focus:outline-none transition-all placeholder:text-gray-800 font-bold uppercase text-[10px] tracking-widest"
+              className="w-full px-6 py-4 bg-black border border-white/5 rounded-xl text-white focus:border-blue-600 focus:outline-none transition-all placeholder:text-gray-800 font-bold text-[10px] tracking-widest"
               required
             />
           </div>
@@ -180,7 +180,7 @@ function Register() {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="DESCRIBE YOUR ORGANIZATION'S MISSION..."
-              className="w-full px-6 py-4 bg-black border border-white/5 rounded-xl text-white focus:border-blue-600 focus:outline-none transition-all placeholder:text-gray-800 h-32 font-bold uppercase text-[10px] tracking-widest leading-loose"
+              className="w-full px-6 py-4 bg-black border border-white/5 rounded-xl text-white focus:border-blue-600 focus:outline-none transition-all placeholder:text-gray-800 h-32 font-bold text-[10px] tracking-widest leading-loose"
             />
           </div>
         </div>

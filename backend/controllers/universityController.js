@@ -1,4 +1,4 @@
-const { FYP, Project, Course, Training, Collaboration } = require('../models/UniversityEntities');
+const { FYP, Project, Course, Training, Collaboration, Product, OpenHouse } = require('../models/UniversityEntities');
 const { Job, Internship } = require('../models/IndustryEntities');
 const User = require('../models/User');
 const { uploadToLocal } = require('../utils/fileUpload');
@@ -140,3 +140,15 @@ exports.createCollaboration = createOne(Collaboration);
 exports.getCollaborations = getAll(Collaboration);
 exports.getCollaboration = getOne(Collaboration);
 exports.deleteCollaboration = deleteOne(Collaboration);
+
+// Products
+exports.createProduct = createOne(Product);
+exports.getProducts = getAll(Product);
+exports.getProduct = getOne(Product);
+exports.deleteProduct = deleteOne(Product);
+
+// OpenHouse
+exports.createOpenHouse = createOne(OpenHouse);
+exports.getOpenHouses = getAll(OpenHouse);
+exports.getOpenHouse = getOne(OpenHouse);
+exports.deleteOpenHouse = deleteOne(OpenHouse);

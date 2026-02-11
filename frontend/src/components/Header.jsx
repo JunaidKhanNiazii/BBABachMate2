@@ -51,7 +51,7 @@ const Header = React.memo(() => {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled || isMobileMenuOpen
         ? 'bg-black border-b border-white/10 py-3 shadow-[0_4px_30px_rgba(0,0,0,0.8)]'
         : 'bg-black/80 backdrop-blur-md py-4'
         }`}
@@ -232,7 +232,16 @@ const Header = React.memo(() => {
 
       {/* Mobile Menu */}
       <div className={`lg:hidden fixed inset-0 z-40 bg-black transition-all duration-500 ease-in-out ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
-        <div className="flex flex-col h-full pt-24 px-6 pb-10 overflow-y-auto">
+        <div className="flex flex-col h-full pt-24 px-6 pb-10 overflow-y-auto relative">
+          {/* Close Button Inside Menu */}
+          <button
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="absolute top-6 right-6 p-2 text-gray-400 hover:text-white transition-colors"
+          >
+            <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
           {/* Mobile Profile if logged in */}
           {currentUser && (
             <div className="flex items-center p-4 bg-white/5 rounded-2xl mb-8">

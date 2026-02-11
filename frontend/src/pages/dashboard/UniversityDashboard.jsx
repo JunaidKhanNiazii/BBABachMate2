@@ -7,6 +7,7 @@ import api from '../../api/axios';
 function UniversityDashboard() {
   const { userProfile, updateProfile } = useAuth();
   const [activeTab, setActiveTab] = useState('home');
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isEditingProfile, setIsEditingProfile] = useState(false);
   const [profileData, setProfileData] = useState(userProfile?.profile || {});
   const [stats, setStats] = useState({
@@ -146,13 +147,32 @@ function UniversityDashboard() {
 
   return (
     <div className="min-h-screen bg-black flex font-sans selection:bg-blue-500/30">
+      {/* Mobile Sidebar Overlay */}
+      {isSidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black/80 z-40 md:hidden backdrop-blur-sm"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
+
       {/* Sidebar */}
-      <div className="w-72 bg-neutral-900 border-r border-white/5 flex flex-col">
-        <div className="p-8 border-b border-white/5">
-          <div className="flex items-center space-x-3 mb-6">
+      <div className={`fixed inset-y-0 left-0 z-50 w-72 bg-neutral-900 border-r border-white/5 flex flex-col transition-transform duration-300 transform md:relative md:translate-x-0 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}>
+        <div className="p-8 border-b border-white/5 flex justify-between items-center">
+          <div className="flex items-center space-x-3">
             <div className="w-8 h-8 bg-white text-black rounded-lg flex items-center justify-center font-black text-lg shadow-lg">A</div>
             <span className="text-xl font-black tracking-tighter text-white uppercase italic">AICON</span>
           </div>
+          {/* Close button for mobile */}
+          <button
+            onClick={() => setIsSidebarOpen(false)}
+            className="md:hidden text-gray-500 hover:text-white"
+          >
+            ✕
+          </button>
+        </div>
+
+        <div className="px-8 py-6">
           <div className="space-y-1">
             <p className="text-[9px] uppercase tracking-widest font-bold text-gray-500">Academic Hub</p>
             <p className="text-xs font-bold text-white truncate uppercase tracking-tight">{userProfile?.profile?.name || 'University Profile'}</p>
@@ -187,14 +207,26 @@ function UniversityDashboard() {
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col h-screen overflow-hidden">
-        <header className="px-10 py-8 flex justify-between items-center bg-black border-b border-white/5">
-          <div>
-            <h1 className="text-3xl font-bold text-white tracking-tight uppercase">
-              {tabs.find(t => t.id === activeTab)?.label}
-            </h1>
-            <p className="text-[9px] text-gray-600 font-bold uppercase tracking-widest mt-1">
-              {activeTab === 'home' ? 'Academic Analytics Overview' : 'Educational Protocol System'}
-            </p>
+        <header className="px-6 md:px-10 py-6 md:py-8 flex justify-between items-center bg-black border-b border-white/5">
+          <div className="flex items-center gap-4">
+            {/* Hamburger Button */}
+            <button
+              onClick={() => setIsSidebarOpen(true)}
+              className="md:hidden text-white hover:text-blue-500 transition-colors"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+
+            <div>
+              <h1 className="text-xl md:text-3xl font-bold text-white tracking-tight uppercase">
+                {tabs.find(t => t.id === activeTab)?.label}
+              </h1>
+              <p className="text-[9px] text-gray-600 font-bold uppercase tracking-widest mt-1">
+                {activeTab === 'home' ? 'Academic Analytics Overview' : 'Educational Protocol System'}
+              </p>
+            </div>
           </div>
           <div className="px-5 py-2.5 bg-neutral-900 border border-white/5 rounded-xl">
             <span className="text-[9px] font-bold text-blue-500 uppercase tracking-widest flex items-center gap-2">
@@ -323,7 +355,7 @@ function UniversityDashboard() {
             </div>
           )}
 
-          {!['home', 'profile', 'discover'].includes(activeTab) && (
+          {!['home', 'profile', 'discover', 'notifications', 'settings'].includes(activeTab) && (
             <div className="animate-in fade-in duration-500">
               <ItemManager key={activeTab} {...configs[activeTab]} />
             </div>
