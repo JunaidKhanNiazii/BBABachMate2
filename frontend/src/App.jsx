@@ -19,12 +19,12 @@ const PublicListing = lazy(() => import('./components/PublicListing'));
 
 // Loading component
 const LoadingSpinner = () => (
-  <div className="flex flex-col justify-center items-center min-h-screen bg-black">
+  <div className="flex flex-col justify-center items-center min-h-screen bg-[var(--bg-primary)]">
     <div className="relative w-20 h-20">
-      <div className="absolute inset-0 border-4 border-blue-600/20 rounded-2xl"></div>
-      <div className="absolute inset-0 border-4 border-t-blue-600 rounded-2xl animate-spin"></div>
+      <div className="absolute inset-0 border-4 border-[var(--accent-secondary)]/20 rounded-2xl"></div>
+      <div className="absolute inset-0 border-4 border-t-[var(--accent-secondary)] rounded-2xl animate-spin"></div>
     </div>
-    <p className="mt-8 text-[10px] font-black text-gray-700 uppercase tracking-[0.6em] animate-pulse">Initializing Interface</p>
+    <p className="mt-8 text-[10px] font-black text-[var(--text-secondary)] uppercase tracking-[0.6em] animate-pulse">Initializing Interface</p>
   </div>
 );
 

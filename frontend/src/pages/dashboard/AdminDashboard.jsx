@@ -7,10 +7,10 @@ import {
 } from 'recharts';
 
 const StatCard = ({ title, value, subtext, color = "blue" }) => (
-  <div className="bg-neutral-900 border border-white/5 p-6 rounded-2xl hover:border-blue-500/30 transition-all group">
-    <h3 className="text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em] mb-4">{title}</h3>
-    <p className="text-4xl font-black italic tracking-tighter text-white group-hover:text-blue-500 transition-colors">{value}</p>
-    <p className="text-[9px] font-bold text-gray-600 uppercase tracking-widest mt-4 opacity-60">{subtext}</p>
+  <div className="bg-[var(--bg-secondary)] border border-[var(--bg-tertiary)] p-6 rounded-2xl hover:border-[var(--accent-secondary)]/30 transition-all group shadow-sm">
+    <h3 className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-4">{title}</h3>
+    <p className="text-4xl font-black italic tracking-tighter text-[var(--accent-primary)] group-hover:text-[var(--accent-secondary)] transition-colors">{value}</p>
+    <p className="text-[9px] font-bold text-[var(--text-secondary)] uppercase tracking-widest mt-4 opacity-60">{subtext}</p>
   </div>
 );
 
@@ -171,7 +171,7 @@ function AdminDashboard() {
   ] : [];
 
   return (
-    <div className="min-h-screen bg-black flex font-sans selection:bg-blue-500/30">
+    <div className="min-h-screen bg-[var(--bg-primary)] flex font-sans selection:bg-blue-500/30 text-[var(--text-primary)]">
       {/* Mobile Sidebar Overlay */}
       {isSidebarOpen && (
         <div
@@ -181,11 +181,11 @@ function AdminDashboard() {
       )}
 
       {/* Sidebar */}
-      <div className={`fixed inset-y-0 left-0 z-50 w-72 bg-neutral-900 border-r border-white/5 flex flex-col transition-transform duration-300 transform md:relative md:translate-x-0 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+      <div className={`fixed inset-y-0 left-0 z-50 w-72 bg-[#1e3a8a] border-r border-white/10 flex flex-col transition-transform duration-300 transform md:relative md:translate-x-0 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
         }`}>
-        <div className="p-8 border-b border-white/5 flex justify-between items-center">
+        <div className="p-8 border-b border-white/10 flex justify-between items-center">
           <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 bg-blue-600 text-white rounded-lg flex items-center justify-center font-black text-lg shadow-lg">A</div>
+            <div className="w-8 h-8 bg-white text-[#1e3a8a] rounded-lg flex items-center justify-center font-black text-lg shadow-lg">A</div>
             <span className="text-xl font-black tracking-tighter text-white uppercase italic">AICON</span>
           </div>
           {/* Close button for mobile */}
@@ -198,7 +198,7 @@ function AdminDashboard() {
         </div>
 
         <div className="px-8 py-6">
-          <p className="text-[9px] uppercase tracking-widest font-bold text-gray-500">System Admin</p>
+          <p className="text-[9px] uppercase tracking-widest font-bold text-blue-200/60">System Admin</p>
           <p className="text-xs font-bold text-white truncate uppercase tracking-tight">Super Admin</p>
         </div>
 
@@ -211,18 +211,18 @@ function AdminDashboard() {
                 setIsSidebarOpen(false);
               }}
               className={`w-full flex items-center px-4 py-3.5 rounded-xl transition-all group ${activeTab === tab.id
-                ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/10'
-                : 'text-gray-500 hover:bg-white/5 hover:text-white'
+                ? 'bg-[var(--accent-secondary)] text-white shadow-lg'
+                : 'text-blue-100/70 hover:bg-white/10 hover:text-white'
                 }`}
             >
               <span className="text-[10px] font-bold uppercase tracking-widest leading-none">{tab.label}</span>
             </button>
           ))}
 
-          <div className="pt-4 mt-4 border-t border-white/5">
+          <div className="pt-4 mt-4 border-t border-white/10">
             <button
               onClick={() => navigate('/')}
-              className="w-full flex items-center px-4 py-3.5 rounded-xl text-gray-500 hover:bg-red-600/10 hover:text-red-500 transition-all group"
+              className="w-full flex items-center px-4 py-3.5 rounded-xl text-blue-100/60 hover:bg-red-500/20 hover:text-red-300 transition-all group"
             >
               <span className="text-[10px] font-bold uppercase tracking-widest leading-none">Back to Home</span>
             </button>
@@ -231,26 +231,26 @@ function AdminDashboard() {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col h-screen overflow-hidden text-white">
-        <header className="px-6 md:px-10 py-6 md:py-8 flex justify-between items-center bg-black border-b border-white/5">
+      <div className="flex-1 flex flex-col h-screen overflow-hidden text-[var(--text-primary)]">
+        <header className="px-6 md:px-10 py-6 md:py-8 flex justify-between items-center bg-[var(--bg-primary)] border-b border-[var(--bg-tertiary)]">
           <div className="flex items-center gap-4">
             <button
               onClick={() => setIsSidebarOpen(true)}
-              className="md:hidden text-white hover:text-blue-500 transition-colors"
+              className="md:hidden text-[var(--accent-primary)] hover:text-[var(--accent-secondary)] transition-colors"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             </button>
             <div>
-              <h1 className="text-3xl font-bold tracking-tight text-white uppercase mb-1 hidden md:block">{tabs.find(t => t.id === activeTab)?.label}</h1>
-              <h1 className="text-xl font-bold tracking-tight text-white uppercase mb-1 md:hidden">{tabs.find(t => t.id === activeTab)?.label}</h1>
-              <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest italic">System Administration • Global Protocol Management</p>
+              <h1 className="text-3xl font-bold tracking-tight text-[var(--text-primary)] uppercase mb-1 hidden md:block">{tabs.find(t => t.id === activeTab)?.label}</h1>
+              <h1 className="text-xl font-bold tracking-tight text-[var(--text-primary)] uppercase mb-1 md:hidden">{tabs.find(t => t.id === activeTab)?.label}</h1>
+              <p className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-widest italic">System Administration • Global Protocol Management</p>
             </div>
           </div>
-          <div className="px-6 py-3 bg-neutral-900 border border-white/5 rounded-xl flex items-center space-x-4 hidden md:flex">
-            <div className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(59,130,246,0.5)]"></div>
-            <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Admin Authorization: Active</span>
+          <div className="px-6 py-3 bg-[var(--bg-secondary)] border border-[var(--bg-tertiary)] rounded-xl flex items-center space-x-4 hidden md:flex">
+            <div className="w-1.5 h-1.5 bg-[var(--accent-secondary)] rounded-full animate-pulse shadow-[0_0_10px_rgba(59,130,246,0.5)]"></div>
+            <span className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-widest">Admin Authorization: Active</span>
           </div>
         </header>
 
@@ -261,10 +261,10 @@ function AdminDashboard() {
             <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
               {loading && !globalStats ? (
                 <div className="p-20 text-center flex flex-col items-center">
-                  <div className="w-10 h-1 bg-white/5 rounded-full overflow-hidden mb-6">
-                    <div className="h-full bg-blue-600 animate-loading-bar"></div>
+                  <div className="w-10 h-1 bg-[var(--bg-tertiary)] rounded-full overflow-hidden mb-6">
+                    <div className="h-full bg-[var(--accent-secondary)] animate-loading-bar"></div>
                   </div>
-                  <p className="text-gray-600 font-bold text-[10px] uppercase tracking-widest animate-pulse">Scanning Neural Network...</p>
+                  <p className="text-[var(--text-secondary)] font-bold text-[10px] uppercase tracking-widest animate-pulse">Scanning Neural Network...</p>
                 </div>
               ) : globalStats && (
                 <>
@@ -292,8 +292,8 @@ function AdminDashboard() {
                   </div>
 
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <div className="bg-neutral-900 border border-white/5 p-8 rounded-3xl">
-                      <h3 className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-8">User Distribution Analysis</h3>
+                    <div className="bg-[var(--bg-secondary)] border border-[var(--bg-tertiary)] p-8 rounded-3xl shadow-sm">
+                      <h3 className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-widest mb-8">User Distribution Analysis</h3>
                       <div className="h-[300px] w-full min-h-[300px]">
                         <ResponsiveContainer width="100%" height="100%">
                           <PieChart>
@@ -320,8 +320,8 @@ function AdminDashboard() {
                       </div>
                     </div>
 
-                    <div className="bg-neutral-900 border border-white/5 p-8 rounded-3xl">
-                      <h3 className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-8">Content Volume Pipeline</h3>
+                    <div className="bg-[var(--bg-secondary)] border border-[var(--bg-tertiary)] p-8 rounded-3xl shadow-sm">
+                      <h3 className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-widest mb-8">Content Volume Pipeline</h3>
                       <div className="h-[300px] w-full min-h-[300px]">
                         <ResponsiveContainer width="100%" height="100%">
                           <BarChart data={contentData} margin={{ top: 20, right: 30, left: 20, bottom: 60 }}>
@@ -352,10 +352,10 @@ function AdminDashboard() {
                     </div>
                   </div>
 
-                  <div className="bg-neutral-900 border border-white/5 rounded-3xl overflow-hidden mt-8">
-                    <div className="px-8 py-6 border-b border-white/5 flex justify-between items-center">
-                      <h3 className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Pending Verifications</h3>
-                      <button onClick={() => setActiveTab('users')} className="text-[9px] font-bold text-blue-500 uppercase tracking-widest hover:text-blue-400 transition-colors">View All Directory</button>
+                  <div className="bg-[var(--bg-secondary)] border border-[var(--bg-tertiary)] rounded-3xl overflow-hidden mt-8 shadow-sm">
+                    <div className="px-8 py-6 border-b border-[var(--bg-tertiary)] flex justify-between items-center">
+                      <h3 className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-widest">Pending Verifications</h3>
+                      <button onClick={() => setActiveTab('users')} className="text-[9px] font-bold text-[var(--accent-secondary)] uppercase tracking-widest hover:text-[var(--accent-primary)] transition-colors">View All Directory</button>
                     </div>
                     <div className="overflow-x-auto">
                       <table className="min-w-full text-xs">
@@ -405,31 +405,31 @@ function AdminDashboard() {
                   </div>
                 ) : (
                   <table className="min-w-full text-xs">
-                    <thead className="bg-white/[0.02]">
+                    <thead className="bg-[var(--bg-tertiary)]/50">
                       <tr>
-                        <th className="px-8 py-6 text-left text-[10px] font-bold text-gray-500 uppercase tracking-widest">Principal Identity</th>
-                        <th className="px-8 py-6 text-left text-[10px] font-bold text-gray-500 uppercase tracking-widest">Designation</th>
-                        <th className="px-8 py-6 text-left text-[10px] font-bold text-gray-500 uppercase tracking-widest">Contact</th>
-                        <th className="px-8 py-6 text-left text-[10px] font-bold text-gray-500 uppercase tracking-widest">Status</th>
-                        <th className="px-8 py-6 text-right text-[10px] font-bold text-gray-500 uppercase tracking-widest">Actions</th>
+                        <th className="px-8 py-6 text-left text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-widest">Principal Identity</th>
+                        <th className="px-8 py-6 text-left text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-widest">Designation</th>
+                        <th className="px-8 py-6 text-left text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-widest">Contact</th>
+                        <th className="px-8 py-6 text-left text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-widest">Status</th>
+                        <th className="px-8 py-6 text-right text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-widest">Actions</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-white/5">
+                    <tbody className="divide-y divide-[var(--bg-tertiary)]">
                       {users.map((user) => (
-                        <tr key={user._id} className="hover:bg-white/[0.01] transition-all">
+                        <tr key={user._id} className="hover:bg-[var(--bg-tertiary)]/20 transition-all">
                           <td className="px-8 py-6">
-                            <div className="font-bold text-white uppercase italic">{user.profile?.name || 'Undefined'}</div>
-                            <div className="text-gray-600 text-[10px] font-bold uppercase tracking-tight mt-1">{user.profile?.location || 'Unspecified'}</div>
+                            <div className="font-bold text-[var(--text-primary)] uppercase italic">{user.profile?.name || 'Undefined'}</div>
+                            <div className="text-[var(--text-secondary)] text-[10px] font-bold uppercase tracking-tight mt-1">{user.profile?.location || 'Unspecified'}</div>
                           </td>
                           <td className="px-8 py-6">
-                            <span className={`px-4 py-1.5 text-[9px] font-bold uppercase tracking-widest rounded-lg border ${user.role === 'industry' ? 'bg-blue-600/10 text-blue-500 border-blue-500/20' : user.role === 'university' ? 'bg-purple-600/10 text-purple-500 border-purple-500/20' : 'bg-white/5 text-gray-400 border-white/5'}`}>
+                            <span className={`px-4 py-1.5 text-[9px] font-bold uppercase tracking-widest rounded-lg border ${user.role === 'industry' ? 'bg-[var(--accent-secondary)]/10 text-[var(--accent-secondary)] border-[var(--accent-secondary)]/20' : user.role === 'university' ? 'bg-purple-600/10 text-purple-600 border-purple-600/20' : 'bg-gray-100 text-gray-400 border-gray-200'}`}>
                               {user.role}
                             </span>
                           </td>
-                          <td className="px-8 py-6 text-gray-500 italic font-medium">{user.email}</td>
+                          <td className="px-8 py-6 text-[var(--text-secondary)] italic font-medium">{user.email}</td>
                           <td className="px-8 py-6">
-                            <span className={`flex items-center space-x-2 text-[9px] font-bold uppercase tracking-widest ${user.isVerified ? 'text-green-500' : 'text-yellow-500'}`}>
-                              <div className={`w-1.5 h-1.5 rounded-full ${user.isVerified ? 'bg-green-500' : 'bg-yellow-500'}`}></div>
+                            <span className={`flex items-center space-x-2 text-[9px] font-bold uppercase tracking-widest ${user.isVerified ? 'text-green-600' : 'text-yellow-600'}`}>
+                              <div className={`w-1.5 h-1.5 rounded-full ${user.isVerified ? 'bg-green-600' : 'bg-yellow-600'}`}></div>
                               <span>{user.isVerified ? 'Authorized' : 'Pending'}</span>
                             </span>
                           </td>
@@ -438,13 +438,13 @@ function AdminDashboard() {
                               <>
                                 <button
                                   onClick={() => handleVerifyUser(user._id)}
-                                  className={`px-4 py-2 rounded-lg text-[9px] font-bold uppercase tracking-widest transition-all ${user.isVerified ? 'bg-white/5 text-gray-500 hover:text-white' : 'bg-blue-600 text-white hover:bg-blue-700 shadow-lg'}`}
+                                  className={`px-4 py-2 rounded-lg text-[9px] font-bold uppercase tracking-widest transition-all ${user.isVerified ? 'bg-[var(--bg-tertiary)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]' : 'bg-[var(--accent-secondary)] text-white hover:bg-[var(--accent-primary)] shadow-lg'}`}
                                 >
                                   {user.isVerified ? 'Revoke' : 'Authorize'}
                                 </button>
                                 <button
                                   onClick={() => handleDeleteUser(user._id)}
-                                  className="px-4 py-2 bg-red-600/10 text-red-500 rounded-lg hover:bg-red-600 hover:text-white transition-all text-[9px] font-bold uppercase tracking-widest"
+                                  className="px-4 py-2 bg-red-600/10 text-red-600 rounded-lg hover:bg-red-600 hover:text-white transition-all text-[9px] font-bold uppercase tracking-widest"
                                 >
                                   Delete
                                 </button>
@@ -462,13 +462,13 @@ function AdminDashboard() {
 
           {/* Content Moderation Tab */}
           {activeTab === 'content' && (
-            <div className="bg-neutral-900 border border-white/5 rounded-2xl shadow-2xl p-8 animate-in fade-in duration-500">
+            <div className="bg-[var(--bg-secondary)] border border-[var(--bg-tertiary)] rounded-2xl shadow-2xl p-8 animate-in fade-in duration-500">
               <div className="flex gap-3 mb-10 overflow-x-auto pb-4 no-scrollbar">
                 {contentTypes.map((type) => (
                   <button
                     key={type.id}
                     onClick={() => setSelectedContentType(type.id)}
-                    className={`px-6 py-2.5 rounded-xl text-[10px] font-bold uppercase tracking-widest whitespace-nowrap transition-all ${selectedContentType === type.id ? 'bg-blue-600 text-white shadow-lg' : 'bg-white/5 text-gray-500 hover:text-white'}`}
+                    className={`px-6 py-2.5 rounded-xl text-[10px] font-bold uppercase tracking-widest whitespace-nowrap transition-all ${selectedContentType === type.id ? 'bg-[var(--accent-secondary)] text-white shadow-lg' : 'bg-[var(--bg-tertiary)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}
                   >
                     {type.label}
                   </button>
@@ -477,48 +477,48 @@ function AdminDashboard() {
 
               {loading && content.length === 0 ? (
                 <div className="p-20 text-center flex flex-col items-center">
-                  <div className="w-10 h-1 bg-white/5 rounded-full overflow-hidden mb-6">
-                    <div className="h-full bg-blue-600 animate-loading-bar"></div>
+                  <div className="w-10 h-1 bg-[var(--bg-tertiary)] rounded-full overflow-hidden mb-6">
+                    <div className="h-full bg-[var(--accent-secondary)] animate-loading-bar"></div>
                   </div>
-                  <p className="text-gray-600 font-bold text-[10px] uppercase tracking-widest animate-pulse">Syncing Records...</p>
+                  <p className="text-[var(--text-secondary)] font-bold text-[10px] uppercase tracking-widest animate-pulse">Syncing Records...</p>
                 </div>
               ) : content.length === 0 ? (
-                <div className="p-20 text-center border border-dashed border-white/5 rounded-2xl bg-black/10">
-                  <p className="text-gray-600 font-bold text-[10px] uppercase tracking-widest">No records available</p>
+                <div className="p-20 text-center border border-dashed border-[var(--bg-tertiary)] rounded-2xl bg-[var(--bg-primary)]/50">
+                  <p className="text-[var(--text-secondary)] font-bold text-[10px] uppercase tracking-widest">No records available</p>
                 </div>
               ) : (
-                <div className="overflow-hidden rounded-xl border border-white/5 bg-black/20 shadow-xl">
+                <div className="overflow-hidden rounded-xl border border-[var(--bg-tertiary)] bg-[var(--bg-primary)] shadow-xl">
                   <table className="min-w-full text-xs">
-                    <thead className="bg-white/[0.02]">
+                    <thead className="bg-[var(--bg-tertiary)]/50">
                       <tr>
-                        <th className="px-8 py-6 text-left text-[10px] font-bold text-gray-500 uppercase tracking-widest">Record Details</th>
-                        <th className="px-8 py-6 text-left text-[10px] font-bold text-gray-500 uppercase tracking-widest">Originator</th>
-                        <th className="px-8 py-6 text-left text-[10px] font-bold text-gray-500 uppercase tracking-widest">Date Logged</th>
-                        <th className="px-8 py-6 text-right text-[10px] font-bold text-gray-500 uppercase tracking-widest">Actions</th>
+                        <th className="px-8 py-6 text-left text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-widest">Record Details</th>
+                        <th className="px-8 py-6 text-left text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-widest">Originator</th>
+                        <th className="px-8 py-6 text-left text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-widest">Date Logged</th>
+                        <th className="px-8 py-6 text-right text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-widest">Actions</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-white/5">
+                    <tbody className="divide-y divide-[var(--bg-tertiary)]">
                       {content.map((item) => (
-                        <tr key={item._id} className="hover:bg-white/[0.01] transition-all">
+                        <tr key={item._id} className="hover:bg-[var(--bg-tertiary)]/20 transition-all">
                           <td className="px-8 py-6">
-                            <div className="font-bold text-white uppercase italic">{item.title || item.name}</div>
-                            <div className="text-[10px] text-gray-600 font-bold uppercase tracking-tight mt-1 line-clamp-1 italic">{item.description || item.abstract || item.purpose}</div>
+                            <div className="font-bold text-[var(--text-primary)] uppercase italic">{item.title || item.name}</div>
+                            <div className="text-[10px] text-[var(--text-secondary)] font-bold uppercase tracking-tight mt-1 line-clamp-1 italic">{item.description || item.abstract || item.purpose}</div>
                           </td>
                           <td className="px-8 py-6">
                             <div className="flex items-center space-x-3">
-                              <div className="w-6 h-6 bg-blue-600/10 text-blue-500 rounded-md flex items-center justify-center text-[9px] font-black border border-blue-500/20 uppercase italic">
+                              <div className="w-6 h-6 bg-[var(--accent-secondary)]/10 text-[var(--accent-secondary)] rounded-md flex items-center justify-center text-[9px] font-black border border-[var(--accent-secondary)]/20 uppercase italic">
                                 {(item.createdBy?.profile?.name || 'U')[0]}
                               </div>
-                              <span className="text-[10px] font-bold text-gray-500 uppercase tracking-tight">{item.createdBy?.profile?.name || 'Unknown'}</span>
+                              <span className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-tight">{item.createdBy?.profile?.name || 'Unknown'}</span>
                             </div>
                           </td>
-                          <td className="px-8 py-6 text-[10px] font-bold text-gray-600 uppercase tracking-widest">
+                          <td className="px-8 py-6 text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-widest">
                             {new Date(item.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
                           </td>
                           <td className="px-8 py-6 text-right">
                             <button
                               onClick={() => handleDeleteContent(item._id)}
-                              className="px-4 py-2 bg-red-600/10 text-red-500 rounded-lg hover:bg-red-600 hover:text-white transition-all text-[9px] font-bold uppercase tracking-widest"
+                              className="px-4 py-2 bg-red-600/10 text-red-600 rounded-lg hover:bg-red-600 hover:text-white transition-all text-[9px] font-bold uppercase tracking-widest"
                             >
                               Delete
                             </button>
@@ -534,14 +534,14 @@ function AdminDashboard() {
 
           {/* Inquiries Tab */}
           {activeTab === 'inquiries' && (
-            <div className="bg-neutral-900 border border-white/5 rounded-2xl shadow-2xl overflow-hidden animate-in fade-in duration-500">
+            <div className="bg-[var(--bg-secondary)] border border-[var(--bg-tertiary)] rounded-2xl shadow-2xl overflow-hidden animate-in fade-in duration-500">
               <div className="overflow-x-auto">
                 {loading && inquiries.length === 0 ? (
                   <div className="p-20 text-center flex flex-col items-center">
-                    <div className="w-10 h-1 bg-white/5 rounded-full overflow-hidden mb-6">
-                      <div className="h-full bg-blue-600 animate-loading-bar"></div>
+                    <div className="w-10 h-1 bg-[var(--bg-tertiary)] rounded-full overflow-hidden mb-6">
+                      <div className="h-full bg-[var(--accent-secondary)] animate-loading-bar"></div>
                     </div>
-                    <p className="text-gray-600 font-bold text-[10px] uppercase tracking-widest animate-pulse">Retrieving Messages...</p>
+                    <p className="text-[var(--text-secondary)] font-bold text-[10px] uppercase tracking-widest animate-pulse">Retrieving Messages...</p>
                   </div>
                 ) : inquiries.length === 0 ? (
                   <div className="p-20 text-center">
@@ -549,33 +549,33 @@ function AdminDashboard() {
                   </div>
                 ) : (
                   <table className="min-w-full text-xs">
-                    <thead className="bg-white/[0.02]">
+                    <thead className="bg-[var(--bg-tertiary)]/50">
                       <tr>
-                        <th className="px-8 py-6 text-left text-[10px] font-bold text-gray-500 uppercase tracking-widest">Inquirer</th>
-                        <th className="px-8 py-6 text-left text-[10px] font-bold text-gray-500 uppercase tracking-widest">Message</th>
-                        <th className="px-8 py-6 text-left text-[10px] font-bold text-gray-500 uppercase tracking-widest">Sector</th>
-                        <th className="px-8 py-6 text-right text-[10px] font-bold text-gray-500 uppercase tracking-widest">Actions</th>
+                        <th className="px-8 py-6 text-left text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-widest">Inquirer</th>
+                        <th className="px-8 py-6 text-left text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-widest">Message</th>
+                        <th className="px-8 py-6 text-left text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-widest">Sector</th>
+                        <th className="px-8 py-6 text-right text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-widest">Actions</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-white/5">
+                    <tbody className="divide-y divide-[var(--bg-tertiary)]">
                       {inquiries.map((inq) => (
-                        <tr key={inq._id} className="hover:bg-white/[0.01] transition-all">
+                        <tr key={inq._id} className="hover:bg-[var(--bg-tertiary)]/20 transition-all">
                           <td className="px-8 py-6">
-                            <div className="font-bold text-white uppercase italic">{inq.name}</div>
-                            <div className="text-gray-600 text-[10px] font-bold uppercase mt-1">{inq.email}</div>
+                            <div className="font-bold text-[var(--text-primary)] uppercase italic">{inq.name}</div>
+                            <div className="text-[var(--text-secondary)] text-[10px] font-bold uppercase mt-1">{inq.email}</div>
                           </td>
                           <td className="px-8 py-6 max-w-md">
-                            <p className="text-gray-400 italic leading-relaxed">{inq.message}</p>
+                            <p className="text-[var(--text-secondary)] italic leading-relaxed">{inq.message}</p>
                           </td>
                           <td className="px-8 py-6">
-                            <span className="px-3 py-1 bg-blue-600/10 text-blue-500 rounded-lg text-[9px] font-bold uppercase tracking-widest border border-blue-500/20">
+                            <span className="px-3 py-1 bg-[var(--accent-secondary)]/10 text-[var(--accent-secondary)] rounded-lg text-[9px] font-bold uppercase tracking-widest border border-[var(--accent-secondary)]/20">
                               {inq.sector}
                             </span>
                           </td>
                           <td className="px-8 py-6 text-right">
                             <button
                               onClick={() => handleDeleteInquiry(inq._id)}
-                              className="px-4 py-2 bg-red-600/10 text-red-500 rounded-lg hover:bg-red-600 hover:text-white transition-all text-[9px] font-bold uppercase tracking-widest"
+                              className="px-4 py-2 bg-red-600/10 text-red-600 rounded-lg hover:bg-red-600 hover:text-white transition-all text-[9px] font-bold uppercase tracking-widest"
                             >
                               Remove
                             </button>

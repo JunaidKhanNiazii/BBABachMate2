@@ -31,11 +31,11 @@ function Login() {
   return (
     <div className="max-w-md mx-6 md:mx-auto pt-32 pb-24">
       <div className="text-center mb-10">
-        <h2 className="text-4xl font-black text-white mb-3 tracking-tight uppercase">Account <span className="text-blue-600">Login</span></h2>
-        <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest italic">AICON Secure Portal</p>
+        <h2 className="text-4xl font-black text-[var(--text-primary)] mb-3 tracking-tight uppercase">Account <span className="text-[var(--accent-secondary)]">Login</span></h2>
+        <p className="text-[10px] text-[var(--text-secondary)] font-bold uppercase tracking-widest italic">AICON Secure Portal</p>
       </div>
 
-      <form onSubmit={handleSubmit} className="bg-neutral-900/50 p-8 md:p-10 rounded-2xl border border-white/5 shadow-2xl backdrop-blur-sm">
+      <form onSubmit={handleSubmit} className="bg-[var(--bg-primary)] p-8 md:p-10 rounded-2xl border border-[var(--bg-tertiary)] shadow-2xl backdrop-blur-sm">
         {error && (
           <div className="bg-red-500/10 border border-red-500/20 text-red-500 p-5 rounded-2xl mb-8 text-[10px] font-black uppercase tracking-widest flex items-center space-x-3">
             <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -46,32 +46,32 @@ function Login() {
         )}
 
         <div className="mb-8">
-          <label className="block text-gray-600 text-[10px] font-black uppercase tracking-[0.2em] mb-3 ml-1">Identity Endpoint</label>
+          <label className="block text-[var(--text-secondary)] text-[10px] font-black uppercase tracking-[0.2em] mb-3 ml-1">Identity Endpoint</label>
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full px-6 py-4 bg-black border border-white/5 rounded-2xl text-white focus:border-blue-500 focus:outline-none transition-all placeholder:text-gray-800 font-bold text-sm"
+            className="w-full px-6 py-4 bg-[var(--bg-secondary)] border border-[var(--bg-tertiary)] rounded-2xl text-[var(--text-primary)] focus:border-[var(--accent-secondary)] focus:outline-none transition-all placeholder:text-[var(--text-secondary)]/50 font-bold text-sm"
             placeholder="name@organization.com"
             required
           />
         </div>
 
         <div className="mb-12">
-          <label className="block text-gray-600 text-[10px] font-black uppercase tracking-[0.2em] mb-3 ml-1">Access Protocol</label>
+          <label className="block text-[var(--text-secondary)] text-[10px] font-black uppercase tracking-[0.2em] mb-3 ml-1">Access Protocol</label>
           <div className="relative">
             <input
               type={showPassword ? "text" : "password"}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-6 py-4 bg-black border border-white/5 rounded-2xl text-white focus:border-blue-500 focus:outline-none transition-all pr-14 placeholder:text-gray-800 font-bold text-sm"
+              className="w-full px-6 py-4 bg-[var(--bg-secondary)] border border-[var(--bg-tertiary)] rounded-2xl text-[var(--text-primary)] focus:border-[var(--accent-secondary)] focus:outline-none transition-all pr-14 placeholder:text-[var(--text-secondary)]/50 font-bold text-sm"
               placeholder="••••••••"
               required
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-4 top-1/2 -translate-y-1/2 p-2 text-gray-700 hover:text-white transition-colors focus:outline-none"
+              className="absolute right-4 top-1/2 -translate-y-1/2 p-2 text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors focus:outline-none"
             >
               {showPassword ? (
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -96,9 +96,9 @@ function Login() {
         </button>
       </form>
 
-      <p className="text-center mt-10 text-gray-500 font-bold text-[10px] uppercase tracking-widest leading-loose">
+      <p className="text-center mt-10 text-[var(--text-secondary)] font-bold text-[10px] uppercase tracking-widest leading-loose">
         New to AICON?{' '}
-        <a href="/register" className="text-white hover:text-blue-500 transition-colors ml-1 border-b border-white/10">
+        <a href="/register" className="text-[var(--text-primary)] hover:text-[var(--accent-secondary)] transition-colors ml-1 border-b border-[var(--text-primary)]/10">
           Create Account
         </a>
       </p>

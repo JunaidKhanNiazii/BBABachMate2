@@ -39,12 +39,12 @@ function PublicListing({ title, endpoint }) {
     });
 
     return (
-        <div className="min-h-screen bg-black py-24 px-6 md:px-8">
+        <div className="min-h-screen bg-[var(--bg-primary)] py-24 px-6 md:px-8">
             <div className="max-w-7xl mx-auto">
                 <div className="flex flex-col items-center text-center mb-20 animate-in fade-in slide-in-from-top-4 duration-700">
-                    <div className="w-20 h-1 bg-blue-600 rounded-full mb-8"></div>
-                    <h1 className="text-5xl md:text-7xl font-black text-white mb-6 tracking-tighter uppercase">{title} <span className="text-blue-600">HUNT</span></h1>
-                    <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest italic leading-relaxed">Browsing Active Professional Opportunities in {title}</p>
+                    <div className="w-20 h-1 bg-[var(--accent-secondary)] rounded-full mb-8"></div>
+                    <h1 className="text-5xl md:text-7xl font-black text-[var(--text-primary)] mb-6 tracking-tighter uppercase">{title} <span className="text-[var(--accent-secondary)]">HUNT</span></h1>
+                    <p className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-widest italic leading-relaxed">Browsing Active Professional Opportunities in {title}</p>
                 </div>
 
                 <div className="mb-16 max-w-3xl mx-auto">
@@ -54,21 +54,21 @@ function PublicListing({ title, endpoint }) {
                             placeholder={`Filter ${type} records...`}
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="w-full bg-neutral-900 px-8 py-5 rounded-2xl border border-white/5 focus:border-blue-600/50 focus:outline-none shadow-2xl text-white font-bold placeholder:text-gray-700 transition-all uppercase text-xs tracking-widest"
+                            className="w-full bg-[var(--bg-secondary)] px-8 py-5 rounded-2xl border border-[var(--bg-tertiary)] focus:border-[var(--accent-secondary)]/50 focus:outline-none shadow-sm text-[var(--text-primary)] font-bold placeholder:text-[var(--text-secondary)]/30 transition-all uppercase text-xs tracking-widest"
                         />
                     </div>
                 </div>
 
                 {loading && (
                     <div className="text-center py-40">
-                        <div className="inline-block animate-spin rounded-xl h-12 w-12 border-4 border-blue-600/20 border-t-blue-600 shadow-2xl"></div>
-                        <p className="mt-6 text-[10px] font-black uppercase tracking-[0.4em] text-gray-600 animate-pulse">Syncing Database...</p>
+                        <div className="inline-block animate-spin rounded-xl h-12 w-12 border-4 border-[var(--accent-secondary)]/20 border-t-[var(--accent-secondary)] shadow-2xl"></div>
+                        <p className="mt-6 text-[10px] font-black uppercase tracking-[0.4em] text-[var(--text-secondary)] animate-pulse">Syncing Database...</p>
                     </div>
                 )}
 
                 {!loading && filteredItems.length === 0 && (
-                    <div className="text-center py-32 bg-neutral-900 border border-white/5 rounded-[3rem] border-dashed">
-                        <p className="text-xs font-bold uppercase tracking-widest text-gray-600">
+                    <div className="text-center py-32 bg-[var(--bg-secondary)] border border-[var(--bg-tertiary)] rounded-[3rem] border-dashed">
+                        <p className="text-xs font-bold uppercase tracking-widest text-[var(--text-secondary)]">
                             {searchTerm ? `No results found for "${searchTerm.toUpperCase()}"` : `The ${type.toUpperCase()} registry is currently empty`}
                         </p>
                     </div>
@@ -96,8 +96,8 @@ function SpeakerCard({ speaker }) {
         : null;
 
     return (
-        <div className="group bg-neutral-900 rounded-[2.5rem] border border-white/5 overflow-hidden hover:border-blue-600/20 transition-all duration-500 shadow-2xl hover:-translate-y-2">
-            <div className="h-80 bg-neutral-800 relative overflow-hidden">
+        <div className="group bg-[var(--bg-secondary)] rounded-[2.5rem] border border-[var(--bg-tertiary)] overflow-hidden hover:border-[var(--accent-secondary)]/20 transition-all duration-500 shadow-sm hover:shadow-xl hover:-translate-y-2">
+            <div className="h-80 bg-[var(--bg-tertiary)] relative overflow-hidden">
                 {imageUrl ? (
                     <img
                         src={imageUrl}
@@ -105,44 +105,44 @@ function SpeakerCard({ speaker }) {
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                     />
                 ) : (
-                    <div className="absolute inset-0 flex items-center justify-center bg-neutral-800">
-                        <div className="text-gray-700 text-8xl font-black opacity-30">
+                    <div className="absolute inset-0 flex items-center justify-center bg-[var(--bg-tertiary)]">
+                        <div className="text-[var(--text-secondary)]/30 text-8xl font-black">
                             {speaker.name.charAt(0).toUpperCase()}
                         </div>
                     </div>
                 )}
-                <div className="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-neutral-900 to-transparent">
-                    <p className="text-blue-500 font-bold uppercase tracking-widest text-[9px] mb-2">{speaker.designation || "Expert Specialist"}</p>
-                    <h3 className="text-3xl font-black text-white tracking-tighter uppercase">{speaker.name}</h3>
+                <div className="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-[var(--bg-secondary)] to-transparent">
+                    <p className="text-[var(--accent-secondary)] font-bold uppercase tracking-widest text-[9px] mb-2">{speaker.designation || "Expert Specialist"}</p>
+                    <h3 className="text-3xl font-black text-[var(--text-primary)] tracking-tighter uppercase">{speaker.name}</h3>
                 </div>
             </div>
 
             <div className="p-10">
                 <div className="flex flex-wrap gap-2 mb-8">
                     {speaker.roleType?.split(',').map(role => (
-                        <span key={role} className="px-3 py-1 bg-white/5 text-gray-400 rounded-full text-[8px] font-bold uppercase tracking-widest border border-white/5">{role.trim()}</span>
+                        <span key={role} className="px-3 py-1 bg-[var(--bg-tertiary)] text-[var(--text-secondary)] rounded-full text-[8px] font-bold uppercase tracking-widest border border-[var(--bg-tertiary)]">{role.trim()}</span>
                     ))}
                 </div>
 
-                <p className="text-gray-400 font-medium text-sm mb-10 leading-relaxed italic line-clamp-3">
+                <p className="text-[var(--text-secondary)] font-medium text-sm mb-10 leading-relaxed italic line-clamp-3">
                     {speaker.bio || speaker.topic}
                 </p>
 
-                <div className="grid grid-cols-2 gap-6 mb-10 pb-10 border-b border-white/5">
+                <div className="grid grid-cols-2 gap-6 mb-10 pb-10 border-b border-[var(--bg-tertiary)]">
                     <div>
-                        <p className="text-[8px] uppercase font-black text-gray-600 tracking-widest mb-1">Experience</p>
-                        <p className="text-xs font-bold text-white uppercase">{speaker.experience || "N/A"}</p>
+                        <p className="text-[8px] uppercase font-black text-[var(--text-secondary)] tracking-widest mb-1">Experience</p>
+                        <p className="text-xs font-bold text-[var(--text-primary)] uppercase">{speaker.experience || "N/A"}</p>
                     </div>
                     <div>
-                        <p className="text-[8px] uppercase font-black text-gray-600 tracking-widest mb-1">Organization</p>
-                        <p className="text-xs font-bold text-white uppercase">{speaker.organization || "Independent"}</p>
+                        <p className="text-[8px] uppercase font-black text-[var(--text-secondary)] tracking-widest mb-1">Organization</p>
+                        <p className="text-xs font-bold text-[var(--text-primary)] uppercase">{speaker.organization || "Independent"}</p>
                     </div>
                 </div>
 
                 {speaker.createdBy && (
                     <div className="flex items-center justify-between">
-                        <span className="text-[8px] font-bold text-gray-700 uppercase tracking-widest italic">Registered By</span>
-                        <span className="text-[10px] font-black text-blue-500 uppercase tracking-tighter border-b border-blue-500/20">{speaker.createdBy.profile?.name}</span>
+                        <span className="text-[8px] font-bold text-[var(--text-secondary)]/50 uppercase tracking-widest italic">Registered By</span>
+                        <span className="text-[10px] font-black text-[var(--accent-secondary)] uppercase tracking-tighter border-b border-[var(--accent-secondary)]/20">{speaker.createdBy.profile?.name}</span>
                     </div>
                 )}
             </div>
@@ -156,12 +156,12 @@ function ItemCard({ item, type }) {
         : null;
 
     return (
-        <div className="bg-neutral-900 rounded-[2rem] border border-white/5 p-10 hover:bg-neutral-800/80 transition-all duration-500 group shadow-2xl relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-blue-600/5 blur-[80px] rounded-full"></div>
+        <div className="bg-[var(--bg-secondary)] rounded-[2rem] border border-[var(--bg-tertiary)] p-10 hover:bg-[var(--bg-tertiary)]/20 transition-all duration-500 group shadow-sm hover:shadow-xl relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-[var(--accent-secondary)]/5 blur-[80px] rounded-full"></div>
 
             <div className="flex flex-col md:flex-row gap-12 relative z-10">
                 {imageUrl && (
-                    <div className="w-full md:w-56 h-56 flex-shrink-0 rounded-[2rem] overflow-hidden border border-white/5 bg-neutral-800 group-hover:border-blue-500/30 transition-all">
+                    <div className="w-full md:w-56 h-56 flex-shrink-0 rounded-[2rem] overflow-hidden border border-[var(--bg-tertiary)] bg-[var(--bg-secondary)] group-hover:border-[var(--accent-secondary)]/30 transition-all">
                         <img
                             src={imageUrl}
                             alt={item.title || item.name}
@@ -173,15 +173,15 @@ function ItemCard({ item, type }) {
                 <div className="flex-1">
                     <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
                         <div className="space-y-1">
-                            <p className="text-blue-500 font-bold uppercase tracking-[0.2em] text-[10px]">{item.domain || item.category || type.slice(0, -1)}</p>
-                            <h3 className="text-3xl md:text-4xl font-black text-white tracking-tighter uppercase">{item.title || item.name}</h3>
+                            <p className="text-[var(--accent-secondary)] font-bold uppercase tracking-[0.2em] text-[10px]">{item.domain || item.category || type.slice(0, -1)}</p>
+                            <h3 className="text-3xl md:text-4xl font-black text-[var(--text-primary)] tracking-tighter uppercase">{item.title || item.name}</h3>
                         </div>
-                        <div className="px-5 py-2 bg-blue-600 text-white rounded-xl text-[10px] font-black uppercase tracking-widest shadow-xl group-hover:bg-blue-700 transition-all cursor-pointer">
+                        <div className="px-5 py-2 bg-[var(--accent-primary)] text-white rounded-xl text-[10px] font-black uppercase tracking-widest shadow-lg hover:bg-[var(--accent-secondary)] transition-all cursor-pointer">
                             View Details
                         </div>
                     </div>
 
-                    <p className="text-gray-500 font-medium text-sm mb-10 line-clamp-2 max-w-4xl leading-loose italic">
+                    <p className="text-[var(--text-secondary)] font-medium text-sm mb-10 line-clamp-2 max-w-4xl leading-loose italic">
                         {item.description || item.abstract || item.problemStatement}
                     </p>
 
@@ -195,13 +195,13 @@ function ItemCard({ item, type }) {
                     </div>
 
                     {item.createdBy && (
-                        <div className="mt-12 pt-8 border-t border-white/5 flex items-center gap-4">
-                            <div className="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center border border-white/10 text-[10px] font-black text-gray-500 uppercase tracking-tighter italic">
+                        <div className="mt-12 pt-8 border-t border-[var(--bg-tertiary)] flex items-center gap-4">
+                            <div className="w-10 h-10 bg-[var(--bg-tertiary)] rounded-full flex items-center justify-center border border-[var(--bg-tertiary)] text-[10px] font-black text-[var(--text-secondary)] uppercase tracking-tighter italic">
                                 {item.createdBy.profile?.name?.charAt(0)}
                             </div>
                             <div className="space-y-1">
-                                <p className="text-[9px] font-bold text-gray-700 uppercase tracking-widest">Origin Entity</p>
-                                <p className="text-sm font-black text-white uppercase tracking-tighter italic">{item.createdBy.profile?.name}</p>
+                                <p className="text-[9px] font-bold text-[var(--text-secondary)]/50 uppercase tracking-widest">Origin Entity</p>
+                                <p className="text-sm font-black text-[var(--text-primary)] uppercase tracking-tighter italic">{item.createdBy.profile?.name}</p>
                             </div>
                         </div>
                     )}
@@ -213,11 +213,11 @@ function ItemCard({ item, type }) {
 
 function Attribute({ icon, label, variant = 'gray' }) {
     const classes = variant === 'blue'
-        ? "bg-blue-600/10 text-blue-500 border-blue-500/20"
-        : "bg-white/5 text-gray-400 border-white/5";
+        ? "bg-[var(--accent-secondary)]/10 text-[var(--accent-secondary)] border-[var(--accent-secondary)]/20"
+        : "bg-[var(--bg-tertiary)] text-[var(--text-secondary)] border-[var(--bg-tertiary)]";
 
     return (
-        <div className={`flex items-center space-x-2 px-5 py-2.5 border rounded-xl transition-all hover:border-blue-500/30 ${classes}`}>
+        <div className={`flex items-center space-x-2 px-5 py-2.5 border rounded-xl transition-all hover:border-[var(--accent-secondary)]/30 ${classes}`}>
             {icon && <span className="text-sm mr-1">{icon}</span>}
             <span className="text-[10px] font-bold uppercase tracking-widest">{label}</span>
         </div>

@@ -56,11 +56,11 @@ function Register() {
   return (
     <div className="max-w-4xl mx-auto py-32 px-6">
       <div className="text-center mb-12">
-        <h2 className="text-4xl md:text-5xl font-black text-white tracking-tight mb-3 uppercase">Account <span className="text-blue-600">Registration</span></h2>
-        <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest italic">Join the AICON Professional Ecosystem</p>
+        <h2 className="text-4xl md:text-5xl font-black text-[var(--text-primary)] tracking-tight mb-3 uppercase">Account <span className="text-[var(--accent-secondary)]">Registration</span></h2>
+        <p className="text-[10px] text-[var(--text-secondary)] font-bold uppercase tracking-widest italic">Join the AICON Professional Ecosystem</p>
       </div>
 
-      <form onSubmit={handleSubmit} className="bg-neutral-900/50 p-8 md:p-12 rounded-2xl border border-white/5 shadow-2xl backdrop-blur-sm">
+      <form onSubmit={handleSubmit} className="bg-[var(--bg-primary)] p-8 md:p-12 rounded-2xl border border-[var(--bg-tertiary)] shadow-2xl backdrop-blur-sm">
         {error && (
           <div className="bg-red-500/10 border border-red-500/20 text-red-500 p-6 rounded-2xl mb-12 text-[10px] font-bold uppercase tracking-widest flex items-center space-x-4 animate-shake">
             <svg className="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -78,8 +78,8 @@ function Register() {
               type="button"
               onClick={() => setRole('industry')}
               className={`flex flex-col items-start p-6 rounded-xl border transition-all group ${role === 'industry'
-                ? 'border-blue-600 bg-blue-600/5 text-white shadow-xl'
-                : 'border-white/5 bg-black/40 text-gray-500 hover:border-white/20'
+                ? 'border-[var(--accent-primary)] bg-[var(--accent-primary)]/5 text-[var(--accent-primary)] shadow-xl'
+                : 'border-[var(--bg-tertiary)] bg-[var(--bg-secondary)] text-[var(--text-secondary)] hover:border-[var(--text-secondary)]/30'
                 }`}
             >
               <span className="font-bold text-xs uppercase tracking-widest mb-1">Industry Partner</span>
@@ -89,8 +89,8 @@ function Register() {
               type="button"
               onClick={() => setRole('university')}
               className={`flex flex-col items-start p-6 rounded-xl border transition-all group ${role === 'university'
-                ? 'border-blue-600 bg-blue-600/5 text-white shadow-xl'
-                : 'border-white/5 bg-black/40 text-gray-500 hover:border-white/20'
+                ? 'border-[var(--accent-primary)] bg-[var(--accent-primary)]/5 text-[var(--accent-primary)] shadow-xl'
+                : 'border-[var(--bg-tertiary)] bg-[var(--bg-secondary)] text-[var(--text-secondary)] hover:border-[var(--text-secondary)]/30'
                 }`}
             >
               <span className="font-bold text-xs uppercase tracking-widest mb-1">Academic Partner</span>
@@ -101,44 +101,44 @@ function Register() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
           <div className="md:col-span-2">
-            <label className="block text-gray-500 text-[10px] font-bold uppercase tracking-widest mb-3 ml-1">Organization Name</label>
+            <label className="block text-[var(--text-secondary)] text-[10px] font-bold uppercase tracking-widest mb-3 ml-1">Organization Name</label>
             <input
               type="text"
               placeholder={role === 'industry' ? "E.G. GOOGLE CLOUD" : "E.G. HARVARD UNIVERSITY"}
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full px-6 py-4 bg-black border border-white/5 rounded-xl text-white focus:border-blue-600 focus:outline-none transition-all placeholder:text-gray-800 font-bold text-[10px] tracking-widest"
+              className="w-full px-6 py-4 bg-[var(--bg-secondary)] border border-[var(--bg-tertiary)] rounded-xl text-[var(--text-primary)] focus:border-[var(--accent-primary)] focus:outline-none transition-all placeholder:text-[var(--text-secondary)]/30 font-bold text-[10px] tracking-widest"
               required
             />
           </div>
 
           <div className="md:col-span-2">
-            <label className="block text-gray-500 text-[10px] font-bold uppercase tracking-widest mb-3 ml-1">Email Address</label>
+            <label className="block text-[var(--text-secondary)] text-[10px] font-bold uppercase tracking-widest mb-3 ml-1">Email Address</label>
             <input
               type="email"
               placeholder="ADMIN@ORGANIZATION.COM"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-6 py-4 bg-black border border-white/5 rounded-xl text-white focus:border-blue-600 focus:outline-none transition-all placeholder:text-gray-800 font-bold text-[10px] tracking-widest"
+              className="w-full px-6 py-4 bg-[var(--bg-secondary)] border border-[var(--bg-tertiary)] rounded-xl text-[var(--text-primary)] focus:border-[var(--accent-primary)] focus:outline-none transition-all placeholder:text-[var(--text-secondary)]/30 font-bold text-[10px] tracking-widest"
               required
             />
           </div>
 
           <div className="relative">
-            <label className="block text-gray-500 text-[10px] font-bold uppercase tracking-widest mb-3 ml-1">Password</label>
+            <label className="block text-[var(--text-secondary)] text-[10px] font-bold uppercase tracking-widest mb-3 ml-1">Password</label>
             <div className="relative">
               <input
                 type={showPassword ? "text" : "password"}
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-6 py-4 bg-black border border-white/5 rounded-xl text-white focus:border-blue-600 focus:outline-none transition-all placeholder:text-gray-800 pr-14 font-bold"
+                className="w-full px-6 py-4 bg-[var(--bg-secondary)] border border-[var(--bg-tertiary)] rounded-xl text-[var(--text-primary)] focus:border-[var(--accent-primary)] focus:outline-none transition-all placeholder:text-[var(--text-secondary)]/30 pr-14 font-bold"
                 required
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-4 top-1/2 -translate-y-1/2 p-2 text-gray-800 hover:text-white transition-colors"
+                className="absolute right-4 top-1/2 -translate-y-1/2 p-2 text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
               >
                 {showPassword ? (
                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18" /></svg>
@@ -150,20 +150,20 @@ function Register() {
           </div>
 
           <div className="relative">
-            <label className="block text-gray-500 text-[10px] font-bold uppercase tracking-widest mb-3 ml-1">Confirm Password</label>
+            <label className="block text-[var(--text-secondary)] text-[10px] font-bold uppercase tracking-widest mb-3 ml-1">Confirm Password</label>
             <div className="relative">
               <input
                 type={showConfirmPassword ? "text" : "password"}
                 placeholder="••••••••"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className="w-full px-6 py-4 bg-black border border-white/5 rounded-xl text-white focus:border-blue-600 focus:outline-none transition-all placeholder:text-gray-800 pr-14 font-bold"
+                className="w-full px-6 py-4 bg-[var(--bg-secondary)] border border-[var(--bg-tertiary)] rounded-xl text-[var(--text-primary)] focus:border-[var(--accent-primary)] focus:outline-none transition-all placeholder:text-[var(--text-secondary)]/30 pr-14 font-bold"
                 required
               />
               <button
                 type="button"
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                className="absolute right-4 top-1/2 -translate-y-1/2 p-2 text-gray-800 hover:text-white transition-colors"
+                className="absolute right-4 top-1/2 -translate-y-1/2 p-2 text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
               >
                 {showConfirmPassword ? (
                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18" /></svg>
@@ -175,12 +175,12 @@ function Register() {
           </div>
 
           <div className="md:col-span-2">
-            <label className="block text-gray-500 text-[10px] font-bold uppercase tracking-widest mb-3 ml-1">Strategic Mission</label>
+            <label className="block text-[var(--text-secondary)] text-[10px] font-bold uppercase tracking-widest mb-3 ml-1">Strategic Mission</label>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="DESCRIBE YOUR ORGANIZATION'S MISSION..."
-              className="w-full px-6 py-4 bg-black border border-white/5 rounded-xl text-white focus:border-blue-600 focus:outline-none transition-all placeholder:text-gray-800 h-32 font-bold text-[10px] tracking-widest leading-loose"
+              className="w-full px-6 py-4 bg-[var(--bg-secondary)] border border-[var(--bg-tertiary)] rounded-xl text-[var(--text-primary)] focus:border-[var(--accent-primary)] focus:outline-none transition-all placeholder:text-[var(--text-secondary)]/30 h-32 font-bold text-[10px] tracking-widest leading-loose"
             />
           </div>
         </div>
@@ -193,9 +193,9 @@ function Register() {
           {loading ? 'Processing...' : 'Register Account'}
         </button>
 
-        <p className="text-center mt-10 text-gray-500 font-bold text-[10px] uppercase tracking-widest leading-loose">
+        <p className="text-center mt-10 text-[var(--text-secondary)] font-bold text-[10px] uppercase tracking-widest leading-loose">
           Already a member?{' '}
-          <a href="/login" className="text-white hover:text-blue-500 transition-colors ml-1 border-b border-white/10">
+          <a href="/login" className="text-[var(--text-primary)] hover:text-[var(--accent-secondary)] transition-colors ml-1 border-b border-[var(--text-primary)]/10">
             Login
           </a>
         </p>

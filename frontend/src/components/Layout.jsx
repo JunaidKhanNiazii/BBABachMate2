@@ -5,7 +5,7 @@ import Footer from './Footer';
 
 const Layout = React.memo(() => {
   return (
-    <div className="min-h-screen flex flex-col bg-black text-white">
+    <div className="min-h-screen flex flex-col bg-[var(--bg-primary)] text-[var(--text-primary)]">
       <Header />
 
       <main className="flex-grow">

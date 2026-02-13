@@ -52,16 +52,16 @@ const Header = React.memo(() => {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled || isMobileMenuOpen
-        ? 'bg-black border-b border-white/10 py-3 shadow-[0_4px_30px_rgba(0,0,0,0.8)]'
-        : 'bg-black/80 backdrop-blur-md py-4'
+        ? 'bg-[#1e3a8a] border-b border-white/10 py-3 shadow-[0_4px_30px_rgba(30,58,138,0.5)]'
+        : 'bg-[#1e3a8a]/90 backdrop-blur-md py-4'
         }`}
     >
       <div className="container mx-auto px-6 md:px-8">
         <div className="flex justify-between items-center">
           {/* Logo */}
           <Link to="/" className="group flex items-center space-x-2">
-            <div className="w-10 h-10 bg-white text-black rounded-xl flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform duration-300">
-              <span className="font-black text-xl">A</span>
+            <div className="w-10 h-10 bg-white text-black rounded-xl flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform duration-300 font-black text-xl">
+              A
             </div>
             <span className="text-2xl font-black tracking-tighter text-white">
               AI<span className="text-blue-500">CON</span>
@@ -74,7 +74,7 @@ const Header = React.memo(() => {
               <Link
                 key={link.to}
                 to={link.to}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${location.pathname === link.to ? 'text-white' : 'text-gray-400 hover:text-white'
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${location.pathname === link.to ? 'text-white bg-white/10' : 'text-blue-100 hover:text-white hover:bg-white/5'
                   }`}
               >
                 {link.label}
@@ -88,7 +88,7 @@ const Header = React.memo(() => {
                 onMouseEnter={() => setActiveDropdown('industry')}
                 onMouseLeave={() => setActiveDropdown(null)}
               >
-                <button className="flex items-center space-x-1 px-4 py-2 rounded-lg text-sm font-medium text-gray-400 hover:text-white transition-colors">
+                <button className="flex items-center space-x-1 px-4 py-2 rounded-lg text-sm font-medium text-blue-100 hover:text-white transition-colors">
                   <span>Industry Hub</span>
                   <svg className={`w-4 h-4 transition-transform duration-200 ${activeDropdown === 'industry' ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -96,16 +96,16 @@ const Header = React.memo(() => {
                 </button>
 
                 <div className={`absolute left-0 mt-0 w-64 pt-4 transition-all duration-200 ${activeDropdown === 'industry' ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible translate-y-2'}`}>
-                  <div className="bg-black border border-white/10 rounded-2xl shadow-2xl p-2 overflow-hidden">
+                  <div className="bg-[#1e3a8a] border border-white/10 rounded-2xl shadow-2xl p-2 overflow-hidden">
                     <div className="p-3 mb-2 bg-blue-500/10 rounded-xl">
-                      <p className="text-[10px] uppercase tracking-widest font-black text-blue-400 mb-1">Industry Hub</p>
-                      <p className="text-xs text-gray-400">Discover professional opportunities</p>
+                      <p className="text-[10px] uppercase tracking-widest font-black text-blue-300 mb-1">Industry Hub</p>
+                      <p className="text-xs text-blue-100/70">Discover professional opportunities</p>
                     </div>
                     {industryLinks.map((link) => (
                       <Link
                         key={link.to}
                         to={link.to}
-                        className="flex items-center space-x-3 px-4 py-2.5 rounded-xl hover:bg-white/5 text-gray-300 hover:text-white transition-all group/item"
+                        className="flex items-center space-x-3 px-4 py-2.5 rounded-xl hover:bg-white/10 text-blue-100 hover:text-white transition-all group/item"
                       >
                         <span className="text-lg grayscale group-hover/item:grayscale-0 transition-all">{link.icon}</span>
                         <span className="text-sm font-medium">{link.label}</span>
@@ -123,7 +123,7 @@ const Header = React.memo(() => {
                 onMouseEnter={() => setActiveDropdown('university')}
                 onMouseLeave={() => setActiveDropdown(null)}
               >
-                <button className="flex items-center space-x-1 px-4 py-2 rounded-lg text-sm font-medium text-gray-400 hover:text-white transition-colors">
+                <button className="flex items-center space-x-1 px-4 py-2 rounded-lg text-sm font-medium text-blue-100 hover:text-white transition-colors">
                   <span>University Hub</span>
                   <svg className={`w-4 h-4 transition-transform duration-200 ${activeDropdown === 'university' ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -131,16 +131,16 @@ const Header = React.memo(() => {
                 </button>
 
                 <div className={`absolute left-0 mt-0 w-64 pt-4 transition-all duration-200 ${activeDropdown === 'university' ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible translate-y-2'}`}>
-                  <div className="bg-black border border-white/10 rounded-2xl shadow-2xl p-2 overflow-hidden">
+                  <div className="bg-[#1e3a8a] border border-white/10 rounded-2xl shadow-2xl p-2 overflow-hidden">
                     <div className="p-3 mb-2 bg-purple-500/10 rounded-xl">
-                      <p className="text-[10px] uppercase tracking-widest font-black text-purple-400 mb-1">University Hub</p>
-                      <p className="text-xs text-gray-400">Explore educational resources</p>
+                      <p className="text-[10px] uppercase tracking-widest font-black text-purple-300 mb-1">University Hub</p>
+                      <p className="text-xs text-blue-100/70">Explore educational resources</p>
                     </div>
                     {academicLinks.map((link) => (
                       <Link
                         key={link.to}
                         to={link.to}
-                        className="flex items-center space-x-3 px-4 py-2.5 rounded-xl hover:bg-white/5 text-gray-300 hover:text-white transition-all group/item"
+                        className="flex items-center space-x-3 px-4 py-2.5 rounded-xl hover:bg-white/10 text-blue-100 hover:text-white transition-all group/item"
                       >
                         <span className="text-lg grayscale group-hover/item:grayscale-0 transition-all">{link.icon}</span>
                         <span className="text-sm font-medium">{link.label}</span>
@@ -156,36 +156,36 @@ const Header = React.memo(() => {
           <div className="hidden lg:flex items-center space-x-4">
             {currentUser ? (
               <div className="flex items-center space-x-6">
-                <div className="flex items-center space-x-3 bg-white/5 px-4 py-2 rounded-xl border border-white/5">
-                  <div className="w-8 h-8 rounded-lg bg-blue-500/10 flex items-center justify-center text-blue-500 font-black text-xs">
+                <div className="flex items-center space-x-3 bg-white/10 px-4 py-2 rounded-xl border border-white/10">
+                  <div className="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center text-white font-black text-xs">
                     {userProfile?.profile?.name?.charAt(0) || currentUser.email?.charAt(0).toUpperCase()}
                   </div>
                   <div className="flex flex-col">
                     <span className="text-xs font-black text-white leading-none tracking-tight">
                       {userProfile?.profile?.name || 'User'}
                     </span>
-                    <span className="text-[9px] uppercase tracking-widest text-gray-500 font-bold mt-1">
+                    <span className="text-[9px] uppercase tracking-widest text-blue-200 font-bold mt-1">
                       {userProfile?.role}
                     </span>
                   </div>
                 </div>
 
                 <div className="relative group">
-                  <button className="flex items-center space-x-2 text-gray-400 hover:text-white transition-colors">
+                  <button className="flex items-center space-x-2 text-blue-100 hover:text-white transition-colors">
                     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                     </svg>
                   </button>
 
                   <div className="absolute right-0 mt-4 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible translate-y-2 group-hover:translate-y-0 transition-all duration-300 pt-2">
-                    <div className="bg-black border border-white/10 rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.5)] p-2">
-                      <Link to="/dashboard" className="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-white/5 text-gray-400 hover:text-white transition-all text-xs font-black uppercase tracking-widest">
-                        <span className="w-5 h-5 bg-white/5 rounded-lg flex items-center justify-center">🏠</span>
+                    <div className="bg-[#1e3a8a] border border-white/10 rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.5)] p-2">
+                      <Link to="/dashboard" className="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-white/10 text-blue-100 hover:text-white transition-all text-xs font-black uppercase tracking-widest">
+                        <span className="w-5 h-5 bg-white/10 rounded-lg flex items-center justify-center">🏠</span>
                         <span>Dashboard</span>
                       </Link>
                       <button
                         onClick={handleLogout}
-                        className="w-full flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-red-500/10 text-red-500 transition-all mt-1 text-xs font-black uppercase tracking-widest"
+                        className="w-full flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-red-500/10 text-red-300 transition-all mt-1 text-xs font-black uppercase tracking-widest"
                       >
                         <span className="w-5 h-5 bg-red-500/5 rounded-lg flex items-center justify-center">🚪</span>
                         <span>Terminal Exit</span>
@@ -198,7 +198,7 @@ const Header = React.memo(() => {
               <div className="flex items-center space-x-4">
                 <Link
                   to="/login"
-                  className="px-6 py-2.5 text-xs font-black uppercase tracking-widest text-gray-400 hover:text-white hover:bg-white/5 rounded-xl transition-all"
+                  className="px-6 py-2.5 text-xs font-black uppercase tracking-widest text-blue-100 hover:text-white hover:bg-white/10 rounded-xl transition-all"
                 >
                   Sign In
                 </Link>
@@ -231,12 +231,12 @@ const Header = React.memo(() => {
       </div>
 
       {/* Mobile Menu */}
-      <div className={`lg:hidden fixed inset-0 z-40 bg-black transition-all duration-500 ease-in-out ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+      <div className={`lg:hidden fixed inset-0 z-40 bg-[#1e3a8a] transition-all duration-500 ease-in-out ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
         <div className="flex flex-col h-full pt-24 px-6 pb-10 overflow-y-auto relative">
           {/* Close Button Inside Menu */}
           <button
             onClick={() => setIsMobileMenuOpen(false)}
-            className="absolute top-6 right-6 p-2 text-gray-400 hover:text-white transition-colors"
+            className="absolute top-6 right-6 p-2 text-blue-100 hover:text-white transition-colors"
           >
             <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -244,20 +244,20 @@ const Header = React.memo(() => {
           </button>
           {/* Mobile Profile if logged in */}
           {currentUser && (
-            <div className="flex items-center p-4 bg-white/5 rounded-2xl mb-8">
-              <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-blue-600 to-purple-600 flex items-center justify-center text-xl font-bold text-white">
+            <div className="flex items-center p-4 bg-white/10 rounded-2xl mb-8">
+              <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-blue-400 to-blue-600 flex items-center justify-center text-xl font-bold text-white">
                 {userProfile?.profile?.name?.charAt(0)}
               </div>
               <div className="ml-4">
                 <p className="text-lg font-bold text-white">{userProfile?.profile?.name}</p>
-                <p className="text-xs uppercase tracking-widest text-blue-400 font-bold">{userProfile?.role}</p>
+                <p className="text-xs uppercase tracking-widest text-blue-200 font-bold">{userProfile?.role}</p>
               </div>
             </div>
           )}
 
           <div className="space-y-6">
             <div className="space-y-4">
-              <p className="text-[10px] uppercase tracking-[0.2em] font-black text-gray-500">Navigation</p>
+              <p className="text-[10px] uppercase tracking-[0.2em] font-black text-blue-300">Navigation</p>
               {navLinks.map((link) => (
                 <Link key={link.to} to={link.to} className="block text-2xl font-black text-white">{link.label}</Link>
               ))}
@@ -269,7 +269,7 @@ const Header = React.memo(() => {
                   <p className="text-[10px] uppercase tracking-[0.2em] font-black text-blue-500">Industry Hub</p>
                   <div className="grid grid-cols-1 gap-3">
                     {industryLinks.map((link) => (
-                      <Link key={link.to} to={link.to} className="flex items-center space-x-3 text-gray-400 hover:text-white transition-colors">
+                      <Link key={link.to} to={link.to} className="flex items-center space-x-3 text-blue-100 hover:text-white transition-colors">
                         <span className="text-xl">{link.icon}</span>
                         <span className="text-lg font-bold">{link.label}</span>
                       </Link>
@@ -285,7 +285,7 @@ const Header = React.memo(() => {
                   <p className="text-[10px] uppercase tracking-[0.2em] font-black text-purple-500">University Hub</p>
                   <div className="grid grid-cols-1 gap-3">
                     {academicLinks.map((link) => (
-                      <Link key={link.to} to={link.to} className="flex items-center space-x-3 text-gray-400 hover:text-white transition-colors">
+                      <Link key={link.to} to={link.to} className="flex items-center space-x-3 text-blue-100 hover:text-white transition-colors">
                         <span className="text-xl">{link.icon}</span>
                         <span className="text-lg font-bold">{link.label}</span>
                       </Link>

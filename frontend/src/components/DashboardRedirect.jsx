@@ -6,12 +6,12 @@ function DashboardRedirect() {
   const { userProfile, loading, profileLoading } = useAuth();
 
   if (loading || profileLoading) return (
-    <div className="flex flex-col justify-center items-center min-h-screen bg-black">
+    <div className="flex flex-col justify-center items-center min-h-screen bg-[var(--bg-primary)]">
       <div className="relative w-16 h-16">
-        <div className="absolute inset-0 border-4 border-white/5 rounded-xl"></div>
-        <div className="absolute inset-0 border-4 border-t-white rounded-xl animate-spin"></div>
+        <div className="absolute inset-0 border-4 border-[var(--bg-tertiary)] rounded-xl"></div>
+        <div className="absolute inset-0 border-4 border-t-[var(--accent-secondary)] rounded-xl animate-spin"></div>
       </div>
-      <p className="mt-6 text-[9px] font-black text-gray-700 uppercase tracking-[0.4em] animate-pulse">Authenticating Identity</p>
+      <p className="mt-6 text-[9px] font-black text-[var(--text-secondary)] uppercase tracking-[0.4em] animate-pulse">Authenticating Identity</p>
     </div>
   );
 

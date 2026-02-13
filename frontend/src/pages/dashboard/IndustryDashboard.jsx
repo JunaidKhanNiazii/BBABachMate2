@@ -153,27 +153,27 @@ function IndustryDashboard() {
   // ... (existing helper functions)
 
   return (
-    <div className="min-h-screen bg-black flex font-sans selection:bg-blue-500/30">
+    <div className="min-h-screen bg-[var(--bg-primary)] flex font-sans selection:bg-blue-500/30">
       {/* Mobile Sidebar Overlay */}
       {isSidebarOpen && (
         <div
-          className="fixed inset-0 bg-black/80 z-40 md:hidden backdrop-blur-sm"
+          className="fixed inset-0 bg-black/60 z-40 md:hidden backdrop-blur-sm"
           onClick={() => setIsSidebarOpen(false)}
         />
       )}
 
       {/* Sidebar */}
-      <div className={`fixed inset-y-0 left-0 z-50 w-72 bg-neutral-900 border-r border-white/5 flex flex-col transition-transform duration-300 transform md:relative md:translate-x-0 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+      <div className={`fixed inset-y-0 left-0 z-50 w-72 bg-[#1e3a8a] border-r border-white/10 flex flex-col transition-transform duration-300 transform md:relative md:translate-x-0 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
         }`}>
-        <div className="p-8 border-b border-white/5 flex justify-between items-center">
+        <div className="p-8 border-b border-white/10 flex justify-between items-center">
           <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 bg-blue-600 text-white rounded-lg flex items-center justify-center font-black text-lg shadow-lg">A</div>
+            <div className="w-8 h-8 bg-white text-[#1e3a8a] rounded-lg flex items-center justify-center font-black text-lg shadow-lg">A</div>
             <span className="text-xl font-black tracking-tighter text-white uppercase italic">AICON</span>
           </div>
           {/* Close button for mobile */}
           <button
             onClick={() => setIsSidebarOpen(false)}
-            className="md:hidden text-gray-500 hover:text-white"
+            className="md:hidden text-white/50 hover:text-white"
           >
             ✕
           </button>
@@ -181,7 +181,7 @@ function IndustryDashboard() {
 
         <div className="px-8 py-6">
           <div className="space-y-1">
-            <p className="text-[9px] uppercase tracking-widest font-bold text-gray-500">Industry Hub</p>
+            <p className="text-[9px] uppercase tracking-widest font-bold text-blue-200/50">Industry Hub</p>
             <p className="text-xs font-bold text-white truncate uppercase tracking-tight">{userProfile?.profile?.name || 'Company Profile'}</p>
           </div>
         </div>
@@ -196,8 +196,8 @@ function IndustryDashboard() {
                 setIsSidebarOpen(false); // Close sidebar on mobile when item clicked
               }}
               className={`w-full flex items-center px-4 py-3.5 rounded-xl transition-all group ${activeTab === tab.id
-                ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/10'
-                : 'text-gray-500 hover:bg-white/5 hover:text-white'
+                ? 'bg-white text-[#1e3a8a] shadow-lg shadow-black/10'
+                : 'text-blue-100/70 hover:bg-white/10 hover:text-white'
                 }`}
             >
               <span className="text-[10px] font-bold uppercase tracking-widest leading-none">{tab.label}</span>
@@ -205,8 +205,8 @@ function IndustryDashboard() {
           ))}
         </nav>
 
-        <div className="p-6 border-t border-white/5">
-          <Link to="/" className="flex items-center space-x-2 text-[9px] font-bold uppercase tracking-widest text-gray-600 hover:text-white transition-all group">
+        <div className="p-6 border-t border-white/10">
+          <Link to="/" className="flex items-center space-x-2 text-[9px] font-bold uppercase tracking-widest text-blue-200/60 hover:text-white transition-all group">
             <span className="group-hover:-translate-x-1 transition-transform">←</span>
             <span>Exit Dashboard</span>
           </Link>
@@ -215,12 +215,12 @@ function IndustryDashboard() {
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col h-screen overflow-hidden">
-        <header className="px-6 md:px-10 py-6 md:py-8 flex justify-between items-center bg-black border-b border-white/5">
+        <header className="px-6 md:px-10 py-6 md:py-8 flex justify-between items-center bg-[var(--bg-primary)] border-b border-[var(--bg-tertiary)]">
           <div className="flex items-center gap-4">
             {/* Hamburger Button */}
             <button
               onClick={() => setIsSidebarOpen(true)}
-              className="md:hidden text-white hover:text-blue-500 transition-colors"
+              className="md:hidden text-[var(--accent-primary)] hover:text-[var(--accent-secondary)] transition-colors"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
@@ -228,17 +228,17 @@ function IndustryDashboard() {
             </button>
 
             <div>
-              <h1 className="text-xl md:text-3xl font-bold text-white tracking-tight uppercase">
+              <h1 className="text-xl md:text-3xl font-bold text-[var(--text-primary)] tracking-tight uppercase">
                 {tabs.find(t => t.id === activeTab)?.label}
               </h1>
-              <p className="text-[9px] text-gray-600 font-bold uppercase tracking-widest mt-1">
+              <p className="text-[9px] text-[var(--text-secondary)] font-bold uppercase tracking-widest mt-1">
                 {activeTab === 'home' ? 'Professional Overview' : 'Management Console'}
               </p>
             </div>
           </div>
-          <div className="px-5 py-2.5 bg-neutral-900 border border-white/5 rounded-xl">
-            <span className="text-[9px] font-bold text-blue-500 uppercase tracking-widest flex items-center gap-2">
-              <span className="w-1 h-1 bg-blue-500 rounded-full animate-pulse"></span>
+          <div className="px-5 py-2.5 bg-[var(--bg-secondary)] border border-[var(--bg-tertiary)] rounded-xl">
+            <span className="text-[9px] font-bold text-[var(--accent-secondary)] uppercase tracking-widest flex items-center gap-2">
+              <span className="w-1 h-1 bg-[var(--accent-secondary)] rounded-full animate-pulse"></span>
               Secure Session
             </span>
           </div>
@@ -256,15 +256,15 @@ function IndustryDashboard() {
           )}
 
           {activeTab === 'profile' && (
-            <div className="bg-neutral-900 border border-white/5 rounded-2xl p-10 animate-in fade-in duration-500">
-              <div className="flex justify-between items-center mb-10 pb-6 border-b border-white/5">
+            <div className="bg-[var(--bg-secondary)] border border-[var(--bg-tertiary)] rounded-2xl p-10 animate-in fade-in duration-500">
+              <div className="flex justify-between items-center mb-10 pb-6 border-b border-[var(--bg-tertiary)]">
                 <div>
-                  <h2 className="text-xl font-bold text-white uppercase tracking-tight">Industrial Identity</h2>
-                  <p className="text-[9px] text-gray-600 font-bold uppercase tracking-widest mt-1">Official Company Record</p>
+                  <h2 className="text-xl font-bold text-[var(--text-primary)] uppercase tracking-tight">Industrial Identity</h2>
+                  <p className="text-[9px] text-[var(--text-secondary)] font-bold uppercase tracking-widest mt-1">Official Company Record</p>
                 </div>
                 <button
                   onClick={() => setIsEditingProfile(!isEditingProfile)}
-                  className="px-6 py-2.5 bg-white text-black rounded-lg text-[10px] font-bold uppercase tracking-widest hover:bg-gray-200 transition-all shadow-lg"
+                  className="px-6 py-2.5 bg-[var(--accent-primary)] text-white rounded-lg text-[10px] font-bold uppercase tracking-widest hover:bg-[var(--accent-secondary)] transition-all shadow-lg"
                 >
                   {isEditingProfile ? 'Cancel Edit' : 'Edit Company Info'}
                 </button>
@@ -295,57 +295,57 @@ function IndustryDashboard() {
 
           {activeTab === 'notifications' && (
             <div className="space-y-6 animate-in fade-in duration-500">
-              <div className="bg-neutral-900 border border-white/5 rounded-2xl p-8 flex items-center justify-between group hover:border-blue-500/30 transition-all">
+              <div className="bg-[var(--bg-secondary)] border border-[var(--bg-tertiary)] rounded-2xl p-8 flex items-center justify-between group hover:border-[var(--accent-secondary)]/30 transition-all">
                 <div className="flex items-center gap-6">
-                  <div className="w-12 h-12 bg-blue-600/10 rounded-xl flex items-center justify-center text-blue-500">
+                  <div className="w-12 h-12 bg-[var(--accent-secondary)]/10 rounded-xl flex items-center justify-center text-[var(--accent-secondary)]">
                     <span className="text-xl">🔔</span>
                   </div>
                   <div>
-                    <h4 className="text-[11px] font-black text-white uppercase tracking-widest">System Update</h4>
-                    <p className="text-[10px] text-gray-500 font-bold uppercase tracking-tight mt-1">Platform maintenance completed successfully.</p>
+                    <h4 className="text-[11px] font-black text-[var(--text-primary)] uppercase tracking-widest">System Update</h4>
+                    <p className="text-[10px] text-[var(--text-secondary)] font-bold uppercase tracking-tight mt-1">Platform maintenance completed successfully.</p>
                   </div>
                 </div>
-                <span className="text-[9px] font-black text-gray-700 uppercase tracking-widest italic">2 hours ago</span>
+                <span className="text-[9px] font-black text-[var(--text-secondary)] uppercase tracking-widest italic">2 hours ago</span>
               </div>
-              <div className="bg-neutral-900 border border-white/5 rounded-2xl p-8 flex items-center justify-between group hover:border-blue-500/30 transition-all opacity-60">
+              <div className="bg-[var(--bg-secondary)] border border-[var(--bg-tertiary)] rounded-2xl p-8 flex items-center justify-between group hover:border-[var(--accent-secondary)]/30 transition-all opacity-60">
                 <div className="flex items-center gap-6">
-                  <div className="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center text-gray-500">
+                  <div className="w-12 h-12 bg-[var(--bg-tertiary)] rounded-xl flex items-center justify-center text-[var(--text-secondary)]">
                     <span className="text-xl">📄</span>
                   </div>
                   <div>
-                    <h4 className="text-[11px] font-black text-white uppercase tracking-widest">Profile Verified</h4>
-                    <p className="text-[10px] text-gray-500 font-bold uppercase tracking-tight mt-1">Your corporate registry credentials have been validated.</p>
+                    <h4 className="text-[11px] font-black text-[var(--text-primary)] uppercase tracking-widest">Profile Verified</h4>
+                    <p className="text-[10px] text-[var(--text-secondary)] font-bold uppercase tracking-tight mt-1">Your corporate registry credentials have been validated.</p>
                   </div>
                 </div>
-                <span className="text-[9px] font-black text-gray-700 uppercase tracking-widest italic">Yesterday</span>
+                <span className="text-[9px] font-black text-[var(--text-secondary)] uppercase tracking-widest italic">Yesterday</span>
               </div>
             </div>
           )}
 
           {activeTab === 'settings' && (
-            <div className="bg-neutral-900 border border-white/5 rounded-2xl p-10 animate-in fade-in duration-500">
-              <h2 className="text-xl font-bold text-white uppercase tracking-tight mb-10 pb-6 border-b border-white/5">Account Management</h2>
+            <div className="bg-[var(--bg-secondary)] border border-[var(--bg-tertiary)] rounded-2xl p-10 animate-in fade-in duration-500">
+              <h2 className="text-xl font-bold text-[var(--text-primary)] uppercase tracking-tight mb-10 pb-6 border-b border-[var(--bg-tertiary)]">Account Management</h2>
               <div className="space-y-12">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h4 className="text-xs font-black text-white uppercase tracking-widest">Email Notifications</h4>
-                    <p className="text-[10px] text-gray-500 font-bold uppercase tracking-tight mt-1 italic">Receive recruitment alerts and synergy proposals.</p>
+                    <h4 className="text-xs font-black text-[var(--text-primary)] uppercase tracking-widest">Email Notifications</h4>
+                    <p className="text-[10px] text-[var(--text-secondary)] font-bold uppercase tracking-tight mt-1 italic">Receive recruitment alerts and synergy proposals.</p>
                   </div>
-                  <div className="w-12 h-6 bg-blue-600 rounded-full relative p-1 cursor-pointer">
+                  <div className="w-12 h-6 bg-[var(--accent-secondary)] rounded-full relative p-1 cursor-pointer">
                     <div className="w-4 h-4 bg-white rounded-full ml-auto shadow-sm"></div>
                   </div>
                 </div>
                 <div className="flex items-center justify-between">
                   <div>
-                    <h4 className="text-xs font-black text-white uppercase tracking-widest">Enterprise Security</h4>
-                    <p className="text-[10px] text-gray-500 font-bold uppercase tracking-tight mt-1 italic">Manage two-factor authentication and access logs.</p>
+                    <h4 className="text-xs font-black text-[var(--text-primary)] uppercase tracking-widest">Enterprise Security</h4>
+                    <p className="text-[10px] text-[var(--text-secondary)] font-bold uppercase tracking-tight mt-1 italic">Manage two-factor authentication and access logs.</p>
                   </div>
-                  <button className="px-6 py-2 bg-white/5 border border-white/5 text-gray-400 rounded-lg text-[9px] font-black uppercase tracking-widest hover:text-white hover:border-white/10 transition-all">Manage</button>
+                  <button className="px-6 py-2 bg-[var(--bg-tertiary)] border border-[var(--bg-tertiary)] text-[var(--text-secondary)] rounded-lg text-[9px] font-black uppercase tracking-widest hover:text-[var(--text-primary)] transition-all">Manage</button>
                 </div>
-                <div className="flex items-center justify-between pt-6 border-t border-white/5">
+                <div className="flex items-center justify-between pt-6 border-t border-[var(--bg-tertiary)]">
                   <div>
-                    <h4 className="text-xs font-black text-red-500 uppercase tracking-widest">Terminal Action</h4>
-                    <p className="text-[10px] text-gray-500 font-bold uppercase tracking-tight mt-1 italic italic">Irreversible deletion of corporate registry.</p>
+                    <h4 className="text-xs font-black text-red-600 uppercase tracking-widest">Terminal Action</h4>
+                    <p className="text-[10px] text-[var(--text-secondary)] font-bold uppercase tracking-tight mt-1 italic italic">Irreversible deletion of corporate registry.</p>
                   </div>
                   <button className="px-6 py-2 bg-red-600 shadow-lg shadow-red-600/10 text-white rounded-lg text-[9px] font-black uppercase tracking-widest hover:bg-red-700 transition-all">Deactivate</button>
                 </div>
@@ -376,21 +376,21 @@ function IndustryDashboard() {
 
 function MetricCard({ title, value, label }) {
   return (
-    <div className="p-8 bg-neutral-900 border border-white/5 rounded-2xl shadow-xl flex flex-col justify-between group hover:border-blue-500/30 transition-all">
+    <div className="p-8 bg-[var(--bg-secondary)] border border-[var(--bg-tertiary)] rounded-2xl shadow-sm flex flex-col justify-between group hover:border-[var(--accent-secondary)]/30 transition-all">
       <div>
-        <h4 className="text-[10px] font-bold text-gray-600 uppercase tracking-widest mb-1">{title}</h4>
-        <p className="text-3xl font-black text-white italic tracking-tighter group-hover:text-blue-500 transition-colors">{value}</p>
+        <h4 className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-widest mb-1">{title}</h4>
+        <p className="text-3xl font-black text-[var(--accent-primary)] italic tracking-tighter group-hover:text-[var(--accent-secondary)] transition-colors">{value}</p>
       </div>
-      <p className="text-[9px] font-bold text-gray-500 uppercase tracking-widest mt-6 opacity-60">{label}</p>
+      <p className="text-[9px] font-bold text-[var(--text-secondary)] uppercase tracking-widest mt-6 opacity-60">{label}</p>
     </div>
   );
 }
 
 function ProfileField({ label, name, value, disabled, onChange, placeholder, isTextarea }) {
-  const inputClass = "w-full p-4 bg-black border border-white/5 rounded-xl text-white text-xs font-medium focus:border-blue-500/50 focus:outline-none transition-all placeholder-gray-800 disabled:opacity-50 uppercase tracking-wide";
+  const inputClass = "w-full p-4 bg-[var(--bg-primary)] border border-[var(--bg-tertiary)] rounded-xl text-[var(--text-primary)] text-xs font-medium focus:border-[var(--accent-secondary)] focus:outline-none transition-all placeholder:text-[var(--text-secondary)]/30 disabled:opacity-50 uppercase tracking-wide";
   return (
     <div>
-      <label className="block text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-3 ml-1">{label}</label>
+      <label className="block text-[10px] font-bold uppercase tracking-widest text-[var(--text-secondary)] mb-3 ml-1">{label}</label>
       {isTextarea ? (
         <textarea name={name} value={value} disabled={disabled} onChange={onChange} className={inputClass + " h-32"} placeholder={placeholder || `ENTER ${label.toUpperCase()}`} />
       ) : (
@@ -402,12 +402,12 @@ function ProfileField({ label, name, value, disabled, onChange, placeholder, isT
 
 function DiscoveryCard({ title, to, description }) {
   return (
-    <Link to={to} className="group p-8 bg-neutral-900 border border-white/5 rounded-2xl hover:border-blue-500/30 transition-all shadow-xl">
-      <h3 className="text-lg font-bold text-white mb-3 tracking-tight uppercase">{title}</h3>
-      <p className="text-gray-500 text-[10px] font-bold uppercase tracking-widest leading-relaxed mb-8 opacity-70 group-hover:opacity-100 italic">
+    <Link to={to} className="group p-8 bg-[var(--bg-secondary)] border border-[var(--bg-tertiary)] rounded-2xl hover:border-[var(--accent-secondary)]/30 transition-all shadow-sm">
+      <h3 className="text-lg font-bold text-[var(--text-primary)] mb-3 tracking-tight uppercase">{title}</h3>
+      <p className="text-[var(--text-secondary)] text-[10px] font-bold uppercase tracking-widest leading-relaxed mb-8 opacity-70 group-hover:opacity-100 italic">
         {description}
       </p>
-      <div className="text-[9px] font-bold uppercase tracking-widest text-blue-500 flex items-center gap-2">
+      <div className="text-[9px] font-bold uppercase tracking-widest text-[var(--accent-secondary)] flex items-center gap-2">
         Browse Registry <span className="group-hover:translate-x-1 transition-transform">→</span>
       </div>
     </Link>
