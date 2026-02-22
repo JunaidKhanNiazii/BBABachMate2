@@ -7,10 +7,10 @@ import {
 } from 'recharts';
 
 const StatCard = ({ title, value, subtext, color = "blue" }) => (
-  <div className="bg-[var(--bg-secondary)] border border-[var(--bg-tertiary)] p-6 rounded-2xl hover:border-[var(--accent-secondary)]/30 transition-all group shadow-sm">
-    <h3 className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-4">{title}</h3>
-    <p className="text-4xl font-black italic tracking-tighter text-[var(--accent-primary)] group-hover:text-[var(--accent-secondary)] transition-colors">{value}</p>
-    <p className="text-[9px] font-bold text-[var(--text-secondary)] uppercase tracking-widest mt-4 opacity-60">{subtext}</p>
+  <div className="bg-[var(--bg-secondary)] border border-[var(--bg-tertiary)] p-4 md:p-6 rounded-2xl hover:border-[var(--accent-secondary)]/30 transition-all group shadow-sm">
+    <h3 className="text-[9px] md:text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-3 md:mb-4">{title}</h3>
+    <p className="text-2xl md:text-4xl font-black italic tracking-tighter text-[var(--accent-primary)] group-hover:text-[var(--accent-secondary)] transition-colors">{value}</p>
+    <p className="text-[8px] md:text-[9px] font-bold text-[var(--text-secondary)] uppercase tracking-widest mt-3 md:mt-4 opacity-60">{subtext}</p>
   </div>
 );
 
@@ -232,29 +232,31 @@ function AdminDashboard() {
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col h-screen overflow-hidden text-[var(--text-primary)]">
-        <header className="px-6 md:px-10 py-6 md:py-8 flex justify-between items-center bg-[var(--bg-primary)] border-b border-[var(--bg-tertiary)]">
-          <div className="flex items-center gap-4">
+        <header className="px-4 md:px-10 py-5 md:py-8 flex justify-between items-center bg-[var(--bg-primary)] border-b border-[var(--bg-tertiary)] sticky top-0 z-30">
+          <div className="flex items-center gap-3 md:gap-4 max-w-[70%] md:max-w-none">
             <button
               onClick={() => setIsSidebarOpen(true)}
-              className="md:hidden text-[var(--accent-primary)] hover:text-[var(--accent-secondary)] transition-colors"
+              className="md:hidden text-[var(--accent-primary)] hover:text-[var(--accent-secondary)] transition-colors shrink-0"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             </button>
-            <div>
+            <div className="truncate">
               <h1 className="text-3xl font-bold tracking-tight text-[var(--text-primary)] uppercase mb-1 hidden md:block">{tabs.find(t => t.id === activeTab)?.label}</h1>
-              <h1 className="text-xl font-bold tracking-tight text-[var(--text-primary)] uppercase mb-1 md:hidden">{tabs.find(t => t.id === activeTab)?.label}</h1>
-              <p className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-widest italic">System Administration • Global Protocol Management</p>
+              <h1 className="text-lg font-bold tracking-tight text-[var(--text-primary)] uppercase mb-0.5 md:hidden truncate">{tabs.find(t => t.id === activeTab)?.label}</h1>
+              <p className="text-[8px] md:text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-widest italic truncate">System Administration • Global Protocol</p>
             </div>
           </div>
-          <div className="px-6 py-3 bg-[var(--bg-secondary)] border border-[var(--bg-tertiary)] rounded-xl flex items-center space-x-4 hidden md:flex">
-            <div className="w-1.5 h-1.5 bg-[var(--accent-secondary)] rounded-full animate-pulse shadow-[0_0_10px_rgba(59,130,246,0.5)]"></div>
-            <span className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-widest">Admin Authorization: Active</span>
+          <div className="px-3 md:px-6 py-2 md:py-3 bg-[var(--bg-secondary)] border border-[var(--bg-tertiary)] rounded-xl flex items-center space-x-2 md:space-x-4 shrink-0">
+            <div className="w-1 md:w-1.5 h-1 md:h-1.5 bg-[var(--accent-secondary)] rounded-full animate-pulse shadow-[0_0_10px_rgba(59,130,246,0.5)]"></div>
+            <span className="text-[8px] md:text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-widest truncate">
+              <span className="hidden sm:inline">Admin Authorization:</span> Active
+            </span>
           </div>
         </header>
 
-        <div className="flex-1 p-8 overflow-y-auto">
+        <div className="flex-1 p-4 md:p-8 overflow-y-auto">
 
           {/* Overview Tab content */}
           {activeTab === 'overview' && (
@@ -292,8 +294,8 @@ function AdminDashboard() {
                   </div>
 
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <div className="bg-[var(--bg-secondary)] border border-[var(--bg-tertiary)] p-8 rounded-3xl shadow-sm">
-                      <h3 className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-widest mb-8">User Distribution Analysis</h3>
+                    <div className="bg-[var(--bg-secondary)] border border-[var(--bg-tertiary)] p-4 md:p-8 rounded-3xl shadow-sm">
+                      <h3 className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-widest mb-6 md:mb-8">User Distribution Analysis</h3>
                       <div className="h-[300px] w-full min-h-[300px] relative">
                         <ResponsiveContainer width="100%" height="100%" minWidth={0}>
                           <PieChart key={userData.length}>
@@ -320,8 +322,8 @@ function AdminDashboard() {
                       </div>
                     </div>
 
-                    <div className="bg-[var(--bg-secondary)] border border-[var(--bg-tertiary)] p-8 rounded-3xl shadow-sm">
-                      <h3 className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-widest mb-8">Content Volume Pipeline</h3>
+                    <div className="bg-[var(--bg-secondary)] border border-[var(--bg-tertiary)] p-4 md:p-8 rounded-3xl shadow-sm">
+                      <h3 className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-widest mb-6 md:mb-8">Content Volume Pipeline</h3>
                       <div className="h-[300px] w-full min-h-[300px] relative">
                         <ResponsiveContainer width="100%" height="100%" minWidth={0}>
                           <BarChart key={contentData.length} data={contentData} margin={{ top: 20, right: 30, left: 20, bottom: 60 }}>
@@ -353,9 +355,9 @@ function AdminDashboard() {
                   </div>
 
                   <div className="bg-[var(--bg-secondary)] border border-[var(--bg-tertiary)] rounded-3xl overflow-hidden mt-8 shadow-sm">
-                    <div className="px-8 py-6 border-b border-[var(--bg-tertiary)] flex justify-between items-center">
+                    <div className="px-4 md:px-8 py-5 md:py-6 border-b border-[var(--bg-tertiary)] flex justify-between items-center">
                       <h3 className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-widest">Pending Verifications</h3>
-                      <button onClick={() => setActiveTab('users')} className="text-[9px] font-bold text-[var(--accent-secondary)] uppercase tracking-widest hover:text-[var(--accent-primary)] transition-colors">View All Directory</button>
+                      <button onClick={() => setActiveTab('users')} className="text-[9px] font-bold text-[var(--accent-secondary)] uppercase tracking-widest hover:text-[var(--accent-primary)] transition-colors">Directory</button>
                     </div>
                     <div className="overflow-x-auto">
                       <table className="min-w-full text-xs">

@@ -69,7 +69,7 @@ const Header = React.memo(() => {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-1">
+          <nav className="hidden xl:flex items-center space-x-1">
             {navLinks.map((link) => (
               <Link
                 key={link.to}
@@ -153,7 +153,7 @@ const Header = React.memo(() => {
           </nav>
 
           {/* Action Buttons */}
-          <div className="hidden lg:flex items-center space-x-4">
+          <div className="hidden xl:flex items-center space-x-4">
             {currentUser ? (
               <div className="flex items-center space-x-6">
                 <div className="flex items-center space-x-3 bg-white/10 px-4 py-2 rounded-xl border border-white/10">
@@ -214,7 +214,7 @@ const Header = React.memo(() => {
 
           {/* Mobile Menu Button */}
           <button
-            className="lg:hidden w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-white"
+            className="xl:hidden w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-white"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             {isMobileMenuOpen ? (
@@ -231,7 +231,7 @@ const Header = React.memo(() => {
       </div>
 
       {/* Mobile Menu */}
-      <div className={`lg:hidden fixed inset-0 z-40 bg-[#1e3a8a] transition-all duration-500 ease-in-out ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+      <div className={`xl:hidden fixed inset-0 z-40 bg-[#1e3a8a] transition-all duration-500 ease-in-out ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
         <div className="flex flex-col h-full pt-24 px-6 pb-10 overflow-y-auto relative">
           {/* Close Button Inside Menu */}
           <button

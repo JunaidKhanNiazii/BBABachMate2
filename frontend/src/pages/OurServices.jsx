@@ -83,11 +83,11 @@ function OurServices() {
             <span className="text-[9px] font-black text-blue-800 uppercase tracking-widest">Service Framework</span>
           </div>
 
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-black tracking-tighter uppercase leading-[0.8] text-black animate-in fade-in slide-in-from-top-4 duration-1000 mb-8">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tighter uppercase leading-[0.95] md:leading-[0.8] text-black animate-in fade-in slide-in-from-top-4 duration-1000 mb-8">
             Strategic <span className="text-blue-600">Synergy</span>
           </h1>
 
-          <p className="text-[var(--text-secondary)] text-base md:text-lg font-bold leading-relaxed max-w-2xl mx-auto border-t border-gray-100 pt-8 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-300">
+          <p className="text-[var(--text-secondary)] text-sm md:text-lg font-bold leading-relaxed max-w-2xl mx-auto border-t border-gray-100 pt-8 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-300">
             AICON delivers specialized service protocols that synchronize academic research with industrial performance, creating a high-velocity ecosystem for innovation.
           </p>
         </div>

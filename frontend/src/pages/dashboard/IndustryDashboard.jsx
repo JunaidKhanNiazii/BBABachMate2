@@ -215,36 +215,37 @@ function IndustryDashboard() {
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col h-screen overflow-hidden">
-        <header className="px-6 md:px-10 py-6 md:py-8 flex justify-between items-center bg-[var(--bg-primary)] border-b border-[var(--bg-tertiary)]">
-          <div className="flex items-center gap-4">
+        <header className="px-4 md:px-10 py-5 md:py-8 flex justify-between items-center bg-[var(--bg-primary)] border-b border-[var(--bg-tertiary)] sticky top-0 z-30">
+          <div className="flex items-center gap-3 md:gap-4 max-w-[70%] md:max-w-none">
             {/* Hamburger Button */}
             <button
               onClick={() => setIsSidebarOpen(true)}
-              className="md:hidden text-[var(--accent-primary)] hover:text-[var(--accent-secondary)] transition-colors"
+              className="md:hidden text-[var(--accent-primary)] hover:text-[var(--accent-secondary)] transition-colors shrink-0"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             </button>
 
-            <div>
-              <h1 className="text-xl md:text-3xl font-bold text-[var(--text-primary)] tracking-tight uppercase">
+            <div className="truncate">
+              <h1 className="text-lg md:text-3xl font-bold text-[var(--text-primary)] tracking-tight uppercase truncate">
                 {tabs.find(t => t.id === activeTab)?.label}
               </h1>
-              <p className="text-[9px] text-[var(--text-secondary)] font-bold uppercase tracking-widest mt-1">
+              <p className="text-[8px] md:text-[9px] text-[var(--text-secondary)] font-bold uppercase tracking-widest mt-0.5 md:mt-1 truncate">
                 {activeTab === 'home' ? 'Professional Overview' : 'Management Console'}
               </p>
             </div>
           </div>
-          <div className="px-5 py-2.5 bg-[var(--bg-secondary)] border border-[var(--bg-tertiary)] rounded-xl">
-            <span className="text-[9px] font-bold text-[var(--accent-secondary)] uppercase tracking-widest flex items-center gap-2">
+          <div className="px-3 md:px-5 py-2 md:py-2.5 bg-[var(--bg-secondary)] border border-[var(--bg-tertiary)] rounded-xl shrink-0">
+            <span className="text-[8px] md:text-[9px] font-bold text-[var(--accent-secondary)] uppercase tracking-widest flex items-center gap-2">
               <span className="w-1 h-1 bg-[var(--accent-secondary)] rounded-full animate-pulse"></span>
-              Secure Session
+              <span className="hidden sm:inline">Secure Session</span>
+              <span className="sm:hidden">Active</span>
             </span>
           </div>
         </header>
 
-        <div className="flex-1 p-8 overflow-y-auto">
+        <div className="flex-1 p-4 md:p-8 overflow-y-auto">
           {activeTab === 'home' && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 animate-in fade-in duration-500">
               <MetricCard title="University FYPs" value={stats.universityFYPs.toString().padStart(2, '0')} label="Available Projects" />
@@ -376,12 +377,12 @@ function IndustryDashboard() {
 
 function MetricCard({ title, value, label }) {
   return (
-    <div className="p-8 bg-[var(--bg-secondary)] border border-[var(--bg-tertiary)] rounded-2xl shadow-sm flex flex-col justify-between group hover:border-[var(--accent-secondary)]/30 transition-all">
+    <div className="p-6 md:p-8 bg-[var(--bg-secondary)] border border-[var(--bg-tertiary)] rounded-2xl shadow-sm flex flex-col justify-between group hover:border-[var(--accent-secondary)]/30 transition-all">
       <div>
-        <h4 className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-widest mb-1">{title}</h4>
-        <p className="text-3xl font-black text-[var(--accent-primary)] italic tracking-tighter group-hover:text-[var(--accent-secondary)] transition-colors">{value}</p>
+        <h4 className="text-[9px] md:text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-widest mb-1">{title}</h4>
+        <p className="text-2xl md:text-3xl font-black text-[var(--accent-primary)] italic tracking-tighter group-hover:text-[var(--accent-secondary)] transition-colors">{value}</p>
       </div>
-      <p className="text-[9px] font-bold text-[var(--text-secondary)] uppercase tracking-widest mt-6 opacity-60">{label}</p>
+      <p className="text-[8px] md:text-[9px] font-bold text-[var(--text-secondary)] uppercase tracking-widest mt-4 md:mt-6 opacity-60">{label}</p>
     </div>
   );
 }
@@ -402,12 +403,12 @@ function ProfileField({ label, name, value, disabled, onChange, placeholder, isT
 
 function DiscoveryCard({ title, to, description }) {
   return (
-    <Link to={to} className="group p-8 bg-[var(--bg-secondary)] border border-[var(--bg-tertiary)] rounded-2xl hover:border-[var(--accent-secondary)]/30 transition-all shadow-sm">
-      <h3 className="text-lg font-bold text-[var(--text-primary)] mb-3 tracking-tight uppercase">{title}</h3>
-      <p className="text-[var(--text-secondary)] text-[10px] font-bold uppercase tracking-widest leading-relaxed mb-8 opacity-70 group-hover:opacity-100 italic">
+    <Link to={to} className="group p-6 md:p-8 bg-[var(--bg-secondary)] border border-[var(--bg-tertiary)] rounded-2xl hover:border-[var(--accent-secondary)]/30 transition-all shadow-sm">
+      <h3 className="text-base md:text-lg font-bold text-[var(--text-primary)] mb-2 md:mb-3 tracking-tight uppercase">{title}</h3>
+      <p className="text-[var(--text-secondary)] text-[9px] md:text-[10px] font-bold uppercase tracking-widest leading-relaxed mb-6 md:mb-8 opacity-70 group-hover:opacity-100 italic">
         {description}
       </p>
-      <div className="text-[9px] font-bold uppercase tracking-widest text-[var(--accent-secondary)] flex items-center gap-2">
+      <div className="text-[8px] md:text-[9px] font-bold uppercase tracking-widest text-[var(--accent-secondary)] flex items-center gap-2">
         Browse Registry <span className="group-hover:translate-x-1 transition-transform">→</span>
       </div>
     </Link>

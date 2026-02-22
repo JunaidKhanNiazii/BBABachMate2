@@ -15,15 +15,15 @@ function About() {
             <span className="text-[10px] font-black text-blue-800 uppercase tracking-widest">Our Strategic Identity</span>
           </div>
 
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter uppercase leading-[0.85] text-black animate-in fade-in slide-in-from-top-8 duration-1000 mb-10">
+          <h1 className="text-4xl md:text-7xl lg:text-8xl font-black tracking-tighter uppercase leading-[0.95] md:leading-[0.85] text-black animate-in fade-in slide-in-from-top-8 duration-1000 mb-10">
             AICON <span className="text-blue-600">Impact</span>
           </h1>
 
           <div className="space-y-6 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-300">
-            <p className="text-lg md:text-xl font-bold leading-tight max-w-2xl mx-auto text-black">
+            <p className="text-base md:text-xl font-bold leading-tight max-w-2xl mx-auto text-black">
               Facilitating high-level collaboration between industrial progress and academic research.
             </p>
-            <p className="text-[var(--text-secondary)] text-xs md:text-sm font-medium leading-relaxed max-w-2xl mx-auto italic border-l-4 border-blue-600 pl-4 text-left">
+            <p className="text-[var(--text-secondary)] text-[11px] md:text-sm font-medium leading-relaxed max-w-2xl mx-auto italic border-l-4 border-blue-600 pl-4 text-left">
               AICON – Academia Industry Collaboration Network is a platform that bridges the gap, offering consulting services that drive innovation and growth.
               We provide a space for businesses and academic institutions to collaborate, share
               knowledge, and develop solutions that address real-world challenges.

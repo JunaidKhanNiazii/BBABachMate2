@@ -61,37 +61,37 @@ function Home() {
         <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-blue-600/5 blur-[120px] rounded-full -translate-y-1/2"></div>
         <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-[var(--accent-primary)]/5 blur-[120px] rounded-full translate-y-1/2"></div>
 
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10 text-center lg:text-left">
           <div className="flex flex-col lg:flex-row items-center gap-16">
-            <div className="lg:w-1/2 text-left space-y-8">
+            <div className="lg:w-1/2 space-y-8 flex flex-col items-center lg:items-start text-center lg:text-left">
               <div className="inline-flex items-center space-x-2 px-4 py-2 bg-blue-50 border border-blue-100 rounded-full animate-in fade-in slide-in-from-left-4 duration-700">
                 <span className="w-2 h-2 bg-blue-600 rounded-full animate-pulse"></span>
                 <span className="text-[10px] font-black text-blue-800 uppercase tracking-widest">Bridge the gap, build the future</span>
               </div>
 
-              <h1 className="text-3xl md:text-4xl font-black tracking-tighter uppercase leading-[0.85] text-black animate-in fade-in slide-in-from-top-8 duration-1000">
+              <h1 className="text-4xl md:text-4xl lg:text-6xl font-black tracking-tighter uppercase leading-[0.95] md:leading-[0.85] text-black animate-in fade-in slide-in-from-top-8 duration-1000">
                 AICON <span className="text-blue-600">Academia</span><br />
                 <span className="text-[var(--accent-primary)]">Industry</span><br />
                 Network
               </h1>
 
-              <p className="text-[var(--text-secondary)] text-base md:text-lg font-bold leading-relaxed max-w-lg animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-300">
+              <p className="text-[var(--text-secondary)] text-sm md:text-lg font-bold leading-relaxed max-w-lg animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-300">
                 AICON – Academia Industry Collaboration Network is a platform that facilitates collaboration between industry and academia.
                 Our platform bridges the gap, offering services that drive innovation and growth.
               </p>
 
-              <div className="flex flex-wrap gap-4 pt-4 animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-500">
-                <Link to="/register" className="group px-10 py-5 bg-[var(--accent-primary)] text-white rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-blue-700 transition-all shadow-xl hover:shadow-blue-900/40 active:scale-95 flex items-center space-x-3">
+              <div className="flex flex-wrap justify-center lg:justify-start gap-4 pt-4 animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-500">
+                <Link to="/register" className="group px-8 md:px-10 py-4 md:py-5 bg-[var(--accent-primary)] text-white rounded-2xl font-black text-[10px] md:text-xs uppercase tracking-widest hover:bg-blue-700 transition-all shadow-xl hover:shadow-blue-900/40 active:scale-95 flex items-center space-x-3 text-center">
                   <span>Join as University</span>
                   <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
                 </Link>
-                <Link to="/register" className="group px-10 py-5 bg-white border-2 border-black text-black rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-black hover:text-white transition-all active:scale-95">
+                <Link to="/register" className="group px-8 md:px-10 py-4 md:py-5 bg-white border-2 border-black text-black rounded-2xl font-black text-[10px] md:text-xs uppercase tracking-widest hover:bg-black hover:text-white transition-all active:scale-95 text-center">
                   Join as Industry
                 </Link>
               </div>
             </div>
 
-            <div className="lg:w-1/2 relative h-[300px] lg:h-[400px]">
+            <div className="lg:w-1/2 relative h-[250px] md:h-[300px] lg:h-[450px] w-full">
               <div className="absolute -inset-4 bg-gradient-to-tr from-blue-600 to-[var(--accent-primary)] opacity-10 blur-2xl rounded-[2.5rem] animate-pulse"></div>
               <div className="relative h-full w-full rounded-[2rem] overflow-hidden shadow-[0_30px_60px_-10px_rgba(0,0,0,0.15)] border-2 border-white animate-in zoom-in-95 duration-1000">
                 <img
