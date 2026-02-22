@@ -44,7 +44,7 @@ function Contact() {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           <div className="lg:col-span-2">
-            <div className="bg-[var(--bg-secondary)] p-8 md:p-12 rounded-2xl border border-[var(--bg-tertiary)] shadow-xl">
+            <div className="bg-[var(--bg-secondary)] p-8 md:p-12 rounded-2xl  shadow-[0_15px_20px_rgba(59,130,246,0.6)] ">
               <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {status.message && (
                   <div className={`md:col-span-2 p-4 rounded-xl text-xs font-bold uppercase tracking-widest ${status.type === 'success' ? 'bg-green-500/10 text-green-500 border border-green-500/20' : 'bg-red-500/10 text-red-500 border border-red-500/20'}`}>

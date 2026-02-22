@@ -1,57 +1,72 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function About() {
   return (
-    <div className="min-h-screen bg-[var(--bg-primary)]">
-      <div className="max-w-7xl mx-auto py-32 px-6 lg:px-8">
-        {/* Hero Section */}
-        <div className="flex flex-col lg:flex-row items-center gap-16 mb-32">
-          <div className="lg:w-1/2 text-center lg:text-left">
-            <h1 className="text-4xl md:text-6xl font-black mb-8 tracking-tight uppercase leading-tight text-[var(--text-primary)]">
-              OUR <span className="text-[var(--accent-secondary)]">MISSION</span>
-            </h1>
-            <p className="text-[var(--text-secondary)] font-medium text-sm leading-relaxed tracking-wide">
-              AICON is dedicated to fostering innovation and collaboration by creating a seamless bridge between academia and industry.
-              We establish a robust ecosystem where knowledge meets execution, driving progress across the industrial landscape.
-            </p>
+    <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] selection:bg-blue-500/30 overflow-x-hidden flex flex-col justify-center py-20">
+      {/* Background Subtle Accents */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-blue-600/5 blur-[120px] rounded-full pointer-events-none"></div>
+
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10 w-full">
+        {/* About Hero Section - Centered Typographic */}
+        <div className="text-center max-w-4xl mx-auto mb-20 md:mb-24">
+          <div className="inline-flex items-center space-x-2 px-4 py-2 bg-blue-50 border border-blue-100 rounded-full animate-in fade-in slide-in-from-bottom-4 duration-700 mb-6">
+            <span className="w-2 h-2 bg-blue-600 rounded-full animate-pulse"></span>
+            <span className="text-[10px] font-black text-blue-800 uppercase tracking-widest">Our Strategic Identity</span>
           </div>
-          <div className="lg:w-1/2">
-            <img
-              src="/images/innovation_abstract.png"
-              alt="AICON Innovation"
-              className="w-full rounded-2xl border border-white/5 shadow-2xl grayscale opacity-90"
-            />
+
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter uppercase leading-[0.85] text-black animate-in fade-in slide-in-from-top-8 duration-1000 mb-10">
+            AICON <span className="text-blue-600">Impact</span>
+          </h1>
+
+          <div className="space-y-6 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-300">
+            <p className="text-lg md:text-xl font-bold leading-tight max-w-2xl mx-auto text-black">
+              Facilitating high-level collaboration between industrial progress and academic research.
+            </p>
+            <p className="text-[var(--text-secondary)] text-xs md:text-sm font-medium leading-relaxed max-w-2xl mx-auto italic border-l-4 border-blue-600 pl-4 text-left">
+              AICON – Academia Industry Collaboration Network is a platform that bridges the gap, offering consulting services that drive innovation and growth.
+              We provide a space for businesses and academic institutions to collaborate, share
+              knowledge, and develop solutions that address real-world challenges.
+            </p>
+            <div className="pt-6">
+              <Link to="/contact" className="inline-flex items-center px-8 py-4 bg-black text-white rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-blue-600 transition-all active:scale-95 shadow-xl hover:shadow-blue-600/40">
+                Initiate Consultation
+              </Link>
+            </div>
           </div>
         </div>
 
-        {/* Info Boxes */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-24">
-          <div className="bg-[var(--bg-secondary)] p-10 rounded-2xl border border-[var(--bg-tertiary)] shadow-sm">
-            <h2 className="text-xl font-black mb-6 uppercase tracking-tight text-[var(--text-primary)]">MISSION DATA</h2>
-            <p className="text-[var(--text-secondary)] font-medium text-xs leading-relaxed uppercase tracking-widest">
-              We empower the next generation of professionals by integrating academic research with industrial requirements,
-              facilitating the exchange of ideas and talent to create sustainable value.
+        {/* Mission & Vision Section - Enhanced Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-4 border-t border-gray-100 pt-16">
+          <div className="space-y-4 group p-6 rounded-3xl hover:bg-gray-50 transition-all duration-500">
+            <div className="text-5xl font-black text-blue-600/5 group-hover:text-blue-600/10 transition-colors uppercase tracking-widest leading-none">01</div>
+            <h2 className="text-lg font-black uppercase tracking-tight text-black border-b-2 border-blue-600 pb-2 inline-block">Mission</h2>
+            <p className="text-[var(--text-secondary)] text-[13px] font-medium leading-relaxed">
+              To bridge the gap between academia and industry by providing seamless collaboration
+              opportunities, fostering innovation, and empowering students and professionals
+              through internships, research partnerships, and skill development programs.
             </p>
           </div>
 
-          <div className="bg-[var(--bg-secondary)] p-10 rounded-2xl border border-[var(--bg-tertiary)] shadow-sm">
-            <h2 className="text-xl font-black mb-6 uppercase tracking-tight text-[var(--text-primary)]">VISION PROTOCOL</h2>
-            <p className="text-[var(--text-secondary)] font-medium text-xs leading-relaxed uppercase tracking-widest">
-              To be the leading platform for academic-industrial synergy, recognized for driving innovation,
-              economic growth, and professional excellence through strategic partnerships.
+          <div className="space-y-4 group p-6 rounded-3xl hover:bg-gray-50 transition-all duration-500">
+            <div className="text-5xl font-black text-blue-600/5 group-hover:text-blue-600/10 transition-colors uppercase tracking-widest leading-none">02</div>
+            <h2 className="text-lg font-black uppercase tracking-tight text-black border-b-2 border-blue-600 pb-2 inline-block">Vision</h2>
+            <p className="text-[var(--text-secondary)] text-[13px] font-medium leading-relaxed">
+              To become the leading platform in Pakistan that empowers universities and industries
+              to collaborate effectively, fostering innovation, skill development, and sustainable
+              growth.
             </p>
           </div>
-        </div>
 
-        {/* CTA Section */}
-        <div className="bg-[var(--bg-tertiary)] border border-[var(--bg-tertiary)] p-12 md:p-20 rounded-2xl text-center">
-          <h3 className="text-3xl font-black mb-6 uppercase tracking-tight text-[var(--text-primary)]">Strategic Synergy</h3>
-          <p className="text-[var(--text-secondary)] mb-10 max-w-2xl mx-auto text-sm font-medium leading-relaxed">
-            Driving tangible results in research, product development, and talent acquisition.
-          </p>
-          <button className="px-10 py-4 bg-[var(--accent-primary)] text-white rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-[var(--accent-secondary)] transition-all active:scale-95 shadow-xl">
-            Learn More
-          </button>
+          <div className="space-y-4 group p-6 rounded-3xl hover:bg-gray-50 transition-all duration-500">
+            <div className="text-5xl font-black text-blue-600/5 group-hover:text-blue-600/10 transition-colors uppercase tracking-widest leading-none">03</div>
+            <h2 className="text-lg font-black uppercase tracking-tight text-black border-b-2 border-blue-600 pb-2 inline-block">Strategic Goals</h2>
+            <p className="text-[var(--text-secondary)] text-[13px] font-medium leading-relaxed">
+              We are constantly evolving our platform to integrate cutting-edge research modules,
+              AI-driven talent matching, and strategic procurement protocols that define the next
+              era of industrial excellence.
+            </p>
+          </div>
         </div>
       </div>
     </div>
