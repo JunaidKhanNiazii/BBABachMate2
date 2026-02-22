@@ -92,12 +92,12 @@ function PublicListing({ title, endpoint }) {
 
 function SpeakerCard({ speaker }) {
     const imageUrl = speaker.imageUrl
-        ? (speaker.imageUrl.startsWith('http') ? speaker.imageUrl : `http://localhost:5000${speaker.imageUrl}`)
+        ? (speaker.imageUrl.startsWith('http') ? speaker.imageUrl : `https://bbabachmate2026-821t2dq3p-junaidkhanniaziis-projects.vercel.app${speaker.imageUrl}`)
         : null;
 
     return (
-        <div className="group bg-[var(--bg-secondary)] rounded-[2.5rem] border border-[var(--bg-tertiary)] overflow-hidden hover:border-[var(--accent-secondary)]/20 transition-all duration-500 shadow-sm hover:shadow-xl hover:-translate-y-2">
-            <div className="h-80 bg-[var(--bg-tertiary)] relative overflow-hidden">
+        <div className="group bg-white rounded-[2.5rem] border border-gray-100 overflow-hidden hover:border-[var(--accent-secondary)]/20 transition-all duration-500 shadow-sm hover:shadow-2xl hover:-translate-y-2 flex flex-col items-center text-center p-10">
+            <div className="w-40 h-40 rounded-full overflow-hidden border-4 border-white shadow-xl mb-8 ring-8 ring-blue-50/50 group-hover:ring-[var(--accent-secondary)]/10 transition-all">
                 {imageUrl ? (
                     <img
                         src={imageUrl}
@@ -105,44 +105,99 @@ function SpeakerCard({ speaker }) {
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                     />
                 ) : (
-                    <div className="absolute inset-0 flex items-center justify-center bg-[var(--bg-tertiary)]">
-                        <div className="text-[var(--text-secondary)]/30 text-8xl font-black">
-                            {speaker.name.charAt(0).toUpperCase()}
-                        </div>
+                    <div className="w-full h-full flex items-center justify-center bg-gray-50 text-gray-300 font-black text-5xl">
+                        {speaker.name?.charAt(0).toUpperCase() || '?'}
                     </div>
                 )}
-                <div className="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-[var(--bg-secondary)] to-transparent">
-                    <p className="text-[var(--accent-secondary)] font-bold uppercase tracking-widest text-[9px] mb-2">{speaker.designation || "Expert Specialist"}</p>
-                    <h3 className="text-3xl font-black text-[var(--text-primary)] tracking-tighter uppercase">{speaker.name}</h3>
-                </div>
             </div>
 
-            <div className="p-10">
-                <div className="flex flex-wrap gap-2 mb-8">
-                    {speaker.roleType?.split(',').map(role => (
-                        <span key={role} className="px-3 py-1 bg-[var(--bg-tertiary)] text-[var(--text-secondary)] rounded-full text-[8px] font-bold uppercase tracking-widest border border-[var(--bg-tertiary)]">{role.trim()}</span>
-                    ))}
+            <div className="mb-8">
+                <h3 className="text-3xl font-black text-[var(--accent-primary)] tracking-tighter uppercase mb-2 leading-none">{speaker.name}</h3>
+                <p className="text-[11px] font-bold text-[var(--accent-secondary)] uppercase tracking-[0.3em]">{speaker.designation || "Expert Consultant"}</p>
+            </div>
+
+            <div className="flex justify-center gap-4 mb-10">
+                <div className="w-12 h-12 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center text-xl hover:bg-blue-600 hover:text-white transition-all cursor-pointer shadow-sm">📞</div>
+                <div className="w-12 h-12 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center text-xl hover:bg-blue-600 hover:text-white transition-all cursor-pointer shadow-sm">✉️</div>
+                <div className="w-12 h-12 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center text-xl hover:bg-blue-600 hover:text-white transition-all cursor-pointer shadow-sm">•••</div>
+            </div>
+
+            <div className="w-full p-6 bg-gray-50/50 rounded-[2rem] mb-6 border border-gray-100 flex items-center justify-between">
+                <div className="flex items-center gap-4 text-left">
+                    <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-sm text-xl border border-gray-100">🏢</div>
+                    <div>
+                        <p className="text-[9px] font-black text-gray-400 uppercase tracking-widest leading-none mb-1.5">Affiliation</p>
+                        <p className="text-xs font-black text-[var(--text-primary)] uppercase tracking-tight">{speaker.organization || "Independent"}</p>
+                    </div>
+                </div>
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+            </div>
+
+            <button className="w-full py-5 bg-white border-2 border-black text-black rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-black hover:text-white transition-all active:scale-95 shadow-lg">
+                View Full Profile
+            </button>
+        </div>
+    );
+}
+
+function ItemCard({ item, type }) {
+    const imageUrl = item.imageUrl
+        ? (item.imageUrl.startsWith('http') ? item.imageUrl : `https://bbabachmate2026-821t2dq3p-junaidkhanniaziis-projects.vercel.app${item.imageUrl}`)
+        : null;
+
+    // Determine brand color based on type
+    const isIndustry = type.includes('jobs') || type.includes('internships') || type.includes('challenges') || type.includes('research');
+    const brandColor = isIndustry ? "var(--accent-secondary)" : "var(--accent-primary)";
+
+    return (
+        <div className="bg-white rounded-[2.5rem] border border-gray-100 p-8 md:p-12 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 group relative overflow-hidden flex flex-col lg:flex-row gap-10">
+            <div className={`absolute top-0 right-0 w-40 h-40 opacity-5 blur-[100px] rounded-full`} style={{ backgroundColor: brandColor }}></div>
+
+            {imageUrl && (
+                <div className="w-full lg:w-64 h-64 flex-shrink-0 rounded-[2rem] overflow-hidden border border-gray-100 shadow-sm group-hover:shadow-xl transition-all">
+                    <img
+                        src={imageUrl}
+                        alt={item.title || item.name}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    />
+                </div>
+            )}
+
+            <div className="flex-1 flex flex-col">
+                <div className="flex flex-wrap items-start justify-between gap-6 mb-8">
+                    <div className="space-y-2">
+                        <div className="flex items-center gap-3">
+                            <span className="px-3 py-1 bg-blue-50 text-[var(--accent-secondary)] rounded-lg text-[9px] font-black uppercase tracking-widest border border-blue-100">{item.domain || item.category || type.split('/').pop()}</span>
+                            {item.type && <span className="px-3 py-1 bg-gray-50 text-gray-500 rounded-lg text-[9px] font-black uppercase tracking-widest border border-gray-100">{item.type}</span>}
+                        </div>
+                        <h3 className="text-3xl md:text-5xl font-black text-[var(--accent-primary)] tracking-tighter uppercase leading-none">{item.title || item.name}</h3>
+                    </div>
+                    <button className="px-10 py-5 bg-[var(--accent-primary)] text-white rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-blue-700 transition-all shadow-xl active:scale-95">
+                        Inquire Details
+                    </button>
                 </div>
 
-                <p className="text-[var(--text-secondary)] font-medium text-sm mb-10 leading-relaxed italic line-clamp-3">
-                    {speaker.bio || speaker.topic}
+                <p className="text-[var(--text-secondary)] font-medium text-base md:text-lg mb-10 line-clamp-3 leading-relaxed italic max-w-4xl">
+                    {item.description || item.abstract || item.problemStatement}
                 </p>
 
-                <div className="grid grid-cols-2 gap-6 mb-10 pb-10 border-b border-[var(--bg-tertiary)]">
-                    <div>
-                        <p className="text-[8px] uppercase font-black text-[var(--text-secondary)] tracking-widest mb-1">Experience</p>
-                        <p className="text-xs font-bold text-[var(--text-primary)] uppercase">{speaker.experience || "N/A"}</p>
-                    </div>
-                    <div>
-                        <p className="text-[8px] uppercase font-black text-[var(--text-secondary)] tracking-widest mb-1">Organization</p>
-                        <p className="text-xs font-bold text-[var(--text-primary)] uppercase">{speaker.organization || "Independent"}</p>
-                    </div>
+                <div className="flex flex-wrap gap-3 mt-auto pt-8 border-t border-gray-50">
+                    {item.location && <FeatureBadge icon="📍" label={item.location} />}
+                    {item.duration && <FeatureBadge icon="⏱️" label={item.duration} />}
+                    {item.stipendType && <FeatureBadge icon="💰" label={item.stipendType} />}
+                    {item.deadline && <FeatureBadge icon="📅" label={new Date(item.deadline).toLocaleDateString()} />}
+                    {item.supervisor && <FeatureBadge icon="👤" label={item.supervisor} />}
                 </div>
 
-                {speaker.createdBy && (
-                    <div className="flex items-center justify-between">
-                        <span className="text-[8px] font-bold text-[var(--text-secondary)]/50 uppercase tracking-widest italic">Registered By</span>
-                        <span className="text-[10px] font-black text-[var(--accent-secondary)] uppercase tracking-tighter border-b border-[var(--accent-secondary)]/20">{speaker.createdBy.profile?.name}</span>
+                {item.createdBy && (
+                    <div className="mt-10 flex items-center gap-4 p-4 bg-gray-50/50 rounded-2xl border border-gray-100 self-start">
+                        <div className="w-10 h-10 bg-white rounded-xl shadow-sm border border-gray-100 flex items-center justify-center text-xs font-black text-[var(--accent-secondary)]">
+                            {item.createdBy.profile?.name?.charAt(0) || 'E'}
+                        </div>
+                        <div>
+                            <p className="text-[8px] font-black text-gray-400 uppercase tracking-widest mb-0.5">Verified Origin</p>
+                            <p className="text-xs font-black text-[var(--text-primary)] uppercase tracking-tight">{item.createdBy.profile?.name}</p>
+                        </div>
                     </div>
                 )}
             </div>
@@ -150,63 +205,11 @@ function SpeakerCard({ speaker }) {
     );
 }
 
-function ItemCard({ item, type }) {
-    const imageUrl = item.imageUrl
-        ? (item.imageUrl.startsWith('http') ? item.imageUrl : `http://localhost:5000${item.imageUrl}`)
-        : null;
-
+function FeatureBadge({ icon, label }) {
     return (
-        <div className="bg-[var(--bg-secondary)] rounded-[2rem] border border-[var(--bg-tertiary)] p-10 hover:bg-[var(--bg-tertiary)]/20 transition-all duration-500 group shadow-sm hover:shadow-xl relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-[var(--accent-secondary)]/5 blur-[80px] rounded-full"></div>
-
-            <div className="flex flex-col md:flex-row gap-12 relative z-10">
-                {imageUrl && (
-                    <div className="w-full md:w-56 h-56 flex-shrink-0 rounded-[2rem] overflow-hidden border border-[var(--bg-tertiary)] bg-[var(--bg-secondary)] group-hover:border-[var(--accent-secondary)]/30 transition-all">
-                        <img
-                            src={imageUrl}
-                            alt={item.title || item.name}
-                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                        />
-                    </div>
-                )}
-
-                <div className="flex-1">
-                    <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
-                        <div className="space-y-1">
-                            <p className="text-[var(--accent-secondary)] font-bold uppercase tracking-[0.2em] text-[10px]">{item.domain || item.category || type.slice(0, -1)}</p>
-                            <h3 className="text-3xl md:text-4xl font-black text-[var(--text-primary)] tracking-tighter uppercase">{item.title || item.name}</h3>
-                        </div>
-                        <div className="px-5 py-2 bg-[var(--accent-primary)] text-white rounded-xl text-[10px] font-black uppercase tracking-widest shadow-lg hover:bg-[var(--accent-secondary)] transition-all cursor-pointer">
-                            View Details
-                        </div>
-                    </div>
-
-                    <p className="text-[var(--text-secondary)] font-medium text-sm mb-10 line-clamp-2 max-w-4xl leading-loose italic">
-                        {item.description || item.abstract || item.problemStatement}
-                    </p>
-
-                    <div className="flex flex-wrap gap-4 items-center">
-                        {item.location && <Attribute icon="📍" label={item.location} />}
-                        {item.type && <Attribute label={item.type} variant="blue" />}
-                        {item.duration && <Attribute icon="⏱️" label={item.duration} />}
-                        {item.stipendType && <Attribute icon="💰" label={item.stipendType} />}
-                        {item.deadline && <Attribute icon="📅" label={`Deadline: ${new Date(item.deadline).toLocaleDateString()}`} />}
-                        {item.supervisor && <Attribute icon="👤" label={`Supervisor: ${item.supervisor}`} />}
-                    </div>
-
-                    {item.createdBy && (
-                        <div className="mt-12 pt-8 border-t border-[var(--bg-tertiary)] flex items-center gap-4">
-                            <div className="w-10 h-10 bg-[var(--bg-tertiary)] rounded-full flex items-center justify-center border border-[var(--bg-tertiary)] text-[10px] font-black text-[var(--text-secondary)] uppercase tracking-tighter italic">
-                                {item.createdBy.profile?.name?.charAt(0)}
-                            </div>
-                            <div className="space-y-1">
-                                <p className="text-[9px] font-bold text-[var(--text-secondary)]/50 uppercase tracking-widest">Origin Entity</p>
-                                <p className="text-sm font-black text-[var(--text-primary)] uppercase tracking-tighter italic">{item.createdBy.profile?.name}</p>
-                            </div>
-                        </div>
-                    )}
-                </div>
-            </div>
+        <div className="flex items-center space-x-2 px-5 py-3 bg-white border border-gray-100 rounded-xl hover:border-blue-200 transition-colors shadow-sm">
+            <span className="text-base">{icon}</span>
+            <span className="text-[10px] font-black text-[var(--text-secondary)] uppercase tracking-widest">{label}</span>
         </div>
     );
 }

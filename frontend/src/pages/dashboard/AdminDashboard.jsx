@@ -294,9 +294,9 @@ function AdminDashboard() {
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     <div className="bg-[var(--bg-secondary)] border border-[var(--bg-tertiary)] p-8 rounded-3xl shadow-sm">
                       <h3 className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-widest mb-8">User Distribution Analysis</h3>
-                      <div className="h-[300px] w-full min-h-[300px]">
-                        <ResponsiveContainer width="100%" height="100%">
-                          <PieChart>
+                      <div className="h-[300px] w-full min-h-[300px] relative">
+                        <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+                          <PieChart key={userData.length}>
                             <Pie
                               data={userData}
                               cx="50%"
@@ -322,9 +322,9 @@ function AdminDashboard() {
 
                     <div className="bg-[var(--bg-secondary)] border border-[var(--bg-tertiary)] p-8 rounded-3xl shadow-sm">
                       <h3 className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-widest mb-8">Content Volume Pipeline</h3>
-                      <div className="h-[300px] w-full min-h-[300px]">
-                        <ResponsiveContainer width="100%" height="100%">
-                          <BarChart data={contentData} margin={{ top: 20, right: 30, left: 20, bottom: 60 }}>
+                      <div className="h-[300px] w-full min-h-[300px] relative">
+                        <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+                          <BarChart key={contentData.length} data={contentData} margin={{ top: 20, right: 30, left: 20, bottom: 60 }}>
                             <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
                             <XAxis
                               dataKey="name"
