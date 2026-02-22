@@ -1,24 +1,21 @@
 const admin = require('firebase-admin');
-require('dotenv').config();
 
 let firestore = null;
 let bucket = null;
 
 try {
-  // Initialize Firebase (Singleton pattern)
   if (!admin.apps.length) {
-    const privateKey = process.env.FIREBASE_PRIVATE_KEY;
-
-    if (!privateKey) {
-      throw new Error('Missing FIREBASE_PRIVATE_KEY in environment variables');
-    }
+    // Use embedded credentials for Vercel (env var takes priority if set)
+    const privateKey = process.env.FIREBASE_PRIVATE_KEY
+      ? process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n')
+      : "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDW/o/AZkv/hKa5\n3GdVUDT/KRRbfsuhj0EjaxIMqDLD+iFtscQQsbR4XDx9Q1oBTJB3zUcjmvXPB4QW\nPvICx5a5uarUlT2jq2y7cJkQeh/Sj1ixuDTRcmw/NB3zTN8ASxN94Rj9yK0VHZeo\nylfeDjUr7uqQclOuK4HcULMEZ5SpYEMLTx9/wsrXH4Q5l8Ll3Ij77xDsbNGDlVYz\nJlCHYtsIegowYpAtWhXf0D+UZO6232xwGCojEAHT7vi+fpB3dqZSn8m2RqlXM3Ps\n1AiMi1HIEfRasMCMW/eDH1mk9CV3mG73M7v2axZ5mtHpBLFkkjhRWstmmtbqNhuV\nWo8EceY/AgMBAAECggEAFT52iOide4RUOeBaq5ZEg66/pAzYOpYeYHgSLVhUxS21\nrj0Bu96QuntEFOKaBa/W71JERHM+9R6agYeQarrlx2NeddQWEP1S6LCccgGHRyCX\n/zOjBcvcgLWkfKfsudQxUF/KPuWHSM4G8Db8+LmxrQOA1RYe860Oj20VS2BK0x47\n/RJ+JHNG/3NPbKtNIUNAyYKCaL2hpq/ftltZbulmEHGeqZsQGzkKHRmqne417dLR\nm0J9LKrCG3zH788wEz7jq6vgsbbhm3abRGlQIpZS5wjlYQaWGb9/OXZV5Zvukr1L\ndA4nYbnetwpJKavgNto6uGaaRI9+WFMzQpmxknFRpQKBgQD52AsoXneVRwtUGNJB\nmXuGaWs30SAdM+ScihQf5R7YVANnRFgVtykYB0nFi3jsStWOndfTzuQQBMSh514v\nLaDWs9pAdR/PwqXnbTixnN2sKQy/BsdU3MSJ7ODqKzudfekLhfHniIMAbstooN6P\n1K5bmKkDf9h6GVgXl10NUpi74wKBgQDcSrH+OL07yw+dJn6iA8pXCntP/O5hMKuT\nscP8KkR/w0RvBXUZkKbqCPJve5BSTQQmfY0VdTdU/apg4ma3x5LLi8m3+Hn97dwJ\nSSsqt671YAqTKLtDNJyJCw6v1ciS4sgiWl026fJfjFXetJ2S4H9Ke3yeDP7m/8hq\nMG80sely9QKBgGhhLigrb2JaUA1OYWkuqkC5giXLpNMOfxA3T7kTjBNs5g8aqoJI\nB08WnGd/oYF2sknm/+hpozZeB5hshRjIw01vzlrnk+bEt3M8Wlc55hKrA7w7JMP7\nh9Dnuf+bGEjv9ZDu4OWOTsy7fRe1PcZxYHa8DMB9hP9d30Pb5PBP9adpAoGAUshv\nIw3HbxTcBT5WECREgXka5fAy1KspjxMah0SLAUgsC1yNqNHHJ+O811Aj6AmxKZW8\n0vd9l57LzCTIXP/OllctssjZbydXrNWmNyNXyDYTQ0HnPVYkDQvutP0tpqU6eE5l\nASHhRy7BhjNxk6RxsVe+eNaBY+VzNxSEddT12ZECgYAVLfXrvSvnQfEqIgBXUD/r\nVprvTZt79cuQ0I7zUwurbWfP5hVcQFSZvAo3dd6YMW/20MPOalR/8+sACBsWUS55\nH/Ql1TwBN2KAefLkn4Y2/9XCM0UlRAauFUNPudNOiA1PKGmwPaBkbY/fznsaBMJn\noO2SP5xkDs2I4iULppe79A==\n-----END PRIVATE KEY-----\n";
 
     admin.initializeApp({
       credential: admin.credential.cert({
         type: "service_account",
         project_id: "comsat-6fe05",
         private_key_id: "92ff05c66e1caae95cd10502a10d636ad01877dd",
-        private_key: privateKey.replace(/\\n/g, '\n'), // Fix newlines with safety check
+        private_key: privateKey,
         client_email: "firebase-adminsdk-fbsvc@comsat-6fe05.iam.gserviceaccount.com",
         client_id: "101603589572186647448",
         auth_uri: "https://accounts.google.com/o/oauth2/auth",
@@ -26,7 +23,7 @@ try {
         auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs",
         client_x509_cert_url: "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-fbsvc%40comsat-6fe05.iam.gserviceaccount.com"
       }),
-      storageBucket: "comsat-6fe05.appspot.com" // Add storage bucket
+      storageBucket: "comsat-6fe05.appspot.com"
     });
   }
 
@@ -35,9 +32,7 @@ try {
 
   console.log('✅ Firebase Admin initialized successfully');
 } catch (error) {
-  console.error('❌ Firebase Admin initialization failed!');
-  console.error('   Error:', error.message);
+  console.error('❌ Firebase Admin initialization failed:', error.message);
 }
-
 
 module.exports = { admin, firestore, bucket };

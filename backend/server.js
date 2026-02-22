@@ -1,9 +1,12 @@
-// server.js - Full Backend Logic
+// server.js - Vercel-compatible Serverless Backend
 const express = require('express');
 const cors = require('cors');
-// Connect to databases
+const helmet = require('helmet');
+const compression = require('compression');
+const morgan = require('morgan');
+
+// Connect to databases (Firebase only)
 const { firestore } = require('./config/firebase');
-// MongoDB connection removed
 
 // Route Imports
 const authRoutes = require('./routes/authRoutes');
@@ -12,40 +15,37 @@ const universityRoutes = require('./routes/universityRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const apiRoutes = require('./routes/api');
 
-const helmet = require('helmet');
-const compression = require('compression');
-const morgan = require('morgan');
-
 const app = express();
-const port = 5000;
 
 // Middleware
 app.use(helmet({
-  contentSecurityPolicy: false, // For local dev compatibility
+  contentSecurityPolicy: false,
   crossOriginResourcePolicy: { policy: "cross-origin" }
 }));
-app.use(compression()); // Gzip all responses
-app.use(morgan('dev')); // Fast logging
-app.use(cors());
-app.use(express.json());
+app.use(compression());
+app.use(morgan('dev'));
 
-// Serve uploaded files statically with caching
-app.use('/uploads', express.static('uploads', {
-  maxAge: '1d',
-  immutable: true
+// CORS - Allow all origins (including Vercel deployments)
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: false
 }));
 
-// Connect to databases
-// MongoDB connection removed
-// connectMongoDB();
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+
+// NOTE: /uploads static file serving removed - Vercel has a read-only filesystem.
+// File uploads should use Firebase Storage or Cloudinary in production.
 
 // Base Route
 app.get('/', (req, res) => {
   res.json({
-    message: '✅ BBABachmate Backend Server Running (Firebase Only)',
+    message: '✅ BBABachmate Backend Running on Vercel',
     timestamp: new Date().toISOString(),
     status: 'active',
-    version: '2.1.0 (Firebase Migration)'
+    version: '2.2.0 (Vercel Serverless)'
   });
 });
 
@@ -64,19 +64,23 @@ app.use((req, res) => {
   });
 });
 
-// Start Server
-app.listen(port, () => {
-  console.log(`
-====================================
-🚀 Server running: http://localhost:${port}
-🔥 Firebase: ${firestore ? 'Connected' : 'Failed'}
-📌 API Routes:
-   - /api/auth
-   - /api/industry
-   - /api/university
-   - /api/admin
-====================================
-  `);
+// Error Handler
+app.use((err, req, res, next) => {
+  console.error('Server error:', err.message);
+  res.status(500).json({
+    success: false,
+    message: 'Internal server error'
+  });
 });
+
+// IMPORTANT: Do NOT call app.listen() on Vercel - export app instead
+// Vercel handles the server lifecycle automatically
+if (process.env.NODE_ENV !== 'production') {
+  const port = process.env.PORT || 5000;
+  app.listen(port, () => {
+    console.log(`🚀 Local server running: http://localhost:${port}`);
+    console.log(`🔥 Firebase: ${firestore ? 'Connected' : 'Failed'}`);
+  });
+}
 
 module.exports = app;
