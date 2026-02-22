@@ -122,7 +122,7 @@ function PublicListing({ title, endpoint }) {
 
 function SpeakerCard({ speaker, onView }) {
     const imageUrl = speaker.imageUrl
-        ? (speaker.imageUrl.startsWith('http') ? speaker.imageUrl : `https://bbabachmate2026-821t2dq3p-junaidkhanniaziis-projects.vercel.app${speaker.imageUrl}`)
+        ? (speaker.imageUrl.startsWith('http') ? speaker.imageUrl : `${import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:5000'}${speaker.imageUrl}`)
         : null;
 
     return (
