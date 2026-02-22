@@ -11,7 +11,7 @@ try {
       type: "service_account",
       project_id: "comsat-6fe05",
       private_key_id: "92ff05c66e1caae95cd10502a10d636ad01877dd",
-      private_key: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'), // Fix newlines
+      private_key: (process.env.FIREBASE_PRIVATE_KEY || '').replace(/\\n/g, '\n'), // Fix newlines with safety check
       client_email: "firebase-adminsdk-fbsvc@comsat-6fe05.iam.gserviceaccount.com",
       client_id: "101603589572186647448",
       auth_uri: "https://accounts.google.com/o/oauth2/auth",
