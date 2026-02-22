@@ -41,20 +41,20 @@ function PublicListing({ title, endpoint }) {
     return (
         <div className="min-h-screen bg-[var(--bg-primary)] py-24 px-6 md:px-8">
             <div className="max-w-7xl mx-auto">
-                <div className="flex flex-col items-center text-center mb-20 animate-in fade-in slide-in-from-top-4 duration-700">
-                    <div className="w-20 h-1 bg-[var(--accent-secondary)] rounded-full mb-8"></div>
-                    <h1 className="text-5xl md:text-7xl font-black text-[var(--text-primary)] mb-6 tracking-tighter uppercase">{title} <span className="text-[var(--accent-secondary)]">HUNT</span></h1>
-                    <p className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-widest italic leading-relaxed">Browsing Active Professional Opportunities in {title}</p>
+                <div className="flex flex-col items-center text-center mb-12 animate-in fade-in slide-in-from-top-4 duration-700">
+                    <div className="w-12 h-1 bg-[var(--accent-secondary)] rounded-full mb-6"></div>
+                    <h1 className="text-3xl md:text-5xl font-black text-[var(--text-primary)] mb-3 tracking-tighter uppercase">{title} <span className="text-[var(--accent-secondary)]">PORTAL</span></h1>
+                    <p className="text-[9px] font-bold text-[var(--text-secondary)] uppercase tracking-[0.3em] italic leading-relaxed opacity-70">Exploring {title} Management Registry</p>
                 </div>
 
-                <div className="mb-16 max-w-3xl mx-auto">
+                <div className="mb-12 max-w-2xl mx-auto">
                     <div className="relative group">
                         <input
                             type="text"
-                            placeholder={`Filter ${type} records...`}
+                            placeholder={`Search ${type}...`}
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="w-full bg-[var(--bg-secondary)] px-8 py-5 rounded-2xl border border-[var(--bg-tertiary)] focus:border-[var(--accent-secondary)]/50 focus:outline-none shadow-sm text-[var(--text-primary)] font-bold placeholder:text-[var(--text-secondary)]/30 transition-all uppercase text-xs tracking-widest"
+                            className="w-full bg-[var(--bg-secondary)] px-6 py-4 rounded-xl border border-[var(--bg-tertiary)] focus:border-[var(--accent-secondary)]/50 focus:outline-none shadow-sm text-[var(--text-primary)] font-bold placeholder:text-[var(--text-secondary)]/30 transition-all uppercase text-[10px] tracking-widest"
                         />
                     </div>
                 </div>
@@ -75,7 +75,7 @@ function PublicListing({ title, endpoint }) {
                 )}
 
                 {!loading && filteredItems.length > 0 && (
-                    <div className={isSpeakers ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10' : 'space-y-8'}>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                         {filteredItems.map((item) => (
                             isSpeakers ? (
                                 <SpeakerCard key={item._id} speaker={item} />
@@ -150,56 +150,58 @@ function ItemCard({ item, type }) {
     const brandColor = isIndustry ? "var(--accent-secondary)" : "var(--accent-primary)";
 
     return (
-        <div className="bg-white rounded-[2.5rem] border border-gray-100 p-8 md:p-12 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 group relative overflow-hidden flex flex-col lg:flex-row gap-10">
-            <div className={`absolute top-0 right-0 w-40 h-40 opacity-5 blur-[100px] rounded-full`} style={{ backgroundColor: brandColor }}></div>
-
-            {imageUrl && (
-                <div className="w-full lg:w-64 h-64 flex-shrink-0 rounded-[2rem] overflow-hidden border border-gray-100 shadow-sm group-hover:shadow-xl transition-all">
+        <div className="group bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 flex flex-col h-full shadow-sm">
+            {/* Header Image */}
+            <div className="h-44 w-full relative overflow-hidden bg-gray-50">
+                {imageUrl ? (
                     <img
                         src={imageUrl}
                         alt={item.title || item.name}
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                     />
-                </div>
-            )}
-
-            <div className="flex-1 flex flex-col">
-                <div className="flex flex-wrap items-start justify-between gap-6 mb-8">
-                    <div className="space-y-2">
-                        <div className="flex items-center gap-3">
-                            <span className="px-3 py-1 bg-blue-50 text-[var(--accent-secondary)] rounded-lg text-[9px] font-black uppercase tracking-widest border border-blue-100">{item.domain || item.category || type.split('/').pop()}</span>
-                            {item.type && <span className="px-3 py-1 bg-gray-50 text-gray-500 rounded-lg text-[9px] font-black uppercase tracking-widest border border-gray-100">{item.type}</span>}
-                        </div>
-                        <h3 className="text-3xl md:text-5xl font-black text-[var(--accent-primary)] tracking-tighter uppercase leading-none">{item.title || item.name}</h3>
+                ) : (
+                    <div className="w-full h-full flex items-center justify-center opacity-20" style={{ background: brandColor }}>
+                        <span className="text-white font-black text-2xl uppercase italic">AICON</span>
                     </div>
-                    <button className="px-10 py-5 bg-[var(--accent-primary)] text-white rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-blue-700 transition-all shadow-xl active:scale-95">
-                        Inquire Details
-                    </button>
+                )}
+                <div className="absolute top-4 left-4">
+                    <span className="px-2 py-1 bg-white/90 backdrop-blur-sm shadow-sm rounded-md text-[8px] font-black uppercase tracking-widest text-[var(--accent-primary)] border border-gray-100">
+                        {item.domain || item.category || type.split('/').pop()}
+                    </span>
                 </div>
+            </div>
 
-                <p className="text-[var(--text-secondary)] font-medium text-base md:text-lg mb-10 line-clamp-3 leading-relaxed italic max-w-4xl">
+            {/* Content Area */}
+            <div className="p-6 flex flex-col flex-1">
+                <h3 className="text-base font-black text-[var(--text-primary)] tracking-tight uppercase mb-2 line-clamp-2 leading-tight group-hover:text-[var(--accent-secondary)] transition-colors">
+                    {item.title || item.name}
+                </h3>
+
+                <p className="text-[10px] font-bold text-gray-400 mb-4 line-clamp-2 uppercase leading-relaxed italic">
                     {item.description || item.abstract || item.problemStatement}
                 </p>
 
-                <div className="flex flex-wrap gap-3 mt-auto pt-8 border-t border-gray-50">
+                <div className="flex flex-wrap gap-2 mb-6 mt-auto">
                     {item.location && <FeatureBadge icon="📍" label={item.location} />}
+                    {item.type && <FeatureBadge label={item.type} />}
                     {item.duration && <FeatureBadge icon="⏱️" label={item.duration} />}
                     {item.stipendType && <FeatureBadge icon="💰" label={item.stipendType} />}
                     {item.deadline && <FeatureBadge icon="📅" label={new Date(item.deadline).toLocaleDateString()} />}
                     {item.supervisor && <FeatureBadge icon="👤" label={item.supervisor} />}
                 </div>
 
-                {item.createdBy && (
-                    <div className="mt-10 flex items-center gap-4 p-4 bg-gray-50/50 rounded-2xl border border-gray-100 self-start">
-                        <div className="w-10 h-10 bg-white rounded-xl shadow-sm border border-gray-100 flex items-center justify-center text-xs font-black text-[var(--accent-secondary)]">
-                            {item.createdBy.profile?.name?.charAt(0) || 'E'}
+                {/* Footer Section */}
+                <div className="pt-4 border-t border-gray-50 flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                        <div className="w-6 h-6 bg-gray-50 rounded-full flex items-center justify-center text-[8px] font-black text-[var(--accent-secondary)] border border-gray-100">
+                            {item.createdBy?.profile?.name?.charAt(0) || 'E'}
                         </div>
-                        <div>
-                            <p className="text-[8px] font-black text-gray-400 uppercase tracking-widest mb-0.5">Verified Origin</p>
-                            <p className="text-xs font-black text-[var(--text-primary)] uppercase tracking-tight">{item.createdBy.profile?.name}</p>
-                        </div>
+                        <span className="text-[8px] font-black text-gray-400 uppercase tracking-tighter truncate max-w-[80px]">{item.createdBy?.profile?.name}</span>
                     </div>
-                )}
+                    <button className="px-4 py-2 bg-[var(--accent-primary)] text-white rounded-lg font-black text-[8px] uppercase tracking-widest hover:bg-black transition-all shadow-md active:scale-95">
+                        Inquire
+                    </button>
+                </div>
             </div>
         </div>
     );
@@ -207,24 +209,13 @@ function ItemCard({ item, type }) {
 
 function FeatureBadge({ icon, label }) {
     return (
-        <div className="flex items-center space-x-2 px-5 py-3 bg-white border border-gray-100 rounded-xl hover:border-blue-200 transition-colors shadow-sm">
-            <span className="text-base">{icon}</span>
-            <span className="text-[10px] font-black text-[var(--text-secondary)] uppercase tracking-widest">{label}</span>
-        </div>
-    );
-}
-
-function Attribute({ icon, label, variant = 'gray' }) {
-    const classes = variant === 'blue'
-        ? "bg-[var(--accent-secondary)]/10 text-[var(--accent-secondary)] border-[var(--accent-secondary)]/20"
-        : "bg-[var(--bg-tertiary)] text-[var(--text-secondary)] border-[var(--bg-tertiary)]";
-
-    return (
-        <div className={`flex items-center space-x-2 px-5 py-2.5 border rounded-xl transition-all hover:border-[var(--accent-secondary)]/30 ${classes}`}>
-            {icon && <span className="text-sm mr-1">{icon}</span>}
-            <span className="text-[10px] font-bold uppercase tracking-widest">{label}</span>
+        <div className="flex items-center space-x-1 px-3 py-1.5 bg-gray-50 border border-gray-100 rounded-lg">
+            {icon && <span className="text-[10px]">{icon}</span>}
+            <span className="text-[7px] font-black text-gray-400 uppercase tracking-widest">{label}</span>
         </div>
     );
 }
 
 export default PublicListing;
+
+
