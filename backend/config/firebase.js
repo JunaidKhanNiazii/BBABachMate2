@@ -5,32 +5,39 @@ let firestore = null;
 let bucket = null;
 
 try {
-  // Initialize Firebase
-  admin.initializeApp({
-    credential: admin.credential.cert({
-      type: "service_account",
-      project_id: "comsat-6fe05",
-      private_key_id: "92ff05c66e1caae95cd10502a10d636ad01877dd",
-      private_key: (process.env.FIREBASE_PRIVATE_KEY || '').replace(/\\n/g, '\n'), // Fix newlines with safety check
-      client_email: "firebase-adminsdk-fbsvc@comsat-6fe05.iam.gserviceaccount.com",
-      client_id: "101603589572186647448",
-      auth_uri: "https://accounts.google.com/o/oauth2/auth",
-      token_uri: "https://oauth2.googleapis.com/token",
-      auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs",
-      client_x509_cert_url: "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-fbsvc%40comsat-6fe05.iam.gserviceaccount.com"
-    }),
-    storageBucket: "comsat-6fe05.appspot.com" // Add storage bucket
-  });
+  // Initialize Firebase (Singleton pattern)
+  if (!admin.apps.length) {
+    const privateKey = process.env.FIREBASE_PRIVATE_KEY;
+
+    if (!privateKey) {
+      throw new Error('Missing FIREBASE_PRIVATE_KEY in environment variables');
+    }
+
+    admin.initializeApp({
+      credential: admin.credential.cert({
+        type: "service_account",
+        project_id: "comsat-6fe05",
+        private_key_id: "92ff05c66e1caae95cd10502a10d636ad01877dd",
+        private_key: privateKey.replace(/\\n/g, '\n'), // Fix newlines with safety check
+        client_email: "firebase-adminsdk-fbsvc@comsat-6fe05.iam.gserviceaccount.com",
+        client_id: "101603589572186647448",
+        auth_uri: "https://accounts.google.com/o/oauth2/auth",
+        token_uri: "https://oauth2.googleapis.com/token",
+        auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs",
+        client_x509_cert_url: "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-fbsvc%40comsat-6fe05.iam.gserviceaccount.com"
+      }),
+      storageBucket: "comsat-6fe05.appspot.com" // Add storage bucket
+    });
+  }
 
   firestore = admin.firestore();
   bucket = admin.storage().bucket();
 
   console.log('✅ Firebase Admin initialized successfully');
-  console.log('✅ Firebase Storage bucket:', bucket.name);
 } catch (error) {
   console.error('❌ Firebase Admin initialization failed!');
   console.error('   Error:', error.message);
-  console.error('   Stack:', error.stack);
 }
+
 
 module.exports = { admin, firestore, bucket };
