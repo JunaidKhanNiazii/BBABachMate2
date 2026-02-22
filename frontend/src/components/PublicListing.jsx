@@ -5,6 +5,8 @@ function PublicListing({ title, endpoint }) {
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
+    const [selectedItem, setSelectedItem] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const type = endpoint.split('/').pop();
     const isSpeakers = type === 'speakers';
@@ -78,25 +80,53 @@ function PublicListing({ title, endpoint }) {
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                         {filteredItems.map((item) => (
                             isSpeakers ? (
-                                <SpeakerCard key={item._id} speaker={item} />
+                                <SpeakerCard
+                                    key={item._id}
+                                    speaker={item}
+                                    onView={() => {
+                                        setSelectedItem(item);
+                                        setIsModalOpen(true);
+                                    }}
+                                />
                             ) : (
-                                <ItemCard key={item._id} item={item} type={type} />
+                                <ItemCard
+                                    key={item._id}
+                                    item={item}
+                                    type={type}
+                                    onInquire={() => {
+                                        setSelectedItem(item);
+                                        setIsModalOpen(true);
+                                    }}
+                                />
                             )
                         ))}
                     </div>
+                )}
+
+                {/* Detail Modal */}
+                {isModalOpen && selectedItem && (
+                    <DetailModal
+                        item={selectedItem}
+                        isSpeaker={isSpeakers}
+                        type={type}
+                        onClose={() => {
+                            setIsModalOpen(false);
+                            setSelectedItem(null);
+                        }}
+                    />
                 )}
             </div>
         </div>
     );
 }
 
-function SpeakerCard({ speaker }) {
+function SpeakerCard({ speaker, onView }) {
     const imageUrl = speaker.imageUrl
         ? (speaker.imageUrl.startsWith('http') ? speaker.imageUrl : `https://bbabachmate2026-821t2dq3p-junaidkhanniaziis-projects.vercel.app${speaker.imageUrl}`)
         : null;
 
     return (
-        <div className="group bg-white rounded-[2.5rem] border border-gray-100 overflow-hidden hover:border-[var(--accent-secondary)]/20 transition-all duration-500 shadow-sm hover:shadow-2xl hover:-translate-y-2 flex flex-col items-center text-center p-10">
+        <div className="group bg-white rounded-[2.5rem] border border-gray-100 overflow-hidden hover:border-[var(--accent-secondary)]/20 transition-all duration-500 shadow-sm hover:shadow-2xl hover:-translate-y-2 flex flex-col items-center text-center p-10 relative">
             <div className="w-40 h-40 rounded-full overflow-hidden border-4 border-white shadow-xl mb-8 ring-8 ring-blue-50/50 group-hover:ring-[var(--accent-secondary)]/10 transition-all">
                 {imageUrl ? (
                     <img
@@ -133,14 +163,20 @@ function SpeakerCard({ speaker }) {
                 <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
             </div>
 
-            <button className="w-full py-5 bg-white border-2 border-black text-black rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-black hover:text-white transition-all active:scale-95 shadow-lg">
-                View Full Profile
-            </button>
+            {/* Hover Reveal Button */}
+            <div className="w-full absolute inset-x-0 bottom-0 p-10 translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 ease-out z-20 bg-gradient-to-t from-white via-white/95 to-transparent pt-32">
+                <button
+                    onClick={onView}
+                    className="w-full py-5 bg-black text-white rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-[var(--accent-secondary)] transition-all active:scale-95 shadow-2xl"
+                >
+                    View Full Profile
+                </button>
+            </div>
         </div>
     );
 }
 
-function ItemCard({ item, type }) {
+function ItemCard({ item, type, onInquire }) {
     const imageUrl = item.imageUrl
         ? (item.imageUrl.startsWith('http') ? item.imageUrl : `https://bbabachmate2026-821t2dq3p-junaidkhanniaziis-projects.vercel.app${item.imageUrl}`)
         : null;
@@ -150,7 +186,7 @@ function ItemCard({ item, type }) {
     const brandColor = isIndustry ? "var(--accent-secondary)" : "var(--accent-primary)";
 
     return (
-        <div className="group bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 flex flex-col h-full shadow-sm">
+        <div className="group bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 flex flex-col h-full shadow-sm relative">
             {/* Header Image */}
             <div className="h-44 w-full relative overflow-hidden bg-gray-50">
                 {imageUrl ? (
@@ -184,10 +220,6 @@ function ItemCard({ item, type }) {
                 <div className="flex flex-wrap gap-2 mb-6 mt-auto">
                     {item.location && <FeatureBadge icon="📍" label={item.location} />}
                     {item.type && <FeatureBadge label={item.type} />}
-                    {item.duration && <FeatureBadge icon="⏱️" label={item.duration} />}
-                    {item.stipendType && <FeatureBadge icon="💰" label={item.stipendType} />}
-                    {item.deadline && <FeatureBadge icon="📅" label={new Date(item.deadline).toLocaleDateString()} />}
-                    {item.supervisor && <FeatureBadge icon="👤" label={item.supervisor} />}
                 </div>
 
                 {/* Footer Section */}
@@ -198,10 +230,86 @@ function ItemCard({ item, type }) {
                         </div>
                         <span className="text-[8px] font-black text-gray-400 uppercase tracking-tighter truncate max-w-[80px]">{item.createdBy?.profile?.name}</span>
                     </div>
-                    <button className="px-4 py-2 bg-[var(--accent-primary)] text-white rounded-lg font-black text-[8px] uppercase tracking-widest hover:bg-black transition-all shadow-md active:scale-95">
-                        Inquire
+                </div>
+
+                {/* Hover Reveal Button */}
+                <div className="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-white via-white to-transparent pt-20 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 z-10 flex items-end">
+                    <button
+                        onClick={onInquire}
+                        className="w-full py-4 bg-[var(--accent-primary)] text-white rounded-xl font-black text-[9px] uppercase tracking-widest hover:bg-black transition-all shadow-xl active:scale-95"
+                    >
+                        View More Details
                     </button>
                 </div>
+            </div>
+        </div>
+    );
+}
+
+function DetailModal({ item, isSpeaker, type, onClose }) {
+    const imageUrl = item.imageUrl
+        ? (item.imageUrl.startsWith('http') ? item.imageUrl : `https://bbabachmate2026-821t2dq3p-junaidkhanniaziis-projects.vercel.app${item.imageUrl}`)
+        : null;
+
+    return (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8">
+            <div className="absolute inset-0 bg-black/80 backdrop-blur-md" onClick={onClose}></div>
+            <div className="bg-white w-full max-w-5xl max-h-[90vh] rounded-[3rem] shadow-2xl relative z-10 overflow-hidden flex flex-col md:flex-row animate-in zoom-in-95 duration-300">
+                <div className="w-full md:w-2/5 h-64 md:h-auto bg-gray-50 relative overflow-hidden">
+                    {imageUrl ? (
+                        <img src={imageUrl} alt={item.title || item.name} className="w-full h-full object-cover" />
+                    ) : (
+                        <div className="w-full h-full flex items-center justify-center bg-[var(--accent-primary)]/10 text-[var(--accent-primary)] font-black text-6xl italic uppercase">AICON</div>
+                    )}
+                    <button onClick={onClose} className="absolute top-6 left-6 w-12 h-12 bg-white/20 backdrop-blur-xl text-white rounded-full flex items-center justify-center hover:bg-white hover:text-black transition-all md:hidden">✕</button>
+                </div>
+                <div className="flex-1 p-8 md:p-16 overflow-y-auto bg-white">
+                    <div className="mb-10 flex justify-between items-start">
+                        <div>
+                            <span className="px-4 py-2 bg-blue-50 text-[var(--accent-secondary)] rounded-xl text-[10px] font-black uppercase tracking-widest mb-4 inline-block border border-blue-100">
+                                {item.domain || item.category || type.split('/').pop()}
+                            </span>
+                            <h2 className="text-4xl md:text-5xl font-black text-[var(--text-primary)] tracking-tighter uppercase mb-4 leading-none">
+                                {item.title || item.name}
+                            </h2>
+                            {isSpeaker && <p className="text-sm font-bold text-[var(--accent-secondary)] uppercase tracking-[0.3em]">{item.designation}</p>}
+                        </div>
+                        <button onClick={onClose} className="hidden md:flex w-14 h-14 bg-gray-50 text-gray-400 rounded-full items-center justify-center hover:bg-black hover:text-white transition-all text-xl">✕</button>
+                    </div>
+                    <div className="space-y-12">
+                        <div>
+                            <h4 className="text-[10px] font-black text-gray-300 uppercase tracking-[0.5em] mb-4">Detailed Registry Data</h4>
+                            <p className="text-lg md:text-xl text-[var(--text-secondary)] font-medium leading-relaxed italic">
+                                {item.description || item.abstract || item.problemStatement || item.bio || "No detailed information found in registry database."}
+                            </p>
+                        </div>
+                        <div className="grid grid-cols-2 lg:grid-cols-3 gap-8 pt-10 border-t border-gray-100">
+                            {item.location && <ModalField label="Primary Location" value={item.location} icon="📍" />}
+                            {item.type && <ModalField label="Record Category" value={item.type} icon="🏷️" />}
+                            {item.duration && <ModalField label="Active Duration" value={item.duration} icon="⏱️" />}
+                            {item.stipendType && <ModalField label="Financial Details" value={item.stipendType} icon="💰" />}
+                            {item.deadline && <ModalField label="Registry Deadline" value={new Date(item.deadline).toLocaleDateString()} icon="📅" />}
+                            {item.supervisor && <ModalField label="Point of Contact" value={item.supervisor} icon="👤" />}
+                            {item.organization && <ModalField label="Affiliated Organization" value={item.organization} icon="🏢" />}
+                        </div>
+                        <div className="pt-12 flex flex-col sm:flex-row gap-4">
+                            <button className="flex-1 py-6 bg-[var(--accent-primary)] text-white rounded-3xl font-black text-xs uppercase tracking-[0.2em] shadow-2xl hover:bg-black transition-all active:scale-95">Send Inquiry</button>
+                            <button onClick={onClose} className="py-6 px-12 bg-white border-2 border-gray-100 text-gray-400 rounded-3xl font-black text-xs uppercase tracking-[0.2em] hover:border-black hover:text-black transition-all">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+function ModalField({ label, value, icon }) {
+    return (
+        <div className="space-y-2">
+            <p className="text-[8px] font-black text-gray-400 uppercase tracking-widest">{label}</p>
+            <div className="flex items-center gap-3">
+                <span className="text-lg">{icon}</span>
+                <span className="text-xs font-bold text-[var(--text-primary)] uppercase truncate">{value}</span>
             </div>
         </div>
     );
@@ -217,5 +325,3 @@ function FeatureBadge({ icon, label }) {
 }
 
 export default PublicListing;
-
-
